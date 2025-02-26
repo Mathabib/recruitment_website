@@ -142,7 +142,7 @@ class VacancyController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'required|numeric|min:0',
+            'salary_expectation' => 'nullable|numeric|min:0',
             'role.*' => 'required|string|max:255',
             'name_company.*' => 'required|string',
             'desc_kerja.*' => 'required|string',

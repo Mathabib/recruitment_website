@@ -115,7 +115,7 @@
                     <div class="kanan col-md-5">
 
                         <div class="input">
-                            <label for="profil_linkedin">LinkedIn Profile Link<span class="important_input"> *</span></label>
+                            <label for="profil_linkedin">LinkedIn Profile Link</label>
                             <input type="url" class="form-control @error('profil_linkedin') is-invalid @enderror" id="profil_linkedin" name="profil_linkedin" value="{{ old('profil_linkedin') }}" placeholder="Link Profile LinkedIn">
                             @error('profil_linkedin')
                             <span class="text-danger">{{ $message }}</span>
@@ -176,8 +176,8 @@
                         </div>
 
                         <div class="input">
-                            <label for="salary_expectation">Salary Expectation<span class="important_input"> *</span></label>
-                            <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation') }}" placeholder="Ex. 15000000" required>
+                            <label for="salary_expectation">Salary Expectation<span class="important_input"></span></label>
+                            <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation') }}" placeholder="Ex. 15000000">
                             @error('salary_expectation')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -351,7 +351,7 @@
                         </div>
                         <button type="button" class="btn btn-secondary ms-4" @click="addInput2">Add</button>
 
-                        <h1 style="margin-top: 30px">Contacts References<span class="important_input"> *</span></h1>
+                        <h1 style="margin-top: 30px">Contacts References</h1>
                         <div class="references_kontainer">
                             <div class="references" v-for="(reference, index) in references">
                                 <div class="input references_name">
