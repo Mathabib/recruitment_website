@@ -1,0 +1,205 @@
+/* Styling umum untuk latar belakang dan font */
+body {
+    background: linear-gradient(135deg, #e0f7fa, #bbdefb); /* Gradasi biru sebagai latar belakang */
+    font-family: 'Roboto', sans-serif; /* Font modern */
+    color: #333; /* Warna teks lebih lembut */
+    margin: 0;
+    padding: 0;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Bayangan lebih lembut */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Efek hover mengangkat */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Bayangan saat hover */
+}
+
+.card-header {
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Gradasi biru untuk header */
+    color: white;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+}
+
+/* Styling untuk Tabel */
+.table {
+    font-size: 1.1rem;
+    border-collapse: separate;
+    border-spacing: 0 10px; /* Jarak antar baris tabel */
+}
+
+/* Styling Container untuk Name dan Location */
+.kontainer_name_location {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.kontainer_name_location:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px); /* Efek hover */
+}
+
+/* Pipeline Stage Styling */
+.pipeline_stage {
+    background-color: #007bff; /* Warna biru */
+    border-radius: 12px; /* Sudut melengkung */
+    padding: 15px;
+    margin: 20px 10px; /* Jarak antar stage lebih besar */
+    text-align: center;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animasi transform dan bayangan */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+    cursor: pointer;
+}
+
+.pipeline_stage:hover {
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Biru lebih pekat saat hover */
+    transform: scale(1.05); /* Efek memperbesar sedikit saat hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Bayangan lebih besar saat hover */
+}
+
+/* Styling untuk jumlah (angka) di dalam pipeline */
+.pipeline_stage .amount {
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0;
+    color: #dfe6e9; /* Warna teks putih */
+}
+
+.pipeline_stage small {
+    display: block;
+    font-size: 0.9rem;
+    color: #dfe6e9; /* Warna teks lebih lembut */
+    margin-top: 8px;
+}
+
+/* Responsif dan Grid Layout untuk Pipeline */
+.pipeline_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Grid yang fleksibel */
+    gap: 20px; /* Jarak antar elemen ditingkatkan */
+    justify-items: center;
+    align-items: center;
+}
+
+/* Dropdown Styling */
+.dropdown-menu {
+    background-color: #007bff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Bayangan dropdown */
+    display: flex;
+    flex-direction: column; /* Tampilkan dropdown secara vertikal */
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+/* Modal Styling */
+.modal-content {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Bayangan modal */
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.modal-footer {
+    background-color: #f1f1f1;
+}
+
+.modal-body p {
+    font-size: 1.1rem;
+    color: #444;
+}
+
+/* Search Bar Styling */
+.search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 50px;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+.search-bar button {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 1.2em;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    color: #0056b3;
+}
+
+/* Extended Button Styling */
+.btn-extended {
+    width: 180px;
+    height: 40px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-extended:hover {
+    background-color: #0056b3;
+}
+
+/* Link Styling dalam Stage */
+.stage-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.stage-link:hover {
+    color: #bcd5f1;
+    cursor: pointer;
+}

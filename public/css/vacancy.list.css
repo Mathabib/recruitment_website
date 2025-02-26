@@ -1,0 +1,135 @@
+body{
+    font-family: 'Arial Narrow', sans-serif;
+}
+.header{
+    width: 100%;
+    height: 300px;
+    color: #B8001F;
+    padding: 0px;
+}
+hr{
+    margin: 0px;
+}
+.overley{
+    width: 100%;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.8);
+    margin: 0px;
+    padding: 0px;
+    left: 10px;
+}
+
+
+.vacancy{
+    margin: 0px;
+    transition: 0.2s ease-in-out;
+    color: black;
+    display: flex;
+    align-items: center;
+}
+/* 
+.vacancy:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+
+} */
+
+.name{
+    font-weight: bolder;
+    font-size: larger;
+}
+
+
+.vacancy_kontainer {
+
+   
+        margin-top: -2px;
+        margin-bottom: -2px;
+        margin-left: -2px;
+        margin-right: -2px;
+        /* Properti lainnya tetap sama */
+   
+    background-color: #ffffff; 
+    border-radius: 8px; 
+    padding: 15px;
+    transition: all 0.4s ease-in-out; 
+    cursor: pointer; 
+    box-shadow: 0 8px 5px rgba(6, 99, 240, 0.8); 
+    font-family: 'Arial Narrow', sans-serif;
+    color: black; 
+}
+
+.vacancy_kontainer:hover {
+    box-shadow: 0 6px 25px rgba(6, 99, 240, 0.8); 
+    background-color: #1566c2; 
+    transform: translateY(-5px);
+    color: #ffffff !important; 
+}
+
+.vacancy_kontainer:active {
+    background-color: #0d4e8b; 
+    box-shadow: 0 8px 30px rgba(6, 99, 240, 0.8); 
+    transform: translateY(0); 
+    color: #ffffff !important;
+}
+
+
+
+.vacancy_kontainer:hover p,
+.vacancy_kontainer:hover h5 {
+    color: #ffffff !important;
+}
+
+.vacancy_kontainer:active p,
+.vacancy_kontainer:active h5 {
+    color: #ffffff !important; 
+}
+
+.footer{
+    margin-top: 50px;
+    width: 100%;
+    height: 300px;
+    background-color: #257180;
+}
+    
+
+
+.text{
+    font-size: larger;
+
+}
+.icon{
+    width: 30px;
+}
+
+.title-footer{
+    font-size: 18px;
+    font-weight: bolder;
+    padding: 0px;
+    margin: 0px;
+}
+.title-kontainer a{
+    color: white;
+}
+.icon-color{
+    fill: white;
+}
+.kanan{
+    color: white;
+}
+
+.kotak-job{
+    width: 40%;
+}
+
+.job-list-outer-container{
+    width: 100%;
+}
+
+@media (max-width: 576px){
+    .kotak-job{
+        width: 90%;
+    }
+}
+

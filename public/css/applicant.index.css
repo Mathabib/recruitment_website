@@ -1,0 +1,293 @@
+/* Style for search bar */
+.search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 600px; 
+    /* margin-left: 400px; */
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 8px 15px; 
+    border-radius: 25px; 
+    border: 1px solid #aae3ea;
+    transition: border-color 0.3s ease;
+    font-size: 0.875rem; 
+}
+
+.search-bar input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.search-bar select {
+    border-radius: 25px;
+    border: 1px solid #aae3ea;
+    padding: 8px 10px;
+    font-size: 0.875rem; 
+}
+.search-bar button {
+    border-radius: 25px; 
+    padding: 8px 15px; 
+    font-size: 0.875rem;
+}
+.search-bar button:hover {
+    background-color: #0056b3; 
+    color: #fff; 
+}
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+.applicant-card {
+    border: 1px solid #8ff0ff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px; 
+}
+
+.h1 {
+    font-size: 28px;
+}
+
+.status-boxes {
+    display: flex;
+    justify-content: flex-start; 
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.status-box {
+    width: 80px; 
+    height: 60px; 
+    border-radius: 12px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px; 
+    color: #fff;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    margin: 0; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+.status-box:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); 
+}
+
+.status-box p {
+    margin: 0;
+    font-size: 18px; 
+    font-weight: bold; 
+}
+
+.status-box small {
+    margin-top: 5px;
+    font-size: 14px; 
+    display: block;
+}
+
+.status-applied {
+    background: linear-gradient(145deg, #4a90e2, #357abd); /* Lighter Blue */
+}
+
+.status-interview {
+    background: linear-gradient(145deg, #007bff, #0056b3); /* Standard Blue */
+}
+
+.status-offer {
+    background: linear-gradient(145deg, #0056b3, #003f88); /* Darker Blue */
+}
+
+.status-accepted {
+    background: linear-gradient(145deg, #003f88, #002b5c); /* Even Darker Blue */
+}
+
+.status-all {
+    background: linear-gradient(145deg, #85c1e9, #4a90e2); /* Light Blue */
+}
+
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse; 
+}
+
+.blue-gradient {
+    background: linear-gradient(135deg, #007bff, #0056b3); 
+    color: white;
+}
+
+.blue-gradient th {
+    background-color:linear-gradient(135deg, #007bff, #0056b3); 
+    color: white !important; 
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: left;
+    color: black; 
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1); 
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #dee2e6;
+}
+/* .table-wrapper {
+    max-height: 650px; 
+    overflow-y: auto;  
+    margin-top: 20px;
+} */
+
+.table thead th, 
+.table tbody tr.sticky-row {
+    position: sticky; 
+    top: 0;          
+    background-color: #007bff; 
+    color: white;
+    z-index: 2;        
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    position: relative;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px; 
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+}
+
+.btn:hover {
+    transform: translateY(-4px); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+}
+
+.btn-primary {
+    background-color: #ff3d00; 
+}
+
+.btn-primary:hover {
+    background-color: #e53935; 
+}
+
+.btn-secondary {
+    background-color: #007bff; 
+}
+
+.btn-secondary:hover {
+    background-color: #0056b3; 
+}
+
+.btn-danger {
+    background-color: #dc3545; 
+}
+
+.btn-danger:hover {
+    background-color: #b21f3a; 
+}
+
+.btn-success {
+    background-color: #28a745; 
+}
+
+.btn-success:hover {
+    background-color: #218838; 
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2); 
+}
+
+
+.recommendation-remark {
+    width: 100%; /* Ensure the dropdown takes full width of the cell */
+}
+
+.selected-option {
+    display: block; /* Ensure it's block-level to take full width */
+    padding: 10px; /* Add padding for a better touch area */
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #ced4da; /* Border for the selected option */
+    cursor: pointer; /* Change cursor to pointer */
+    text-align: center; /* Center the text */
+    font-weight: bold; /* Make the text bold */
+}
+
+.options {
+    display: none; /* Initially hidden */
+    border: 1px solid #ced4da; /* Border for dropdown options */
+    border-radius: 4px; /* Rounded corners */
+    background-color: white; /* Background for dropdown */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    z-index: 1000; /* Ensure dropdown is above other elements */
+}
+
+.option {
+    padding: 10px; /* Padding for each option */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s; /* Smooth background change */
+}
+
+.option:hover {
+    background-color: #f1f1f1; /* Highlight on hover */
+}
+
+
+.btn-fixed-width {
+    width: 150px; /* Tentukan lebar yang diinginkan */
+}
+
+.search-bar .custom-search-input {
+    width: 240px; /* Adjust the width as needed */
+}
+
+
+.btn-no-animation {
+    transition: none !important; 
+}
+
+.btn-no-animation:focus,
+.btn-no-animation:hover {
+    box-shadow: none; 
+    transform: none; 
+}
+
+
