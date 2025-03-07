@@ -11,28 +11,40 @@ class JobController extends Controller
 {
     // Display all jobs or filter by department
     public function index(Request $request)
-    {
-        // Mulai query dari Model Job
-        $query = ModelsJob::query();
+{
+    $sort = $request->input('sort', 'asc');  
+    
+    // Mulai query dari Model Job
+    $query = ModelsJob::query();
 
-        // Filter berdasarkan kata kunci pencarian jika ada
-        if ($request->has('search')) {
-            $search = $request->get('search');
-            $query->where('job_name', 'like', '%' . $search . '%');
-        }
-
-        // Filter berdasarkan department jika ada
-        if ($request->has('department')) {
-            $departmentId = $request->get('department');
-            $query->where('department', $departmentId);
-        }
-
-        // Ambil semua data setelah filter
-        $jobs = $query->get();
-
-        // Kirim data ke view
-        return view('jobs.index', compact('jobs'));
+    // Filter berdasarkan kata kunci pencarian jika ada
+    if ($request->has('search')) {
+        $search = $request->get('search');
+        $query->where('job_name', 'like', '%' . $search . '%');
     }
+
+    // Filter berdasarkan department jika ada
+    if ($request->has('department')) {
+        $departmentId = $request->get('department');
+        $query->where('department', $departmentId);
+    }
+
+    if (!$request->has('sort')) {
+        $query->orderByDesc('updated_at');  // Data yang diupdate muncul pertama
+        $query->orderByDesc('created_at');  // Jika belum ada update, urutkan berdasarkan created_at
+    }
+
+    // Filter sorting berdasarkan A-Z atau Z-A
+    if ($sort === 'desc') {
+        $query->orderBy('job_name', 'desc');
+    } elseif ($sort === 'asc') {
+        $query->orderBy('job_name', 'asc');
+    }
+
+    
+    $jobs = $query->get();
+    return view('jobs.index', compact('jobs'));
+}
 
 
     // Show the form for creating a new job

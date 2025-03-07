@@ -59,6 +59,12 @@
 
 
 @section('content')
+@if(session('success'))
+            <div class="alert alert-success mb-0">
+                {{ session('success') }}
+            </div>
+        @endif
+
 <div class="row">
     <div class="col-12">
         <div class="card ">
@@ -74,6 +80,20 @@
                     <a href="{{ route('pipelines.create') }}" class="btn btn-primary btn-extended" style="margin-top: -15px;">
                         <i class="fa fa-plus"></i>New Data
                     </a>
+
+                    <!-- <a href="{{ route('export.applicant') }}" class="btn btn-success">Export to Excel</a> -->
+
+       
+
+                    <!-- Upload Form -->
+                    <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
+                        @csrf
+                        <div class="form-group mb-0">
+                            <input type="file" name="file" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+
 
                         <!-- Filter Button -->
                         <button

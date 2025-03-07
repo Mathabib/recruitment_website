@@ -13,7 +13,7 @@ class VacancyController extends Controller
     
      public function search(Request $request)
     {
-       
+      
         $jobName = $request->input('job_name');
         $employmentType = $request->input('employment_type');
         $workLocation = $request->input('work_location');
@@ -38,6 +38,9 @@ class VacancyController extends Controller
                 $query->where('location', 'like', '%' . $workLocation . '%');
             });
         }
+
+        // unpublish tidak akan muncul di tampilan
+        $jobs->where('status_published', '!=', 'unpublish');
 
         
         if ($sort === 'desc') {
