@@ -161,6 +161,8 @@
                     <option value="">Select Employment Type</option>
                     <option value="Permanent" {{ request()->input('employment_type') == 'Permanent' ? 'selected' : '' }}>Permanent</option>
                     <option value="Contract" {{ request()->input('employment_type') == 'Contract' ? 'selected' : '' }}>Contract</option>
+                    <option value="Freelance" {{ request()->input('employment_type') == 'Freelance' ? 'selected' : '' }}>Freelance</option>
+
                 </select>
             </div>
             <div class="filter-item">
@@ -182,18 +184,21 @@
         <div class="row-container">
             <!-- Kolom Kiri (Daftar Lowongan) -->
             <div class="col-4 job-list-container">
-                @foreach($jobs as $job)
-                <div class="vacancy-container" data-job-id="{{ $job->id }}" onclick="loadJobDetails({{ $job->id }})">
-                    <p class="job-name">{{ $job->job_name }}</p>
-                    <div class="job-info">
-                        <p>Employment Type: {{ $job->employment_type }} <br> Location: {{ $job->workLocation->location }}</p>
-                    </div>
-                </div>
-                @endforeach
-                <div class="pagination-container" style="display: flex; justify-content: center; align-items: center; margin-top: 0px; ">
-                    {{ $jobs->links('pagination::bootstrap-4') }}
+    @foreach($jobs as $job)
+        @if($job->status != 'unpublish') <!-- Pastikan hanya pekerjaan yang dipublish yang muncul -->
+            <div class="vacancy-container" data-job-id="{{ $job->id }}" onclick="loadJobDetails({{ $job->id }})">
+                <p class="job-name">{{ $job->job_name }}</p>
+                <div class="job-info">
+                    <p>Employment Type: {{ $job->employment_type }} <br> Location: {{ $job->workLocation->location }}</p>
                 </div>
             </div>
+        @endif
+    @endforeach
+    <div class="pagination-container" style="display: flex; justify-content: center; align-items: center; margin-top: 0px;">
+        {{ $jobs->links('pagination::bootstrap-4') }}
+    </div>
+</div>
+
 
             <!-- Kolom Kanan (Menampilkan Detail Pekerjaan Dinamis) -->
             <div class="col-8 job-details-container" id="job-details-container">
@@ -215,12 +220,9 @@
 
     <script>
         function loadJobDetails(jobId) {
-            // Check if the device is mobile (screen width less than or equal to 768px)
             if (window.innerWidth <= 768) {
-                // Redirect to a new page for job details (assuming you have a route like /job/{id})
                 window.location.href = `/job/${jobId}`;
             } else {
-                // If it's a desktop, load job details dynamically via AJAX
                 const allJobContainers = document.querySelectorAll('.vacancy-container');
                 allJobContainers.forEach(container => {
                     container.classList.remove('selected');
@@ -229,11 +231,9 @@
                 const selectedJobContainer = document.querySelector(`.vacancy-container[data-job-id='${jobId}']`);
                 selectedJobContainer.classList.add('selected');
 
-                // Send AJAX request to fetch job details
                 fetch(`/job/${jobId}`)
                     .then(response => response.text())
                     .then(data => {
-                        // Insert job details into the right column
                         document.getElementById('job-details-placeholder').innerHTML = data;
                     })
                     .catch(error => console.error('Error loading job details:', error));

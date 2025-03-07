@@ -357,7 +357,7 @@ class ApplicantController extends Controller
 
     public function update(Request $request, $id)
     {
-
+        // dd($request->all());
 
         // Validate input
         //khusus validate yang sifatnya array maka harus ditambahkan '.*' setelah nama atribut $requestnya 
@@ -398,11 +398,24 @@ class ApplicantController extends Controller
             'email_ref.*' => 'nullable|string',
 
             'education' => 'required|exists:education,id',
-            'jurusan' => 'nullable|exists:jurusan,id',
+            'jurusan' => 'nullable|string|max:255',
         ]);
 
         // Retrieve the applicant
         $applicant = Applicant::findOrFail($id);
+
+        if ($applicant->jurusan) {
+            $applicant->jurusan->update([
+                'name_jurusan' => $request->jurusan
+            ]);
+        } else {
+            // Jika tidak ada, buat data jurusan baru
+            $newJurusan = Jurusan::create([
+                'name_jurusan' => $request->jurusan
+            ]);
+            $applicant->jurusan_id = $newJurusan->id;
+            $applicant->save();
+        }
 
         // Handle file upload for photo_pass if provided
         if ($request->hasFile('photo_pass')) {
@@ -429,7 +442,7 @@ class ApplicantController extends Controller
             'skills' => implode("|", $request->skills),
             'salary_expectation' => $request->salary_expectation,
             'education_id' => $request->education,
-            'jurusan_id' => $request->jurusan,
+            // 'jurusan_id' => $request->jurusan,
         ]);
 
         // Update or create work experiences

@@ -64,17 +64,19 @@
                                 </select>
                             </div>
 
-                                <div class="form-group col-md-9">
-                                    <label for="jurusan" class="form-label">Major</label>
-                                    <select id="jurusan" name="jurusan" class="form-control">
-                                        @foreach($jurusans as $jurusan)
-                                        <option value="{{ $jurusan->id}}" {{$applicant->jurusan_id == $jurusan->id ? 'selected' : ''}}>
-                                            {{ $jurusan->name_jurusan}}
-                                        </option>
-                                        @endforeach
-                                        <!-- Jurusan options akan diisi secara dinamis -->
-                                    </select>
-                                </div>
+
+                            <div class="form-group">
+                                <label for="jurusan">Major</label>
+                                <input type="text" class="form-control @error('jurusan') is-invalid @enderror" 
+                                id="jurusan" name="jurusan" 
+                                value="{{ old('jurusan', $applicant->jurusan->name_jurusan ?? '') }}" 
+                                placeholder="Enter Major" required>
+
+                                @error('jurusan')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                             </div>
 
                             <!--jurusan -->
@@ -172,12 +174,31 @@
                                 <div class="col-md-6">
                                     <!-- MBTI -->
                                     <div class="form-group">
-                                        <label for="mbti">MBTI</label>
-                                        <input type="text" class="form-control @error('mbti') is-invalid @enderror" id="mbti" name="mbti" value="{{ old('mbti', $applicant->mbti) }}" placeholder="MBTI">
-                                        @error('mbti')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                    <label for="mbti">MBTI</label>
+                                    <select class="form-control @error('mbti') is-invalid @enderror" id="mbti" name="mbti">
+                                        <option value="" disabled {{ old('mbti', $applicant->mbti) ? '' : 'selected' }}>Select MBTI</option>
+                                        <option value="ISTJ" {{ old('mbti', $applicant->mbti) == 'ISTJ' ? 'selected' : '' }}>ISTJ - Inspector</option>
+                                        <option value="ISFJ" {{ old('mbti', $applicant->mbti) == 'ISFJ' ? 'selected' : '' }}>ISFJ - Defender</option>
+                                        <option value="INFJ" {{ old('mbti', $applicant->mbti) == 'INFJ' ? 'selected' : '' }}>INFJ - Advocate</option>
+                                        <option value="INTJ" {{ old('mbti', $applicant->mbti) == 'INTJ' ? 'selected' : '' }}>INTJ - Architect</option>
+                                        <option value="ISTP" {{ old('mbti', $applicant->mbti) == 'ISTP' ? 'selected' : '' }}>ISTP - Virtuoso</option>
+                                        <option value="ISFP" {{ old('mbti', $applicant->mbti) == 'ISFP' ? 'selected' : '' }}>ISFP - Adventurer</option>
+                                        <option value="INFP" {{ old('mbti', $applicant->mbti) == 'INFP' ? 'selected' : '' }}>INFP - Mediator</option>
+                                        <option value="INTP" {{ old('mbti', $applicant->mbti) == 'INTP' ? 'selected' : '' }}>INTP - Logician</option>
+                                        <option value="ESTP" {{ old('mbti', $applicant->mbti) == 'ESTP' ? 'selected' : '' }}>ESTP - Entrepeneur</option>
+                                        <option value="ESFP" {{ old('mbti', $applicant->mbti) == 'ESFP' ? 'selected' : '' }}>ESFP - Entertainer</option>
+                                        <option value="ENFP" {{ old('mbti', $applicant->mbti) == 'ENFP' ? 'selected' : '' }}>ENFP - Campaigner</option>
+                                        <option value="ENTP" {{ old('mbti', $applicant->mbti) == 'ENTP' ? 'selected' : '' }}>ENTP - Debater</option>
+                                        <option value="ESTJ" {{ old('mbti', $applicant->mbti) == 'ESTJ' ? 'selected' : '' }}>ESTJ - Executive</option>
+                                        <option value="ESFJ" {{ old('mbti', $applicant->mbti) == 'ESFJ' ? 'selected' : '' }}>ESFJ - Consul</option>
+                                        <option value="ENFJ" {{ old('mbti', $applicant->mbti) == 'ENFJ' ? 'selected' : '' }}>ENFJ - Protagonist</option>
+                                        <option value="ENTJ" {{ old('mbti', $applicant->mbti) == 'ENTJ' ? 'selected' : '' }}>ENTJ - Commander</option>
+                                    </select>
+                                    @error('mbti')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 </div>
         
                                 <div class="col-md-6">
@@ -554,28 +575,9 @@
     }).mount('#app')
 
 
-    $(document).ready(function () {
-        $('#education').on('change', function () {
-            var educationId = $(this).val();
-            if (educationId) {
-                $.ajax({
-                    url: '/get-jurusan/' + educationId,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        $('#jurusan').empty();
-                        $('#jurusan').append('<option value="">Pilih Jurusan</option>');
-                        $.each(data, function (key, value) {
-                            $('#jurusan').append('<option value="' + value.id + '">' + value.name_jurusan + '</option>');
-                        });
-                    }
-                });
-            } else {
-                $('#jurusan').empty();
-                $('#jurusan').append('<option value="">Pilih Jurusan</option>');
-            }
-        });
-    });
+      function updateEducationId(select) {
+        document.getElementById('education_id').value = select.value;
+    }
 </script>
 
 
