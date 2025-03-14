@@ -332,6 +332,12 @@ return [
             'url' => '/pipelines',
             'icon' => 'fa fa-users',
         ],
+
+        [
+            'text' => 'Pipeline-resindo',
+            'url' => '/pipelines-resindo',
+            'icon' => 'fa fa-users',
+        ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',

@@ -31,163 +31,331 @@ class ApplicantController extends Controller
     }
 
 
+    // public function index(Request $request)
+    // {
+    //     $query = Applicant::with('job', 'education', 'jurusan');
+    //     $type = null;
+    //     $query->where('type', $type);
+
+    //     $jobId = $request->get('job_id');
+    //     $jobTitle = $jobId ? optional(Job::find($jobId))->job_name : null;
+    //     $status = $request->get('status');
+    //     $sort = $request->get('sort', 'newest');
+
+    //     if ($jobId) {
+    //         $query->where('job_id', $jobId);
+    //     }
+
+    //     if ($status) {
+    //         $query->where('status', $status);
+    //     }
+    //     // Filter by current status if exists
+    //     $currentStatus = $request->get('status');
+    //     if ($currentStatus && $currentStatus !== '') {
+    //         $query->where('status', $currentStatus);
+    //     }
+
+
+    //     // Memeriksa jika ada job_id atau status
+    //     $applicants = $query->get();
+
+
+    //     // Ambil stage name jika ada job_id
+    //     $stageName = $jobId ? ($applicants->isNotEmpty() ? $applicants->first()->status : null) : null;
+
+    //     if ($jobId || $status) {
+    //         // Jika ada job_id, filter data berdasarkan job_id
+    //         if ($jobId) {
+    //             $query->where('job_id', $jobId);
+    //         }
+
+
+    //         if ($request->has('education') && !empty($request->get('education'))) {
+    //             $educationId = $request->get('education');
+    //             $query->where('education_id', $educationId);
+    //         }
+
+    //         if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
+    //             $jurusanId = $request->get('jurusan');
+    //             $query->where('jurusan_id', $jurusanId);
+    //         }
+
+
+    //         if ($request->has('recommendation') && $request->get('recommendation') != '') {
+    //             $query->where('recommendation_status', $request->get('recommendation'));
+    //         }
+
+
+    //         if ($status && $status != '') {
+    //             $query->where('status', $status);
+    //         }
+    //     } else {
+    //         // Jika tidak ada job_id dan status, terapkan filter ke semua data
+    //         if ($request->has('status') && $request->get('status') != '') {
+    //             $query->where('status', $request->get('status'));
+    //         }
+
+    //         if ($request->has('education') && !empty($request->get('education'))) {
+    //             $educationId = $request->get('education');
+    //             $query->where('education_id', $educationId);
+    //         }
+
+    //         if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
+    //             $jurusanId = $request->get('jurusan');
+    //             $query->where('jurusan_id', $jurusanId);
+    //         }
+
+    //         if ($request->has('recommendation') && $request->get('recommendation') != '') {
+    //             $query->where('recommendation_status', $request->get('recommendation'));
+    //         }
+    //     }
+
+    //     // Search 
+    //     if ($request->has('search')) {
+    //         $search = $request->get('search');
+
+    //         if ($jobId && $status) {
+    //             $query->where('name', 'like', $search . '%');
+    //         } else {
+
+    //             $query->where(function ($query) use ($search) {
+    //                 $query->where('name', 'like', $search . '%')
+    //                     ->orWhereHas('job', function ($query) use ($search) {
+    //                         $query->where('job_name', 'like', $search . '%');
+    //                     });
+    //             });
+    //         }
+    //     }
+
+
+
+    //     // Logika penyortiran
+    //     if ($jobId && $status) {
+    //         // Jika ada job_id dan status, filter berdasarkan job_id dan status
+    //         $query->where('job_id', $jobId)
+    //               ->where('status', $status);
+    //     } else {
+    //         // Jika tidak ada job_id dan status, ambil semua data
+    //         // Anda bisa mengatur filter tambahan jika diperlukan di sini
+    //     }
+        
+    //     // Sortir data berdasarkan parameter sort
+    //     if ($sort === 'newest') {
+    //         $query->orderBy('created_at', 'desc');
+    //     } elseif ($sort === 'oldest') {
+    //         $query->orderBy('created_at', 'asc');
+    //     } elseif ($sort === 'a_to_z') {
+    //         $query->orderBy('name', 'asc');
+    //     } elseif ($sort === 'z_to_a') {
+    //         $query->orderBy('name', 'desc');
+    //     }
+        
+    //     // Eksekusi query untuk mendapatkan hasil
+    //     $results = $query->get();
+
+        
+        
+    //     // Pagination
+    //     $perPage = 10;
+    //     $applicants = $query->paginate($perPage);
+
+    //     // Get the count of applicants based on status
+    //     $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request
+
+    //     if ($jobId) {
+            
+    //         // If job_id exists, filter by job_id
+    //         $statusCounts = [
+    //             'applied' => Applicant::where('status', 'applied')->where('job_id', $jobId)->count(),
+    //             'interview' => Applicant::where('status', 'interview')->where('job_id', $jobId)->count(),
+    //             'offer' => Applicant::where('status', 'offer')->where('job_id', $jobId)->count(),
+    //             'accepted' => Applicant::where('status', 'accepted')->where('job_id', $jobId)->count(),
+    //             'bankcv' => Applicant::where('status', 'bankcv')->where('job_id', $jobId)->count(),
+    //         ];
+    //     } else {
+    //         // If job_id does not exist, count all statuses
+    //         $statusCounts = [
+    //             'applied' => Applicant::where('status', 'applied')->count(),
+    //             'interview' => Applicant::where('status', 'interview')->count(),
+    //             'offer' => Applicant::where('status', 'offer')->count(),
+    //             'accepted' => Applicant::where('status', 'accepted')->count(),
+    //             'bankcv' => Applicant::where('status', 'bankcv')->count(),
+    //         ];
+    //     }
+        
+
+
+    //     // Load dropdown options
+    //     $jobs = Job::all();
+    //     $educations = Education::all();
+    //     $jurusans = Jurusan::all();
+
+    //     return view('pipelines.index', compact('applicants', 'jobs', 'jobTitle', 'educations', 'jurusans', 'request', 'statusCounts', 'stageName'));
+    // }
+
     public function index(Request $request)
-    {
-        $query = Applicant::with('job', 'education', 'jurusan');
+{   
+    
+    $query = Applicant::with('job', 'education', 'jurusan');
 
-        $jobId = $request->get('job_id');
-        $jobTitle = $jobId ? optional(Job::find($jobId))->job_name : null;
-        $status = $request->get('status');
-        $sort = $request->get('sort', 'newest');
 
+
+    $query->whereNull('type');
+    $jobId = $request->get('job_id');
+    $jobTitle = $jobId ? optional(Job::find($jobId))->job_name : null;
+    $status = $request->get('status');
+    $sort = $request->get('sort', 'newest');
+
+    if ($jobId) {
+        $query->where('job_id', $jobId);
+    }
+
+    if ($status) {
+        $query->where('status', $status);
+    }
+    // Filter by current status if exists
+    $currentStatus = $request->get('status');
+    if ($currentStatus && $currentStatus !== '') {
+        $query->where('status', $currentStatus);
+    }
+
+
+    // Memeriksa jika ada job_id atau status
+    $applicants = $query->get();
+
+
+    // Ambil stage name jika ada job_id
+    $stageName = $jobId ? ($applicants->isNotEmpty() ? $applicants->first()->status : null) : null;
+
+    if ($jobId || $status) {
+        // Jika ada job_id, filter data berdasarkan job_id
         if ($jobId) {
             $query->where('job_id', $jobId);
         }
 
-        if ($status) {
+
+        if ($request->has('education') && !empty($request->get('education'))) {
+            $educationId = $request->get('education');
+            $query->where('education_id', $educationId);
+        }
+
+        if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
+            $jurusanId = $request->get('jurusan');
+            $query->where('jurusan_id', $jurusanId);
+        }
+
+
+        if ($request->has('recommendation') && $request->get('recommendation') != '') {
+            $query->where('recommendation_status', $request->get('recommendation'));
+        }
+
+
+        if ($status && $status != '') {
             $query->where('status', $status);
         }
-        // Filter by current status if exists
-        $currentStatus = $request->get('status');
-        if ($currentStatus && $currentStatus !== '') {
-            $query->where('status', $currentStatus);
+    } else {
+        // Jika tidak ada job_id dan status, terapkan filter ke semua data
+        if ($request->has('status') && $request->get('status') != '') {
+            $query->where('status', $request->get('status'));
         }
 
-
-        // Memeriksa jika ada job_id atau status
-        $applicants = $query->get();
-
-
-        // Ambil stage name jika ada job_id
-        $stageName = $jobId ? ($applicants->isNotEmpty() ? $applicants->first()->status : null) : null;
-
-        if ($jobId || $status) {
-            // Jika ada job_id, filter data berdasarkan job_id
-            if ($jobId) {
-                $query->where('job_id', $jobId);
-            }
-
-
-            if ($request->has('education') && !empty($request->get('education'))) {
-                $educationId = $request->get('education');
-                $query->where('education_id', $educationId);
-            }
-
-            if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
-                $jurusanId = $request->get('jurusan');
-                $query->where('jurusan_id', $jurusanId);
-            }
-
-
-            if ($request->has('recommendation') && $request->get('recommendation') != '') {
-                $query->where('recommendation_status', $request->get('recommendation'));
-            }
-
-
-            if ($status && $status != '') {
-                $query->where('status', $status);
-            }
-        } else {
-            // Jika tidak ada job_id dan status, terapkan filter ke semua data
-            if ($request->has('status') && $request->get('status') != '') {
-                $query->where('status', $request->get('status'));
-            }
-
-            if ($request->has('education') && !empty($request->get('education'))) {
-                $educationId = $request->get('education');
-                $query->where('education_id', $educationId);
-            }
-
-            if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
-                $jurusanId = $request->get('jurusan');
-                $query->where('jurusan_id', $jurusanId);
-            }
-
-            if ($request->has('recommendation') && $request->get('recommendation') != '') {
-                $query->where('recommendation_status', $request->get('recommendation'));
-            }
+        if ($request->has('education') && !empty($request->get('education'))) {
+            $educationId = $request->get('education');
+            $query->where('education_id', $educationId);
         }
 
-        // Search 
-        if ($request->has('search')) {
-            $search = $request->get('search');
-
-            if ($jobId && $status) {
-                $query->where('name', 'like', $search . '%');
-            } else {
-
-                $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', $search . '%')
-                        ->orWhereHas('job', function ($query) use ($search) {
-                            $query->where('job_name', 'like', $search . '%');
-                        });
-                });
-            }
+        if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
+            $jurusanId = $request->get('jurusan');
+            $query->where('jurusan_id', $jurusanId);
         }
 
-
-
-        // Logika penyortiran
-        if ($jobId && $status) {
-            // Jika ada job_id dan status, filter berdasarkan job_id dan status
-            $query->where('job_id', $jobId)
-                  ->where('status', $status);
-        } else {
-            // Jika tidak ada job_id dan status, ambil semua data
-            // Anda bisa mengatur filter tambahan jika diperlukan di sini
+        if ($request->has('recommendation') && $request->get('recommendation') != '') {
+            $query->where('recommendation_status', $request->get('recommendation'));
         }
-        
-        // Sortir data berdasarkan parameter sort
-        if ($sort === 'newest') {
-            $query->orderBy('created_at', 'desc');
-        } elseif ($sort === 'oldest') {
-            $query->orderBy('created_at', 'asc');
-        } elseif ($sort === 'a_to_z') {
-            $query->orderBy('name', 'asc');
-        } elseif ($sort === 'z_to_a') {
-            $query->orderBy('name', 'desc');
-        }
-        
-        // Eksekusi query untuk mendapatkan hasil
-        $results = $query->get();
-
-        // Pagination
-        $perPage = 10;
-        $applicants = $query->paginate($perPage);
-
-        // Get the count of applicants based on status
-        $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request
-
-        if ($jobId) {
-            
-            // If job_id exists, filter by job_id
-            $statusCounts = [
-                'applied' => Applicant::where('status', 'applied')->where('job_id', $jobId)->count(),
-                'interview' => Applicant::where('status', 'interview')->where('job_id', $jobId)->count(),
-                'offer' => Applicant::where('status', 'offer')->where('job_id', $jobId)->count(),
-                'accepted' => Applicant::where('status', 'accepted')->where('job_id', $jobId)->count(),
-                'bankcv' => Applicant::where('status', 'bankcv')->where('job_id', $jobId)->count(),
-            ];
-        } else {
-            // If job_id does not exist, count all statuses
-            $statusCounts = [
-                'applied' => Applicant::where('status', 'applied')->count(),
-                'interview' => Applicant::where('status', 'interview')->count(),
-                'offer' => Applicant::where('status', 'offer')->count(),
-                'accepted' => Applicant::where('status', 'accepted')->count(),
-                'bankcv' => Applicant::where('status', 'bankcv')->count(),
-            ];
-        }
-        
-
-
-        // Load dropdown options
-        $jobs = Job::all();
-        $educations = Education::all();
-        $jurusans = Jurusan::all();
-
-        return view('pipelines.index', compact('applicants', 'jobs', 'jobTitle', 'educations', 'jurusans', 'request', 'statusCounts', 'stageName'));
     }
+
+    // Search 
+    if ($request->has('search')) {
+        $search = $request->get('search');
+
+        if ($jobId && $status) {
+            $query->where('name', 'like', $search . '%');
+        } else {
+
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', $search . '%')
+                    ->orWhereHas('job', function ($query) use ($search) {
+                        $query->where('job_name', 'like', $search . '%');
+                    });
+            });
+        }
+    }
+
+
+
+    // Logika penyortiran
+    if ($jobId && $status) {
+        // Jika ada job_id dan status, filter berdasarkan job_id dan status
+        $query->where('job_id', $jobId)
+              ->where('status', $status);
+    } else {
+        // Jika tidak ada job_id dan status, ambil semua data
+        // Anda bisa mengatur filter tambahan jika diperlukan di sini
+    }
+    
+    // Sortir data berdasarkan parameter sort
+    if ($sort === 'newest') {
+        $query->orderBy('created_at', 'desc');
+    } elseif ($sort === 'oldest') {
+        $query->orderBy('created_at', 'asc');
+    } elseif ($sort === 'a_to_z') {
+        $query->orderBy('name', 'asc');
+    } elseif ($sort === 'z_to_a') {
+        $query->orderBy('name', 'desc');
+    }
+    
+    // Eksekusi query untuk mendapatkan hasil
+    $results = $query->get();
+
+    // Pagination
+    $perPage = 10;
+    $applicants = $query->paginate($perPage);
+
+    // Get the count of applicants based on status
+    $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request
+
+    if ($jobId) {
+        
+        // If job_id exists, filter by job_id
+        $statusCounts = [
+            'applied' => Applicant::where('status', 'applied')->where('job_id', $jobId)->count(),
+            'interview' => Applicant::where('status', 'interview')->where('job_id', $jobId)->count(),
+            'offer' => Applicant::where('status', 'offer')->where('job_id', $jobId)->count(),
+            'accepted' => Applicant::where('status', 'accepted')->where('job_id', $jobId)->count(),
+            'bankcv' => Applicant::where('status', 'bankcv')->where('job_id', $jobId)->count(),
+        ];
+    } else {
+        // If job_id does not exist, count all statuses
+        $statusCounts = [
+            'applied' => Applicant::where('status', 'applied')->count(),
+            'interview' => Applicant::where('status', 'interview')->count(),
+            'offer' => Applicant::where('status', 'offer')->count(),
+            'accepted' => Applicant::where('status', 'accepted')->count(),
+            'bankcv' => Applicant::where('status', 'bankcv')->count(),
+        ];
+    }
+    
+
+
+    // Load dropdown options
+    $jobs = Job::all();
+    $educations = Education::all();
+    $jurusans = Jurusan::all();
+    // $applicants = Applicant::where('type', 'resindo')
+    // ->paginate(10);  // Tentukan jumlah data per halaman, misalnya 10
+
+    return view('pipelines-resindo.index', compact('applicants', 'jobs', 'jobTitle', 'educations', 'jurusans', 'request', 'statusCounts', 'stageName'));
+}
 
 
 
