@@ -126,8 +126,11 @@ class VacancyController extends Controller
         return view('vacancy_form', compact('jobs', 'educations'));
     }
 
+   
+
     public function kirim(Request $request)
     {
+       
         // Validate input
         $request->validate([
             'job_id' => 'required|exists:jobs,id',
@@ -161,6 +164,7 @@ class VacancyController extends Controller
             'email_ref.*' => 'nullable|string',
             'education' => 'required|exists:education,id',
             'jurusan' => 'required|string|max:255', // Atur sesuai kebutuhan
+            
         ]);
     
         // Handle file upload for photo_pass if provided
@@ -250,4 +254,6 @@ class VacancyController extends Controller
         $data = $request;
         return view('test', compact('data'));
     }
+
+
 }

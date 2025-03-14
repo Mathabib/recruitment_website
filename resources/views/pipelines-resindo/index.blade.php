@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'List Applicants')
+@section('title', 'List Applicants - Resindo')
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
 <h1 class="m-0 text-dark">
-    <b>List Applicants
+    <b>List Applicants - Resindo
         @if(isset($jobTitle))
             - {{ $jobTitle }}
             @if(isset($stageName) && $request->has('job_id') && $request->has('status'))
@@ -23,31 +23,6 @@
     <!-- Filter Status Stage -->
   
     <!-- Kode untuk menampilkan stage -->
-    <div class="status-boxes">
-    <a href="{{ route('pipelines.index', ['stage' => null, 'education' => null, 'job_id' => $request->get('job_id')]) }}" class="status-box status-all {{ $request->get('stage') == 'all' ? 'active' : '' }}">
-        <small>All</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'applied', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-applied {{ $request->get('status') == 'applied' ? 'active' : '' }}">
-        <p>{{ $statusCounts['applied'] }}</p>
-        <small>Applied</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'interview', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-interview {{ $request->get('status') == 'interview' ? 'active' : '' }}">
-        <p>{{ $statusCounts['interview'] }}</p>
-        <small>Interview</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'offer', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-offer {{ $request->get('status') == 'offer' ? 'active' : '' }}">
-        <p>{{ $statusCounts['offer'] }}</p>
-        <small>Offer</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'accepted', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-accepted {{ $request->get('status') == 'accepted' ? 'active' : '' }}">
-        <p>{{ $statusCounts['accepted'] }}</p>
-        <small>Accepted</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'bankcv', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-bankcv {{ $request->get('status') == 'bankcv' ? 'active' : '' }}">
-        <p>{{ $statusCounts['bankcv'] }}</p>
-        <small>Bank CV</small>
-    </a>
-</div>
 
 
 
@@ -86,17 +61,17 @@
        
 
                     <!-- Upload Form -->
-                    <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
+                    <!-- <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
                         @csrf
                         <div class="form-group mb-0">
                             <input type="file" name="file" class="form-control" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Upload</button>
-                    </form>
+                    </form> -->
 
 
                         <!-- Filter Button -->
-                        <button
+                        <!-- <button
                             type="button"
                             class="btn btn-primary me-0"
                             data-bs-toggle="modal"
@@ -104,10 +79,10 @@
                             style="min-width: 100px; margin-top: -15px;"
                             onclick="checkFilterConditions()">
                             <i class="fa fa-filter" aria-hidden="true"></i> Filter By
-                        </button>
+                        </button> -->
 
                         <!-- Sorting Dropdown -->
-                        <form method="GET" action="{{ route('pipelines.index') }}" class="d-flex align-items-center">
+                        <!-- <form method="GET" action="{{ route('pipelines.index') }}" class="d-flex align-items-center">
                             <button type="button" class="btn btn-primary me-0 btn-no-animation" style="min-width: 100px;">
                                 <i class="fa fa-filter" aria-hidden="true"></i> Sort By
                             </button>
@@ -116,19 +91,19 @@
                                 <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Oldest to Newest</option>
                                 <option value="a_to_z" {{ request('sort') === 'a_to_z' ? 'selected' : '' }}>A to Z</option>
                                 <option value="z_to_a" {{ request('sort') === 'z_to_a' ? 'selected' : '' }}>Z to A</option>
-                            </select>
+                            </select> -->
 
                             <!-- Menambahkan parameter lain ke URL -->
-                            <input type="hidden" name="job_id" value="{{ request('job_id') }}">
+                            <!-- <input type="hidden" name="job_id" value="{{ request('job_id') }}">
                             <input type="hidden" name="status" value="{{ request('status') }}">
-                        </form>
+                        </form> -->
 
 
 
-                    </div>
+                    <!-- </div> -->
 
                     <!-- Right side: Search Input -->
-                    <div class="search-bar">
+                    <!-- <div class="search-bar">
                         <form action="{{ route('pipelines.index') }}" method="GET" class="d-flex align-items-center gap-2">
                             <input type="text" name="search" class="form-control form-control-sm custom-search-input"
                                 style="margin-left: 300px;" placeholder="Search..."
@@ -141,14 +116,14 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
-                    </div>
+                    </div> -->
 
 
-                </div>
+                <!-- </div> -->
 
 
                 <!-- Modal Filter -->
-                <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+                <!-- <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -156,13 +131,13 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('pipelines.index') }}" method="GET">
+                                <form action="{{ route('pipelines.index') }}" method="GET"> -->
                                     <!-- Filter by Job ID (Hidden Field) -->
-                                    <input type="hidden" name="job_id" value="">
+                                    <!-- <input type="hidden" name="job_id" value=""> -->
 
 
                                     <!-- Filter by Education -->
-                                    <div class="mb-3">
+                                    <!-- <div class="mb-3">
                                         <label for="education-dropdown" class="form-label">Education</label>
                                         <select name="education" class="form-select" id="education-dropdown">
                                             <option value="">Select Education</option>
@@ -172,10 +147,10 @@
                                             </option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Filter by Major -->
-                                    <div class="mb-3">
+                                    <!-- <div class="mb-3">
                                         <label for="jurusan-dropdown" class="form-label">Major</label>
                                         <select name="jurusan" class="form-select" id="jurusan-dropdown">
                                             <option value="">Select Major</option>
@@ -185,24 +160,24 @@
                                             </option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Filter by Recommendation -->
-                                    <div class="mb-3">
+                                    <!-- <div class="mb-3">
                                         <label for="recommendation-dropdown" class="form-label">Recommendation</label>
                                         <select name="recommendation" class="form-select" id="recommendation-dropdown">
                                             <option value="">Select Recommendation</option>
                                             <option value="recommended" {{ request('recommendation') == 'recommended' ? 'selected' : '' }}>Recommended</option>
                                             <option value="not_recommended" {{ request('recommendation') == 'not_recommended' ? 'selected' : '' }}>Not Recommended</option>
                                         </select>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Submit Button -->
-                                    <div class="modal-footer">
+                                    <!-- <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Apply Filters</button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -214,18 +189,12 @@
                             <tr class="blue-gradient">
                                 <th>No.</th>
                                 <th>Name</th>
-                                <th>Education</th>
-                                <th>Job</th>
-
-
-                                <th>Move Stage</th>
-                                <th></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($applicants as $key => $applicant)
-                            @if ( $applicant->type !== 'resindo')
+                          
                             <tr>
                                 <td>{{ $key + $applicants->firstItem() }}</td>
                                 <td>
@@ -238,77 +207,60 @@
                                         <span>{{ $applicant->name }}</span>
                                     </div>
                                 </td>
-                                <td>{{ $applicant->education->name_education }} - {{ $applicant->jurusan->name_jurusan }}</td>
-                                <td>{{ $applicant->job->job_name }}</td>
-
-
-                                <td class="pipeline_stage">
-                                    <div>
-                                        <form action="{{ route('applicants.updateStatus', $applicant->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="dropdown">
-                                                <button class="btn btn-white dropdown-toggle btn-fixed-width" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    {{ ucfirst($applicant->status) ?: 'Pilih Status' }}
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <button type="submit" name="status" value="applied" class="dropdown-item">Applicant</button>
-                                                    <button type="submit" name="status" value="interview" class="dropdown-item">Interview</button>
-                                                    <button type="submit" name="status" value="offer" class="dropdown-item">Offer</button>
-                                                    <button type="submit" name="status" value="accepted" class="dropdown-item">Accepted</button>
-                                                    <!-- <button type="submit" name="status" value="rejected" class="dropdown-item">Rejected</button> -->
-                                                    <button type="submit" name="status" value="bankcv" class="dropdown-item">Bank CV</button>
-
-                                                </div>
-                                <td>
-                                    <div class="recommendation-remark" onclick="toggleDropdown(this)" style="position: relative;">
-                                        <span class="selected-option" style="color: white; background-color: <?php echo $applicant->recommendation_status === 'recommended' ? 'green' : 'orange'; ?>;">
-                                            <?php echo ucfirst(str_replace('_', ' ', $applicant->recommendation_status)); ?>
-                                        </span>
-                                        <div class="options" style="display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000;">
-                                            <div class="option" data-value="recommended" onclick="updateRecommendation(this, <?php echo $applicant->id; ?>)" style="background-color: white; color: black;">
-                                                Recommended
-                                            </div>
-                                            <div class="option" data-value="not_recommended" onclick="updateRecommendation(this, <?php echo $applicant->id; ?>)" style="background-color: white; color: black;">
-                                                Not Recommended
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-
-
-
                                 </form>
                 </div>
                 </td>
+                
+    
+
+
                 <td>
-                    <div class="action-icons">
-                        <!-- Edit button -->
-                        <a href="{{ route('pipelines.edit', $applicant->id) }}" class="action-icon" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
+    <div class="dropdown">
+        <!-- Dropdown button -->
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="actionDropdown{{ $applicant->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-cogs"></i> Actions
+        </button>
+        
+        <!-- Dropdown menu -->
+        <div class="dropdown-menu" aria-labelledby="actionDropdown{{ $applicant->id }}">
+            <!-- Edit button -->
+            <a href="{{ route('pipelines.edit', $applicant->id) }}" class="dropdown-item" title="Edit">
+                <i class="fa fa-edit"></i> Edit
+            </a>
 
-                        <!-- Delete button -->
-                        <a href="#" class="action-icon"
-                            onclick="event.preventDefault(); 
-            if (confirm('Are you sure you want to delete this item?')) {
-                document.getElementById('delete-form-{{ $applicant->id }}').submit();
-            }" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>
+            <!-- Generate CV button -->
+            <a href="{{ route('applicants.generateCV', $applicant->id) }}" class="dropdown-item" title="Download CV">
+                <i class="fa fa-file-pdf"></i> Download CV
+            </a>
 
-                        <!-- Hidden delete form -->
-                        <form id="delete-form-{{ $applicant->id }}" action="{{ route('pipelines.destroy', $applicant) }}" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </div>
-                </td>
+            <!-- generate summary -->
+
+            <a href="{{ route('applicants.generateSummary', $applicant->id) }}" class="dropdown-item" title="Download Summary">
+                <i class="fa fa-file-pdf"></i> Download Summary
+            </a>
+
+            <!-- Delete button -->
+            <a href="#" class="dropdown-item" 
+                onclick="event.preventDefault(); 
+                if (confirm('Are you sure you want to delete this item?')) {
+                    document.getElementById('delete-form-{{ $applicant->id }}').submit();
+                }" title="Delete">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+
+            <!-- Hidden delete form -->
+            <form id="delete-form-{{ $applicant->id }}" action="{{ route('pipelines.destroy', $applicant) }}" method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
+        </div>
+    </div>
+</td>
+
 
 
                 </tr>
-           @endif
+              
                 @endforeach
                 </tbody>
                 </table>
