@@ -86,6 +86,5 @@ Route::get('educationMajorCreate/{id}', [JurusanController::class, 'educationMaj
 Route::get('/test/{id}', [JurusanController::class, 'showEducationMajor'])->name('test');
 
 
-
-
-
+Route::get('/pipelines/{id}/pdf2', [ApplicantController::class, 'generatePdf2'])->name('applicants.generatePdf2')->middleware('auth');
+Route::get('/pipelines/{id}/summary', [ApplicantController::class, 'generateSummary'])->name('applicants.generateSummary')->middleware('auth');
