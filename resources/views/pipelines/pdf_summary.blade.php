@@ -152,7 +152,7 @@
             </table>
         </div>
 
-        {{-- <div class="information-detail">
+        <div class="information-detail">
 
             <table>
                 <tr>
@@ -216,12 +216,12 @@
 
                 </tr>                
             </table>
-        </div> --}}
-
-        <div class="kontener">
-            <div class="kotak"></div>
-            <div class="kotak"></div>
         </div>
+
+        {{-- <div class="kontener">
+            <div class="kotak"></div>
+            <div class="kotak"></div>
+        </div> --}}
     </div>
 </body>
 </html>
