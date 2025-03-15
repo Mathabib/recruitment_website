@@ -33,6 +33,7 @@ class Applicant extends Model
         'skills',
         'salary_expectation',
         'status',
+        'type'
     ];
 
     // Define the relationship with the Job model

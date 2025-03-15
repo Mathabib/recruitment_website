@@ -103,6 +103,8 @@
                                     <option value="">Select Job Type</option>
                                     <option value="Permanent" {{ old('employment_type') == 'Permanent' ? 'selected' : '' }}>Permanent</option>
                                     <option value="Contract" {{ old('employment_type') == 'Contract' ? 'selected' : '' }}>Contract</option>
+                                    <option value="Freelance" {{ old('employment_type') == 'Freelance' ? 'selected' : '' }}>Freelance</option>
+
                                 </select>
                                 @error('employment_type')
                                 <span class="text-danger">{{ $message }}</span>

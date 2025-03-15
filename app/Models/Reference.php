@@ -12,6 +12,7 @@ class Reference extends Model
     protected $table = 'reference'; // Optional: specify if your table is not following Laravel's naming conventions
 
     protected $fillable = [
+     'applicant_id', // Ensure this is included
         'name_ref',
         'phone',
         'email_ref',

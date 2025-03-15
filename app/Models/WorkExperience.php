@@ -17,6 +17,7 @@ class WorkExperience extends Model
         'desc_kerja',
         'mulai',
         'selesai',
+        'applicant_id',
         
     ];
 

@@ -7,6 +7,11 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\VacancyController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ResindoController;
+
+
 use App\Models\Applicant;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +36,21 @@ Route::resource('departements', DepartementController::class)->middleware('auth'
 Route::resource('pipelines', ApplicantController::class)->middleware('auth');
 Route::resource('education', EducationController::class)->middleware('auth');
 Route::resource('jurusan', JurusanController::class)->middleware('auth');
+
+// resindo
+
+Route::resource('pipelines-resindo', ResindoController  ::class)->middleware('auth');
+Route::get('/pipelines-resindo/{id}/pdf', [ResindoController::class, 'generateCV'])->name('applicants.generateCV')->middleware('auth');
+Route::get('/pipelines-resindo/{id}/summary', [ResindoController::class, 'generateSummary'])->name('applicants.generateSummary')->middleware('auth');
+
+Route::get('pipelines-resindo', [ResindoController::class, 'indexresindo'])
+    ->name('pipelines-resindo.index')  // Nama route untuk referensi di view atau link
+    ->middleware('auth');
+
+
+Route::get('/export-applicant', [ExportController::class, 'export'])->name('export.applicant');
+Route::post('/import-excel', [ImportController::class, 'import'])->name('import.excel');
+
 Route::get('pipelines', [ApplicantController::class, 'index'])->name('pipelines.index')->middleware('auth');
 Route::put('pipelines/{id}/updateStatus', [ApplicantController::class, 'updateStatus'])->name('applicants.updateStatus')->middleware('auth');
 Route::get('/pipelines/{id}/pdf', [ApplicantController::class, 'generatePdf'])->name('applicants.generatePdf')->middleware('auth');
@@ -48,7 +68,11 @@ Route::get('/list1', [VacancyController::class, 'list2'])->name('list');
 Route::get('/job/{job}', [VacancyController::class, 'showJobDetails'])->name('vacancy.details');
 Route::get('/list1/search', [VacancyController::class, 'search'])->name('vacancy.search');
 Route::get('/form/{id}', [VacancyController::class, 'form'])->name('vacancy_form');
+Route::get('/form-resindo', [VacancyController::class, 'formresindo'])->name('form-resindo');
+
 Route::post('/kirim', [VacancyController::class, 'kirim'])->name('kirim');
+Route::post('/kirimresindo', [VacancyController::class, 'kirimresindo'])->name('kirimresindo');
+
 Route::get('/{id}', [App\Http\Controllers\VacancyController::class, 'index'])->name('vacancy');
 Route::get('/getnotes/{id}', [ApplicantController::class, 'getNotes'])->name('getnotes');
 Route::post('/save-notes', [ApplicantController::class, 'saveNotes'])->name('save.notes');
@@ -61,7 +85,6 @@ Route::get('educationMajorCreate/{id}', [JurusanController::class, 'educationMaj
 //testing 
 Route::get('/test/{id}', [JurusanController::class, 'showEducationMajor'])->name('test');
 
-//==================KHUSUS RESINDO=============================
 
 Route::get('/pipelines/{id}/pdf2', [ApplicantController::class, 'generatePdf2'])->name('applicants.generatePdf2')->middleware('auth');
 Route::get('/pipelines/{id}/summary', [ApplicantController::class, 'generateSummary'])->name('applicants.generateSummary')->middleware('auth');
