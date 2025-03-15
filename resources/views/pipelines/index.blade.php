@@ -331,6 +331,8 @@
                 <button id="edit-notes-button" onclick="editNotes()" class="btn btn-secondary" style="display: none;">Edit</button>
                 <button onclick="deleteNotes()" class="btn btn-danger">Delete Notes</button>
                 <a id="download-cv" href="#" class="btn btn-success">Download CV</a>
+                <a id="download-cv2" href="#" class="btn btn-success">Download CV RESINDO</a>
+                <a id="download-summary" href="#" class="btn btn-success">Download SUMMARY RESINDO</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
             </div>
@@ -374,6 +376,8 @@
         $('#applicant-job').text(applicant.job ? applicant.job.job_name : 'N/A');
         $('#applicant-salary').text(applicant.salary_expectation);
         $('#download-cv').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf");
+        $('#download-cv2').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf2");
+        $('#download-summary').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/summary");
 
         currentApplicantId = applicant.id;
 
