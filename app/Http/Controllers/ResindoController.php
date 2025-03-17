@@ -36,7 +36,7 @@ class ResindoController extends Controller
         }
 
         $pdf = PDF::loadView('pipelines-resindo.summary', ['applicant' => $applicant])
-            ->setPaper('a4', 'portrait');
+            ->setPaper('a4', 'landscape');
 
         return $pdf->stream('applicant-summary-' . $applicant->name . '.pdf');
     }

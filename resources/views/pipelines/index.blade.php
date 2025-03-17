@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
 <h1 class="m-0 text-dark">
-    <b>List Applicants
+    <b>List Applicants 
         @if(isset($jobTitle))
             - {{ $jobTitle }}
             @if(isset($stageName) && $request->has('job_id') && $request->has('status'))

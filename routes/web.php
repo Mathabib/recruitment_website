@@ -42,9 +42,8 @@ Route::resource('jurusan', JurusanController::class)->middleware('auth');
 Route::resource('pipelines-resindo', ResindoController  ::class)->middleware('auth');
 Route::get('/pipelines-resindo/{id}/pdf', [ResindoController::class, 'generateCV'])->name('applicants.generateCV')->middleware('auth');
 Route::get('/pipelines-resindo/{id}/summary', [ResindoController::class, 'generateSummary'])->name('applicants.generateSummary')->middleware('auth');
-
 Route::get('pipelines-resindo', [ResindoController::class, 'indexresindo'])
-    ->name('pipelines-resindo.index')  // Nama route untuk referensi di view atau link
+    ->name('pipelines-resindo.index')  
     ->middleware('auth');
 
 
@@ -68,9 +67,9 @@ Route::get('/list1', [VacancyController::class, 'list2'])->name('list');
 Route::get('/job/{job}', [VacancyController::class, 'showJobDetails'])->name('vacancy.details');
 Route::get('/list1/search', [VacancyController::class, 'search'])->name('vacancy.search');
 Route::get('/form/{id}', [VacancyController::class, 'form'])->name('vacancy_form');
-Route::get('/form-resindo', [VacancyController::class, 'formresindo'])->name('form-resindo');
+Route::get('/form-resindo', [ResindoController::class, 'formresindo'])->name('form-resindo');
 
-Route::post('/kirim', [VacancyController::class, 'kirim'])->name('kirim');
+Route::post('/kirim', [ResindoController::class, 'kirim'])->name('kirim');
 Route::post('/kirimresindo', [VacancyController::class, 'kirimresindo'])->name('kirimresindo');
 
 Route::get('/{id}', [App\Http\Controllers\VacancyController::class, 'index'])->name('vacancy');
@@ -86,5 +85,3 @@ Route::get('educationMajorCreate/{id}', [JurusanController::class, 'educationMaj
 Route::get('/test/{id}', [JurusanController::class, 'showEducationMajor'])->name('test');
 
 
-Route::get('/pipelines/{id}/pdf2', [ApplicantController::class, 'generatePdf2'])->name('applicants.generatePdf2')->middleware('auth');
-Route::get('/pipelines/{id}/summary', [ApplicantController::class, 'generateSummary'])->name('applicants.generateSummary')->middleware('auth');
