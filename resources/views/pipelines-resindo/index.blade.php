@@ -50,9 +50,9 @@
                 <!-- Filter Button -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <!-- Left side: Filter By and Sort By -->
-                    <div class="d-flex align-items-center gap-3">
+                    <dirv class="d-flex align-items-center gap-3">
 
-                    <a href="{{ route('pipelines.create') }}" class="btn btn-primary btn-extended" style="margin-top: -15px;">
+                    <a href="{{ route('pipelines-resindo.create') }}" class="btn btn-primary btn-extended" style="margin-top: -15px;">
                         <i class="fa fa-plus"></i>New Data
                     </a>
 
@@ -224,7 +224,7 @@
         <!-- Dropdown menu -->
         <div class="dropdown-menu" aria-labelledby="actionDropdown{{ $applicant->id }}">
             <!-- Edit button -->
-            <a href="{{ route('pipelines.edit', $applicant->id) }}" class="dropdown-item" title="Edit">
+            <a href="{{ route('pipelines-resindo.edit', $applicant->id) }}" class="dropdown-item" title="Edit">
                 <i class="fa fa-edit"></i> Edit
             </a>
 
@@ -249,7 +249,7 @@
             </a>
 
             <!-- Hidden delete form -->
-            <form id="delete-form-{{ $applicant->id }}" action="{{ route('pipelines.destroy', $applicant) }}" method="POST" style="display: none;">
+            <form id="delete-form-{{ $applicant->id }}" action="{{ route('pipelines-resindo.destroy', $applicant) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>

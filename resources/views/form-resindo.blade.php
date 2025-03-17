@@ -179,12 +179,10 @@
                             @enderror
                         </div>
 
-                        <div class="input">
-                            <label for="languages">Languages Skills<span class="important_input"> *</span></label>
-                            <input type="text" class="form-control @error('languages') is-invalid @enderror" id="languages" name="languages" value="{{ old('languages') }}" placeholder="Ex. English, Russian">
-                            @error('languages')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                       
+                        <div class="input row">
+
+                       
                         </div>
 
 
@@ -252,6 +250,37 @@
 
 
                     <div class="bawah">
+                    <h1 style="margin-top: 30px">Languages Skills</h1>
+                        <div class="language_kontainer">
+                            <div class="language" v-for="(language, index) in language">
+                                <div class="input language_name">
+                                    <label class="form-label" for="language[]">Language</label>
+                                    <input class="form-control" type="text" name="language[]" id="language[]">
+                                    @error('language.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="input language_verbal">
+                                    <label for="verbal[]" class="form-label">Verbal</label>
+                                    <input type="verbal" name="verbal[]" id="verbal[]" class="form-control">
+                                    @error('verbal.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="input language_writen">
+                                    <label for="writen[]" class="form-label">Written</label>
+                                    <input type="text" class="form-control" name="writen[]">
+                                    @error('writen.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <button type="button" class="btn btn-danger" @click="removeInput7(index)">Delete</button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput7">Add</button>
+                    </div>
+                    
                         <h1>Work Experience <span class="important_input"> *</span></h1>
                         <div id="work_experience" class="work_experience" v-for='(experience, index) in experiences' :key='index'>
 
@@ -417,7 +446,11 @@
                     }],
                     certificates: [{
                         value: ''
-                    }]
+                    }],
+                    language: [{
+                        value: ''
+                    }],
+
                 }
             },
             methods: {
@@ -470,6 +503,14 @@
                 },
                 removeInput6(index) {
                     this.certificates.splice(index, 1);
+                },
+                addInput7() {
+                    this.language.push({
+                        value: ''
+                    });
+                },
+                removeInput7(index) {
+                    this.language.splice(index, 1);
                 }
             }
         }).mount('#app')

@@ -354,7 +354,7 @@ class ApplicantController extends Controller
     // $applicants = Applicant::where('type', 'resindo')
     // ->paginate(10);  // Tentukan jumlah data per halaman, misalnya 10
 
-    return view('pipelines-resindo.index', compact('applicants', 'jobs', 'jobTitle', 'educations', 'jurusans', 'request', 'statusCounts', 'stageName'));
+    return view('pipelines.index', compact('applicants', 'jobs', 'jobTitle', 'educations', 'jurusans', 'request', 'statusCounts', 'stageName'));
 }
 
 
@@ -766,34 +766,4 @@ class ApplicantController extends Controller
     }
 
 
-    //===================================================================
-    //      KHUSUS RESINDO 
-    //===================================================================
-
-    public function generatePdf2($id)
-    {
-        $applicant = Applicant::find($id);
-
-        if (!$applicant) {
-            return redirect()->route('pipelines.index')->with('error', 'Applicant not found.');
-        }
-
-        $pdf = PDF::loadView('pipelines.pdf_resindo', ['applicant' => $applicant])
-            ->setPaper('a4', 'portrait');
-
-        return $pdf->stream('applicant-cv-' . $applicant->name . '.pdf');
-    }
-    public function generateSummary($id)
-    {
-        $applicant = Applicant::find($id);
-
-        if (!$applicant) {
-            return redirect()->route('pipelines.index')->with('error', 'Applicant not found.');
-        }
-
-        $pdf = PDF::loadView('pipelines.pdf_summary', ['applicant' => $applicant])
-            ->setPaper('a4', 'landscape');
-
-        return $pdf->stream('applicant-cv-' . $applicant->name . '.pdf');
-    }
 }
