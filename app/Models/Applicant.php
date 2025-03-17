@@ -69,6 +69,11 @@ class Applicant extends Model
         return $this->hasMany(Reference::class);
     }
 
+    public function languages()
+    {
+        return $this->hasMany(Language::class);
+    }
+
     public function notes()
     {
         return $this->hasOne(Notes::class);

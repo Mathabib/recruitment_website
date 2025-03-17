@@ -69,8 +69,8 @@ Route::get('/list1/search', [VacancyController::class, 'search'])->name('vacancy
 Route::get('/form/{id}', [VacancyController::class, 'form'])->name('vacancy_form');
 Route::get('/form-resindo', [ResindoController::class, 'formresindo'])->name('form-resindo');
 
-Route::post('/kirim', [ResindoController::class, 'kirim'])->name('kirim');
-Route::post('/kirimresindo', [VacancyController::class, 'kirimresindo'])->name('kirimresindo');
+Route::post('/kirim', [VacancyController::class, 'kirim'])->name('kirim');
+Route::post('/kirimresindo', [ResindoController::class, 'kirimresindo'])->name('kirimresindo');
 
 Route::get('/{id}', [App\Http\Controllers\VacancyController::class, 'index'])->name('vacancy');
 Route::get('/getnotes/{id}', [ApplicantController::class, 'getNotes'])->name('getnotes');

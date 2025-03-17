@@ -42,17 +42,28 @@ hr{
     flex-wrap: wrap;
 }
 
+.language_kontainer{
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
 .bagian_atas{
     gap: 10px;
 }
 .references{
     width: 300px;
 }
+
+.language{
+    width: 300px;
+}
 /* .skills{
     width: 200px;
 } */
 
-.work_experience, .references, .Project{
+.work_experience, .references, .Project, .language{
     border: 1px solid black;
     border-radius: 15px;
     padding: 20px;
