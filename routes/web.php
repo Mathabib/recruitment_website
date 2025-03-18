@@ -41,6 +41,10 @@ Route::resource('jurusan', JurusanController::class)->middleware('auth');
 
 Route::resource('pipelines-resindo', ResindoController  ::class)->middleware('auth');
 Route::get('/pipelines-resindo/{id}/pdf', [ResindoController::class, 'generateCV'])->name('applicants.generateCV')->middleware('auth');
+Route::get('/pipelines/{id}/pdf2', [ResindoController::class, 'generateCV'])->name('applicants.generateCV')->middleware('auth');
+Route::get('/pipelines/{id}/summary', [ResindoController::class, 'generateSummary'])->name('applicants.generateSummary')->middleware('auth');
+
+
 Route::get('/pipelines-resindo/{id}/summary', [ResindoController::class, 'generateSummary'])->name('applicants.generateSummary')->middleware('auth');
 Route::get('pipelines-resindo', [ResindoController::class, 'indexresindo'])
     ->name('pipelines-resindo.index')  
