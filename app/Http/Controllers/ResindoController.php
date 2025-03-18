@@ -45,16 +45,15 @@ class ResindoController extends Controller
         return $pdf->stream('applicant-summary-' . $applicant->name . '.pdf');
     }
 
+
+
     public function formresindo()
     {
-        // $jobs = Job::findOrFail($id);
+        $jobs = Job::all();
         $educations = Education::all();
-    
-        // if(!$jobs || $jobs->status_published == 0){
-        //     abort(404);
-        // }
-    
-        return view('form-resindo', compact( 'educations'));
+
+      
+        return view('form-resindo', compact('jobs', 'educations'));
     }
     
     public function kirimresindo(Request $request)
@@ -65,7 +64,7 @@ class ResindoController extends Controller
             'name' => 'required|string|max:255',
             'address' => 'required|string',
             'number' => 'required|string|max:15',
-            'email' => 'required|email',
+            'email' => 'nullable|email',
             'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
             'experience_period' => 'nullable|string',
