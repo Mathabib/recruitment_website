@@ -154,11 +154,14 @@
                 </th>
             </tr>
 
-            <tr>
-                <td style="width: 33%"><p style="text-align: center">{{ $applicant->languages}}</p></td>
-                <td style="width: 33%"><p style="text-align: center">advance</p></td>
-                <td style="width: 33%"><p style="text-align: center">advance</p></td>
-            </tr>
+            @foreach ($applicant->Languages as $item)
+                <tr>
+                    <td style="width: 33%"><p style="text-align: center">{{ $item->language }}</p></td>
+                    <td style="width: 33%"><p style="text-align: center">{{ $item->verbal }}</p></td>
+                    <td style="width: 33%"><p style="text-align: center">{{ $item->writen }}</p></td>
+                </tr>    
+            @endforeach
+            
 
         </table>
     </div>
@@ -231,6 +234,21 @@
                     </tr>
                 </table>
             @endforeach
+            @endif
+        </div>
+        
+    </div>
+
+    <div class="Achievement">
+        <h3 class="title">Achievement</h3>
+        <hr>
+        <div class="achievement_section">
+            @if($applicant->Projects->isNotEmpty())
+            <ul>
+                @foreach(explode('|', $applicant->achievement) as $achievement)
+                    <li>{{ $achievement }}</li>
+                @endforeach
+            </ul>
             @endif
         </div>
         

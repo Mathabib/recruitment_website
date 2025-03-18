@@ -122,7 +122,7 @@
             <table style="width: 100%">
                 <tr>
                     <td class="header-name">
-                        <h1>Simon Birch</h1>
+                        <h1>{{ $applicant->name }} test</h1>
                     </td>
                 </tr>
             </table>
@@ -143,11 +143,11 @@
                 </tr>
                 <tr>
                     <td><p class="font-paragraph">Citizenship</p></td>
-                    <td><p class="font-paragraph">Australian / KITAP Indonesia</p></td>
+                    <td><p class="font-paragraph">{{ $applicant->Citizenship }}</p></td>
                 </tr>
                 <tr>
                     <td><p class="font-paragraph">Education</p></td>
-                    <td><p class="font-paragraph">Engineering, Master in Business Administration</p></td>
+                    <td><p class="font-paragraph">{{ $applicant->jurusan->name_jurusan }}</p></td>
                 </tr>
             </table>
         </div>
@@ -160,8 +160,7 @@
                         <div class="education">
                             <strong><p class="sub-tittle">Educations</p></strong>
                             <ul class="unordered-list">
-                                <li><p class="font-paragraph">Bachelor of Engineering (Honours) (RMIT 1988) - Australia</p></li>
-                                <li><p class="font-paragraph">Master of Business Administration Studies (Monash University 1997) - Australia</p></li>
+                                <li><p class="font-paragraph">{{ $applicant->jurusan->name_jurusan }}</p></li>                                
                             </ul>                            
                         </div>
 
@@ -206,10 +205,11 @@
                         <div class="language">
                             <strong><p class="sub-tittle">Language</p></strong>
                             <ul class="unordered-list">
-                                <li><p class="font-paragraph">English</p></li>                                
-                                <li><p class="font-paragraph">Indonesian</p></li>                                
-                                <li><p class="font-paragraph">Dutch</p></li>                                
-                                <li><p class="font-paragraph">Germany</p></li>                                                                
+                                
+                                @foreach ($applicant->Languages as $item)
+                                    <li><p class="font-paragraph">{{ $item->language }}</p></li>    
+                                @endforeach
+                                                                                                
                             </ul>
                         </div>
                     </td>
