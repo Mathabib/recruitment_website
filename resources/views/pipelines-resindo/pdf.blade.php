@@ -102,7 +102,18 @@
                 </td>
                 <td class="td1">
                     <div>                                            
-                        <a style="text-align: center; margin: 0px" href="www.resindori.com"><p>www.resindori.com</p></a>
+                        {{-- <a style="text-align: center; margin: 0px" href="www.resindori.com"><p>www.resindori.com</p></a> --}}
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 33%">
+                                    <table>
+                                        t
+                                    </table>
+                                </td>
+                                <td style="width: 33%"><img src="{{ public_path('assets/icon_youtube.png') }}" alt=""></td>
+                                <td style="width: 33%"><img src="{{ public_path('assets/icon_website.png') }}" alt=""></td>                                
+                            </tr>
+                        </table>
                     </div>
                 </td>
                 <td class="td2">
@@ -120,7 +131,7 @@
                 <div>
                     <h2 class="title">{{ $applicant->name }}</h2>
                     <hr>
-                    <h4 class="title">Senior Document Controller</h4>
+                    <h4 class="title">{{ $applicant->job->job_name }}</h4>
                 </div>
             </td>
             <td class="td2">
@@ -144,11 +155,13 @@
         <h3 class="title">Education</h3>
         <hr>
         <ul>
+            @foreach ($applicant->jurusan2 as $item)
             <li>
                 <p class="font_paragraph">
-                    {{ $applicant->education->name_education }}
+                    {{ $item->jurusan2 }}
                 </p>
             </li>
+            @endforeach
         </ul>
     </div>
 
