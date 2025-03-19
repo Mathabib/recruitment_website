@@ -6,10 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        *{
+            /* border: 1px solid red; */
+        }
         body {
             font-family: 'Arial', sans-serif;
             margin: 0px;
             padding: 0;
+            padding-top: 100px;
             background-color: white;
             color: #333;
             padding-bottom: 50px;
@@ -40,14 +44,13 @@
             height: 30px;
         }
         .content-summary{
-            padding-top: 100px;
             padding-left: 10px;
         }
         
         .foto{
             position: fixed;
-            top: 0;            
-            right: 0px;
+            top: 120px;            
+            right: 30px;
             z-index: 999;
         }
         .biodata-table{
@@ -97,7 +100,7 @@
         } */
 
         @page {
-            padding: 0mm;
+            padding-top:0mm;
             margin: 0mm;
         }
 
@@ -106,12 +109,14 @@
 
             
         }
+        footer{
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
 
-        .kotak{
-            display: table-cell;
-            width: 300px;
-            height: 300px;
-            background: black;
+        }                
+
+        *{
             border: 1px solid red;
         }
     </style>
@@ -122,13 +127,43 @@
             <table style="width: 100%">
                 <tr>
                     <td class="header-name">
-                        <h1>{{ $applicant->name }} test</h1>
+                        <h1>{{ $applicant->name }}</h1>
                     </td>
                 </tr>
             </table>
         </div>
-        <di class="foto"><img style="border-radius: 0 0 0 50%" height="250px" src="{{ public_path('storage/' . $applicant->photo_pass) }}" alt=""></div>
+        <div class="foto"><img style="border-radius: 5%" height="250px" src="{{ public_path('storage/' . $applicant->photo_pass) }}" alt=""></div>
     </header>
+
+    <footer>
+        <table style="width: 100%">
+            <tr>
+                <td style="width: 15%; text-align: center">
+                    <img height="50px;" src="{{ public_path('assets/barcode_resindo.jpg') }}" alt="">
+                </td>
+                <td style="width: 70%; text-align: center">
+                    <div style="width: 100%">
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 33%">
+                                    <img height="50px;" src="{{ public_path('assets/icon_youtube.png') }}" alt="">                        
+                                </td>
+                                <td style="width: 33%">
+                                    <img height="50px;" src="{{ public_path('assets/icon_linkdin.png') }}" alt="">                        
+                                </td>
+                                <td style="width: 33%">
+                                    <img height="50px;" src="{{ public_path('assets/icon_website.png') }}" alt="">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+                <td style="width: 15%; text-align: center">
+                    <img height="50px;" src="{{ public_path('assets/logo-resindo.jpg') }}" alt="">
+                </td>
+            </tr>
+        </table>
+    </footer>
 
     <div class="content-summary">
         <div class="biodata-table">
@@ -154,64 +189,59 @@
 
         <div class="information-detail">
 
+            <div class="education">
+                <strong><p class="sub-tittle">Educations</p></strong>
+                <ul class="unordered-list">
+                    <li><p class="font-paragraph">{{ $applicant->jurusan->name_jurusan }}</p></li>                                
+                </ul>                            
+            </div>
+
+            <div class="experience-record">
+                <strong><p class="sub-tittle">Experience Record (Indonesian eng based since 2005)</p></strong>
+                <ul class="unordered-list">
+                    @foreach($applicant->workExperiences as $experience)
+                        <li><p class="font-paragraph">{{ $experience->name_company }}</p></li>
+                    @endforeach
+                </ul>                            
+            </div>
+
+            <div class="selected-projects">
+                <strong><p class="sub-tittle">Selected Projects</p></strong>
+                <ul class="unordered-list">
+                    @foreach($applicant->projects as $project)
+                        <li><p class="font-paragraph">{{ $project->project_name }}</p></li>
+                    @endforeach
+                </ul>                            
+            </div>
+
+            <div class="skills">
+                <strong><p class="sub-tittle">Skills</p></strong>
+                <ul class="unordered-list">
+                    @foreach(explode('|', $applicant->skills) as $skill)
+                        <li><p class="font-paragraph">{{ trim($skill) }}</p></li>                                
+                    @endforeach
+                </ul>
+            </div>
+            
+            <div class="language">
+                <strong><p class="sub-tittle">Language</p></strong>
+                <ul class="unordered-list">
+                    
+                    @foreach ($applicant->Languages as $item)
+                        <li><p class="font-paragraph">{{ $item->language }}</p></li>    
+                    @endforeach
+                                                                                    
+                </ul>
+            </div>
+
             <table>
                 <tr>
                     <td class="left">
-                        <div class="education">
-                            <strong><p class="sub-tittle">Educations</p></strong>
-                            <ul class="unordered-list">
-                                <li><p class="font-paragraph">{{ $applicant->jurusan->name_jurusan }}</p></li>                                
-                            </ul>                            
-                        </div>
-
-                        <div class="experience-record">
-                            <strong><p class="sub-tittle">Experience Record (Indonesian eng based since 2005)</p></strong>
-                            <ul class="unordered-list">
-                                @foreach($applicant->workExperiences as $experience)
-                                    <li><p class="font-paragraph">{{ $experience->name_company }}</p></li>
-                                @endforeach
-                            </ul>                            
-                        </div>
-
-                        <div class="selected-projects">
-                            <strong><p class="sub-tittle">Selected Projects</p></strong>
-                            <ul class="unordered-list">
-                                @foreach($applicant->projects as $project)
-                                    <li><p class="font-paragraph">{{ $project->project_name }}</p></li>
-                                @endforeach
-                            </ul>                            
-                        </div>
-
+                        
                     </td>
 
                     <td class="right">
-                        <div class="skills">
-                            <strong><p class="sub-tittle">Skills</p></strong>
-                            <ul class="unordered-list">
-                                @foreach(explode('|', $applicant->skills) as $skill)
-                                    <li><p class="font-paragraph">{{ trim($skill) }}</p></li>                                
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div class="country-works">
-                            <strong><p class="sub-tittle">Country of Works Experience</p></strong>
-                            <ul class="unordered-list">
-                                <li><p class="font-paragraph">Australia</p></li>                                
-                                <li><p class="font-paragraph">German</p></li>                                
-                                <li><p class="font-paragraph">Netherland</p></li>                                
-                                <li><p class="font-paragraph">Indonesia</p></li>                                                                
-                            </ul>
-                        </div>
-                        <div class="language">
-                            <strong><p class="sub-tittle">Language</p></strong>
-                            <ul class="unordered-list">
-                                
-                                @foreach ($applicant->Languages as $item)
-                                    <li><p class="font-paragraph">{{ $item->language }}</p></li>    
-                                @endforeach
-                                                                                                
-                            </ul>
-                        </div>
+                        
                     </td>
 
                 </tr>                

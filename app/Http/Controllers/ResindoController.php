@@ -11,6 +11,7 @@ use App\Models\Project;
 use App\Models\Language;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Jurusan;
+use App\Models\Jurusan2;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 
@@ -58,6 +59,7 @@ class ResindoController extends Controller
     
     public function kirimresindo(Request $request)
     {
+        // return $request->jurusan[0];
         // Validasi input
         $request->validate([
             'job_id' => 'nullable|exists:jobs,id',
@@ -89,8 +91,8 @@ class ResindoController extends Controller
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
-            'education' => 'required|exists:education,id',
-            'jurusan' => 'required|string|max:255',
+            'education*' => 'required|exists:education,id',
+            'jurusan*' => 'required|string|max:255',
         ]);
     
         // Menangani upload file photo_pass jika ada
@@ -99,16 +101,20 @@ class ResindoController extends Controller
             $path = $request->file('photo_pass')->store('photos', 'public');
         }
     
-        $educationId = $request->education;
+        $educationId = $request->education[0];
         
         // Cek dan simpan jurusan
-        $jurusan = Jurusan::where('education_id', $educationId)->where('name_jurusan', $request->jurusan)->first();
+        $jurusan = Jurusan::where('education_id', $educationId)->where('name_jurusan', $request->jurusan[0])->first();
         if(!$jurusan){
             $jurusan = Jurusan::Create([
-                'name_jurusan' => strtolower($request->jurusan),
+                'name_jurusan' => strtolower($request->jurusan[0]),
                 'education_id' => $educationId
             ]);
         }
+
+        
+
+        
     
         // Simpan data applicant
         $applicant = Applicant::create([
@@ -128,10 +134,19 @@ class ResindoController extends Controller
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
             'salary_expectation' => $request->salary_expectation,
-            'education_id' => $request->education,
+            'education_id' => $request->education[0],
             'jurusan_id' => $jurusan->id,
             'type' => 'resindo',
         ]);
+
+        
+        foreach($request->jurusan as $index => $jurusan) {
+            Jurusan2::create([
+                'jurusan2' => strtolower($request->jurusan[$index]),
+                'education_id' => $request->education[$index],
+                'applicant_id' => $applicant->id,
+            ]);
+        }
     
         // Menangani bahasa (language)
         if ($request->has('language')) {
