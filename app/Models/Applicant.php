@@ -73,7 +73,10 @@ class Applicant extends Model
     {
         return $this->hasMany(Language::class);
     }
-
+    public function jurusan2()
+    {
+        return $this->hasMany(jurusan2::class);
+    }
     public function notes()
     {
         return $this->hasOne(Notes::class);

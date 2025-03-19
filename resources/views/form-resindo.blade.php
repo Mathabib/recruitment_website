@@ -73,30 +73,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="input row">
-                            <div class="pendidikan col-md-3">
-                                <label for="education" class="form-label">Last Education<span class="important_input"> *</span></label>
-                                <select id="education" name="education" class="form-control" onchange="updateEducationId(this)">
-                                    <option value="">Choose Education</option>
-                                    @foreach ($educations as $education)
-                                    <option value="{{ $education->id }}">{{ $education->name_education }}</option>
-                                    @endforeach
-                                </select>
-                                @error('education')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="jurusan col-md-9">
-                                <div class="input">
-                                    <label for="jurusan" class="form-label">Major<span class="important_input"> *</span></label>
-                                    <input type="text" id="jurusan" name="jurusan" class="form-control" placeholder="Enter Major" required>
-                                    <input type="hidden" id="education_id" name="education_id">
-                                </div>
-                            </div>
-                        </div>
-
-
+                        
 
                         <div class="input">
                             <label for="profile">Profile<span class="important_input"> *</span></label>
@@ -192,6 +169,40 @@
                 <div id="app" class="mt-5">
 
                     <div class="tengah">
+
+                        <div class="outer_educations">
+                            <div class="wraping_education_button" v-for="(jurusan, index) in jurusans" :key='index'>
+                                <div class="input row">
+                                    <div class="pendidikan col-md-3">
+                                        <label for="education" class="form-label">Last Education<span class="important_input"> *</span></label>
+                                        <select id="education" name="education[]" class="form-control" onchange="updateEducationId(this)">
+                                            <option value="">Choose Education</option>
+                                            @foreach ($educations as $education)
+                                            <option value="{{ $education->id }}">{{ $education->name_education }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('education')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+        
+                                    <div class="jurusan col-md-9">
+                                        <div class="input">
+                                            <label for="jurusan" class="form-label">Major<span class="important_input"> *</span></label>
+                                            <input type="text" id="jurusan" name="jurusan[]" class="form-control" placeholder="Enter Major" required>
+                                            <input type="hidden" id="education_id" name="education_id">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button @click="removeInput8(index)" class="btn btn-danger">-</button>
+                                </div>                                        
+                            </div>
+
+                            <div>
+                                <button type="button" @click="addInput8" class="btn btn-secondary">+</button>
+                            </div>
+                        </div>
 
                         <label for="skills" class="mb-1">Skills</label>
                         <div class="keahlian d-flex flex-grow-* row mb-3">
@@ -450,6 +461,9 @@
                     language: [{
                         value: ''
                     }],
+                    jurusans: [{
+                        value: ''
+                    }]
 
                 }
             },
@@ -511,6 +525,14 @@
                 },
                 removeInput7(index) {
                     this.language.splice(index, 1);
+                },
+                addInput8() {
+                    this.jurusans.push({
+                        value: ''
+                    });
+                },
+                removeInput8(index) {
+                    this.jurusans.splice(index, 1);
                 }
             }
         }).mount('#app')

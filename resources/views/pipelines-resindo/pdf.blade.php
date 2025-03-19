@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">      
     <title>Document</title>
     <style>
         body {
@@ -12,7 +12,7 @@
             padding: 0;
             background-color: white;
             color: #333;
-            padding-top: 100px;
+            padding-bottom: 60px;
             /* Memberikan ruang untuk footer */
         }
         header{
@@ -67,13 +67,15 @@
         }
         .responsibilities{
             text-align: justify;
-            margin-left: 30px
         }
         .projects_section{
-            margin-left: 30px;
+            
         }
         .experience_content, .projects_content{
             margin: 30px;
+        }
+        .section{
+            margin-top: 30px
         }
 
         .hide{
@@ -89,6 +91,28 @@
         
 </head>
 <body>
+
+    <footer>
+        <table class="header1">
+            <tr>
+                <td>
+                    <div class="">                        
+                        <img height="60px" src="{{ public_path('assets/barcode_resindo.jpg') }}" alt="Applicant Photo">                                    
+                    </div>
+                </td>
+                <td class="td1">
+                    <div>                                            
+                        <a style="text-align: center; margin: 0px" href="www.resindori.com"><p>www.resindori.com</p></a>
+                    </div>
+                </td>
+                <td class="td2">
+                    <div class="">                        
+                        <img height="50px" src="{{ public_path('assets/logo-resindo.jpg') }}" alt="Applicant Photo">                                    
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </footer>
     
     <table class="header1">
         <tr>
@@ -116,7 +140,7 @@
         <p class="justify_text font_paragraph">{{ $applicant->profile }}</p>
     </div>
 
-    <div class="Education">
+    <div class="section Education">
         <h3 class="title">Education</h3>
         <hr>
         <ul>
@@ -128,7 +152,7 @@
         </ul>
     </div>
 
-    <div class="Training_and_certification">
+    <div class="section Training_and_certification">
         <h3 class="title">Training and Certification</h3>
         <hr>
         <ul>
@@ -138,7 +162,7 @@
         </ul>
     </div>
 
-    <div class="Language">
+    <div class="section Language">
         <h3 class="title">Language</h3>
         <hr>
         <table style="width: 100%">
@@ -156,9 +180,9 @@
 
             @foreach ($applicant->Languages as $item)
                 <tr>
-                    <td style="width: 33%"><p style="text-align: center">{{ $item->language }}</p></td>
-                    <td style="width: 33%"><p style="text-align: center">{{ $item->verbal }}</p></td>
-                    <td style="width: 33%"><p style="text-align: center">{{ $item->writen }}</p></td>
+                    <td style="width: 33%"><p class="font_paragraph" style="text-align: center">{{ $item->language }}</p></td>
+                    <td style="width: 33%"><p class="font_paragraph" style="text-align: center">{{ $item->verbal }}</p></td>
+                    <td style="width: 33%"><p class="font_paragraph" style="text-align: center">{{ $item->writen }}</p></td>
                 </tr>    
             @endforeach
             
@@ -166,7 +190,7 @@
         </table>
     </div>
 
-    <div class="experience">
+    <div class="section experience">
         <h3 class="title">Experience</h3>
         <hr>
         <div>
@@ -205,7 +229,7 @@
         </div>
     </div>
 
-    <div class="Projects">
+    <div class="section Projects">
         <h3 class="title">Projects</h3>
         <hr>
         <div class="projects_section">
@@ -239,7 +263,7 @@
         
     </div>
 
-    <div class="Achievement">
+    <div class="section Achievement">
         <h3 class="title">Achievement</h3>
         <hr>
         <div class="achievement_section">
@@ -253,27 +277,7 @@
         </div>
         
     </div>
-    <footer>
-        <hr>
-    </footer>
-    <header>
-        <table class="header1">
-            <tr>
-                <td class="td1">
-                    <div>
-                        <h2 class="title">{{ $applicant->name }}</h2>
-                        <hr>
-                        <h4 class="title">Senior Document Controller</h4>
-                    </div>
-                </td>
-                <td class="td2">
-                    <div class="">                        
-                        <img height="50px" src="{{ public_path('assets/logo-resindo.jpg') }}" alt="Applicant Photo">                                    
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </header>
     
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
