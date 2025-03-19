@@ -50,21 +50,21 @@
                             @enderror
                         </div>
 
-                        <div class="input">
+                        <!-- <div class="input">
                             <label for="email">Email<span class="important_input"> *</span></label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Email" required>
                             @error('email')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div>
+                        </div> -->
 
-                        <div class="input">
+                        <!-- <div class="input">
                             <label for="number">Phone Number<span class="important_input"> *</span></label>
                             <input type="text" class="form-control @error('number') is-invalid @enderror" id="number" name="number" value="{{ old('number') }}" placeholder="Phone Number" required>
                             @error('number')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div>
+                        </div> -->
 
                         <div class="input">
                             <label for="address">Citizenship<span class="important_input"> *</span></label>
@@ -87,13 +87,29 @@
                     </div>
                     <div class="kanan col-md-5">
 
-                        <div class="input">
+                    <div class="form-group row">
+                                <label for="job_id">Choose Job</label>
+                                <select class="form-control @error('job_id') is-invalid @enderror" id="job_id" name="job_id">
+                                    <option value="">Choose Job</option>
+                                    @foreach ($jobs as $job)
+                                    <option value="{{ $job->id }}" {{ old('job_id') == $job->id ? 'selected' : '' }}>
+                                        {{ $job->job_name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('job_id')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+
+                        <!-- <div class="input">
                             <label for="profil_linkedin">LinkedIn Profile Link</label>
                             <input type="url" class="form-control @error('profil_linkedin') is-invalid @enderror" id="profil_linkedin" name="profil_linkedin" value="{{ old('profil_linkedin') }}" placeholder="Link Profile LinkedIn">
                             @error('profil_linkedin')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div>
+                        </div> -->
 
                         <div class="input">
                             <label for="photo_pass" class="form-label">Upload Photo<span class="important_input"> *</span></label>
@@ -148,13 +164,13 @@
                             @enderror
                         </div>
 
-                        <div class="input">
+                        <!-- <div class="input">
                             <label for="salary_expectation">Salary Expectation<span class="important_input"></span></label>
                             <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation') }}" placeholder="Ex. 15000000">
                             @error('salary_expectation')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div>
+                        </div> -->
 
                        
                         <div class="input row">

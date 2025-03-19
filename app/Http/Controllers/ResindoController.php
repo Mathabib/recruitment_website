@@ -21,6 +21,7 @@ class ResindoController extends Controller
     public function generateCV($id)
     {
         $applicant = Applicant::find($id);
+        // return $applicant->job->job_name;
 
         if (!$applicant) {
             return redirect()->route('pipelines-resindo.index')->with('error', 'Applicant not found.');
@@ -61,13 +62,14 @@ class ResindoController extends Controller
     {
         // return $request->jurusan[0];
         // Validasi input
+        
         $request->validate([
             'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
-            'address' => 'required|string',
-            'number' => 'required|string|max:15',
-            'email' => 'nullable|email',
-            'profil_linkedin' => 'nullable|url',
+            // 'address' => 'required|string',
+            // 'number' => 'required|string|max:15',
+            // 'email' => 'nullable|email',
+            // 'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
             'experience_period' => 'nullable|string',
             'photo_pass' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -95,6 +97,7 @@ class ResindoController extends Controller
             'jurusan*' => 'required|string|max:255',
         ]);
     
+        // return $request;
         // Menangani upload file photo_pass jika ada
         $path = null;
         if ($request->hasFile('photo_pass')) {
