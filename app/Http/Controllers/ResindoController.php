@@ -386,10 +386,10 @@ class ResindoController extends Controller
         $request->validate([
             'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
-            'address' => 'required|string',
-            'number' => 'required|string|max:15',
-            'email' => 'required|email',
-            'profil_linkedin' => 'nullable|url',
+            // 'address' => 'required|string',
+            // 'number' => 'required|string|max:15',
+            // 'email' => 'nullable|email',
+            // 'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
             'experience_period' => 'nullable|string',
             'photo_pass' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -413,26 +413,31 @@ class ResindoController extends Controller
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
-            'education' => 'required|exists:education,id',
-            'jurusan' => 'required|string|max:255',
+            'education*' => 'required|exists:education,id',
+            'jurusan*' => 'required|string|max:255',
         ]);
     
+        // return $request;
         // Menangani upload file photo_pass jika ada
         $path = null;
         if ($request->hasFile('photo_pass')) {
             $path = $request->file('photo_pass')->store('photos', 'public');
         }
     
-        $educationId = $request->education;
+        $educationId = $request->education[0];
         
         // Cek dan simpan jurusan
-        $jurusan = Jurusan::where('education_id', $educationId)->where('name_jurusan', $request->jurusan)->first();
+        $jurusan = Jurusan::where('education_id', $educationId)->where('name_jurusan', $request->jurusan[0])->first();
         if(!$jurusan){
             $jurusan = Jurusan::Create([
-                'name_jurusan' => strtolower($request->jurusan),
+                'name_jurusan' => strtolower($request->jurusan[0]),
                 'education_id' => $educationId
             ]);
         }
+
+        
+
+        
     
         // Simpan data applicant
         $applicant = Applicant::create([
@@ -452,10 +457,19 @@ class ResindoController extends Controller
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
             'salary_expectation' => $request->salary_expectation,
-            'education_id' => $request->education,
+            'education_id' => $request->education[0],
             'jurusan_id' => $jurusan->id,
             'type' => 'resindo',
         ]);
+
+        
+        foreach($request->jurusan as $index => $jurusan) {
+            Jurusan2::create([
+                'jurusan2' => strtolower($request->jurusan[$index]),
+                'education_id' => $request->education[$index],
+                'applicant_id' => $applicant->id,
+            ]);
+        }
     
         // Menangani bahasa (language)
         if ($request->has('language')) {
@@ -514,6 +528,7 @@ class ResindoController extends Controller
         $applicant = Applicant::with(['workExperiences', 'projects', 'references'])->findOrFail($id);
         $jobs = Job::all();
         $educations = Education::all();
+        $jobs = Language::all();
         $jurusans = Jurusan::where('education_id', $applicant->education_id)->get();
         $references = Reference::all();
         $project = Project::all();
@@ -527,6 +542,7 @@ class ResindoController extends Controller
     {
         $applicant = Applicant::with(['workExperiences', 'projects', 'references'])->findOrFail($id);
         $jobs = Job::all();
+        $jobs = Language::all();
         $educations = Education::all();
         $jurusans = Jurusan::where('education_id', $applicant->education_id)->get();
 

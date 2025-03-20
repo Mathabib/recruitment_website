@@ -35,25 +35,25 @@
                             <!-- Address -->
                             <div class="form-group row">
                                 <label for="address">domicile</label>
-                                <input class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address', $applicant->address) }}" placeholder="Domicile" required>
+                                <input class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address', $applicant->address) }}" placeholder="Citizenship" required>
                                 @error('address')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <!-- Email -->
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $applicant->email) }}" placeholder="Email" required>
                                 @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
-                            <div class="education row">
+                            <!-- <div class="education row"> -->
 
                                 <!-- pendidikan -->
-                            <div class="form-group col-md-3">
+                            <!-- <div class="form-group col-md-3">
                                 <label for="education" class="form-label" >Last Education</label>
                                 <select id="education" name="education" class="form-control">
                                     <option value="">Choose Education</option>
@@ -75,9 +75,9 @@
                                 @error('jurusan')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
-                            </div>
+                            <!-- </div> -->
 
                             <!--jurusan -->
                             
@@ -95,14 +95,14 @@
                                 @endif
                             </div>
 
-                            <!-- Salary Expectation -->
+                            <!-- Salary Expectation
                             <div class="form-group">
                                 <label for="salary_expectation">Salary Expectation</label>
                                 <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation', $applicant->salary_expectation) }}" placeholder="Ekspektasi Gaji" required>
                                 @error('salary_expectation')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
                             <!-- Profile -->
                             <div class="form-group">
@@ -134,22 +134,22 @@
                             </div>
 
                             <!-- Number -->
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="number">Phone Number</label>
                                 <input type="text" class="form-control @error('number') is-invalid @enderror" id="number" name="number" value="{{ old('number', $applicant->number) }}" placeholder="Phone Number" required>
                                 @error('number')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
                             <!-- LinkedIn Profile -->
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="profil_linkedin">Link Profile LinkedIn</label>
                                 <input type="url" class="form-control @error('profil_linkedin') is-invalid @enderror" id="profil_linkedin" name="profil_linkedin" value="{{ old('profil_linkedin', $applicant->profil_linkedin) }}" placeholder="Link Profile LinkedIn">
                                 @error('profil_linkedin')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
   
 
                             <!-- Experience Period -->
@@ -162,13 +162,13 @@
                             </div>
 
                             <!-- Languages -->
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="languages">Languages</label>
                                 <input type="text" class="form-control @error('languages') is-invalid @enderror" id="languages" name="languages" value="{{ old('languages', $applicant->languages) }}" placeholder="Bahasa yang dikuasai">
                                 @error('languages')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
                             <div class="row col-md-6">
                                 <div class="col-md-6">
@@ -272,6 +272,41 @@
                                 
                             </div>  
 
+
+                            <h1 style="margin-top: 30px">Languages Skills</h1>
+                        <div class="language_kontainer">
+                            <div class="language" v-for="(language, index) in language">
+                            <div class="">
+                                    <input type="hidden" name="language_id" v-model="language.id">
+                                    <input type="hidden" name="applicant_id" value="{{$applicant->id}}">
+                                </div>
+                                <div class="input language_name">
+                                    <label class="form-label" for="language[]">Language</label>
+                                    <input class="form-control" type="text" name="language[]" id="language[]" v-model="language.language">
+                                    @error('language.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="input language_verbal">
+                                    <label for="verbal[]" class="form-label">Verbal</label>
+                                    <input type="verbal" name="verbal[]" id="verbal[]" class="form-control" v-model="language.verbal">
+                                    @error('verbal.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="input language_writen">
+                                    <label for="writen[]" class="form-label">Written</label>
+                                    <input type="text" class="form-control" name="writen[]" v-model="language.writen">
+                                    @error('writen.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <button type="button" class="btn btn-danger" @click="removeInput7(index)">Delete</button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput7">Add</button>
+                    
                             <h1>Work Experience</h1>
                             <div  id="work_experience" class="work_experience" v-for='(experience, index) in experiences' :key='index'>
                                 <div class="">
@@ -481,7 +516,16 @@
                 ],
                 certificates : [
                     ''
-                ]
+                ],
+                language : [
+                    {
+                        id: '',
+                        applicant_id: '',
+                        language: '',
+                        verbal: '',
+                        writen: ''
+                    }
+                ],
             }
         },
         mounted() {
@@ -496,6 +540,8 @@
                     this.experiences = data.work_experiences;
                     this.projects = data.projects;
                     this.references = data.references;
+                    // this.language = data.language;  
+
                     this.skills = data.skills.split("|");
                     this.achievements = data.achievement.split("|");
                     this.certificates = data.certificates.split("|");
@@ -570,7 +616,20 @@
             },
             removeInput6(index) {
                 this.certificates.splice(index, 1);
-            }
+            },
+            // addInput7() {
+            //     this.language.push(
+            //         {
+            //             id: '',
+            //             applicant_id: '',
+            //             language: '',
+            //             verbal: '',
+            //             writen: ''
+            //     }
+            // )},
+            // removeInput7(index) {
+            //     this.language.splice(index, 1);
+            // },
         }
     }).mount('#app')
 

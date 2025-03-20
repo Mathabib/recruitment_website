@@ -32,26 +32,26 @@
 
                             <!-- Address -->
                             <div class="form-group row">
-                                <label for="address">domicile</label>
-                                <input class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}" placeholder="Domicile" required>
+                                <label for="address">Citizenship</label>
+                                <input class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}" placeholder="Citizenship" required>
                                 @error('address')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <!-- Email -->
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Email" required>
                                 @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
-                            <div class="education row">
+                            <!-- <div class="education row"> -->
 
                                 <!-- pendidikan -->
-                                <div class="form-group col-md-3">
+                                <!-- <div class="form-group col-md-3">
                                     <label for="education" class="form-label">Last Education<span class="important_input"> *</span></label>
                                     <select id="education" name="education" class="form-control" onchange="updateEducationId(this)">
                                         <option value="">Choose Education</option>
@@ -71,7 +71,7 @@
                                         <input type="hidden" id="education_id" name="education_id">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!--jurusan -->
 
@@ -87,13 +87,13 @@
                             </div>
 
                             <!-- Salary Expectation -->
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="salary_expectation">Salary Expectation</label>
                                 <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation') }}" placeholder="Ex. 150000" required>
                                 @error('salary_expectation')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
                             <!-- Profile -->
                             <div class="form-group">
@@ -125,22 +125,22 @@
                             </div>
 
                             <!-- Number -->
-                            <div class="form-group row">
-                                <label for="number">Phone Number</label>
+                            <!-- <div class="form-group row"> -->
+                                <!-- <label for="number">Phone Number</label>
                                 <input type="text" class="form-control @error('number') is-invalid @enderror" id="number" name="number" value="{{ old('number') }}" placeholder="Phone Number" required>
                                 @error('number')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
                             <!-- LinkedIn Profile -->
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="profil_linkedin">Link Profile LinkedIn</label>
                                 <input type="url" class="form-control @error('profil_linkedin') is-invalid @enderror" id="profil_linkedin" name="profil_linkedin" value="{{ old('profil_linkedin') }}" placeholder="Link Profile LinkedIn">
                                 @error('profil_linkedin')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
 
                             <!-- Experience Period -->
@@ -200,6 +200,40 @@
 
                     <div class="mulitple-section" id="app">
                         <div class="tengah">
+
+                        <div class="outer_educations">
+                            <div class="wraping_education_button" v-for="(jurusan, index) in jurusans" :key='index'>
+                                <div class="input row">
+                                    <div class="pendidikan col-md-3">
+                                        <label for="education" class="form-label">Last Education<span class="important_input"> *</span></label>
+                                        <select id="education" name="education[]" class="form-control" onchange="updateEducationId(this)">
+                                            <option value="">Choose Education</option>
+                                            @foreach ($educations as $education)
+                                            <option value="{{ $education->id }}">{{ $education->name_education }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('education')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+        
+                                    <div class="jurusan col-md-9">
+                                        <div class="input">
+                                            <label for="jurusan" class="form-label">Major<span class="important_input"> *</span></label>
+                                            <input type="text" id="jurusan" name="jurusan[]" class="form-control" placeholder="Enter Major" required>
+                                            <input type="hidden" id="education_id" name="education_id">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button @click="removeInput8(index)" class="btn btn-danger">-</button>
+                                </div>                                        
+                            </div>
+
+                            <div>
+                                <button type="button" @click="addInput8" class="btn btn-secondary">+</button>
+                            </div>
+                        </div>
 
                             <label for="skills" class="mb-1">Skills</label>
                             <div class="keahlian d-flex flex-grow-* row mb-3" v-for="">
@@ -485,6 +519,9 @@
                 }],
                 language: [{
                     value: ''
+                }],
+                jurusans: [{
+                    value: ''
                 }]
             }
         },
@@ -544,6 +581,14 @@
             },
             removeInput7(index) {
                 this.language.splice(index, 1);
+            },
+            addInput8() {
+                this.jurusans.push({
+                    value: ''
+                });
+            },
+            removeInput8(index) {
+                this.jurusans.splice(index, 1);
             }
         }
     }).mount('#app')
