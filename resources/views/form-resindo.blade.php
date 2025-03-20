@@ -8,7 +8,9 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('css/form-resindo.css')}}">
-    <link rel="icon" src="{{asset('assets/ISOLOGO.png')}}">
+    <link rel="icon" src="{{asset('assets/ISOLOGO.png')}}">    
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
     <script src="{{asset('js/vue.global.js')}}"></script>
     <title>Form - Resindo</title>
 </head>
@@ -346,11 +348,24 @@
 
                             <div class="input job_description">
                                 <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
+                                <main>
+                                    {{-- <trix-toolbar id="my_toolbar"></trix-toolbar> --}}
+                                    <div class="more-stuff-inbetween"></div>
+                                    <trix-toolbar :id="'toolbar-' + index"></trix-toolbar>
+                                    <input type="hidden" :id="'desc_kerja-' + index" name="desc_kerja[]">
+                                    <trix-editor :toolbar="'toolbar-' + index" :input="'desc_kerja-' + index"></trix-editor>
+                                  </main>
+                            </div>
+
+                            {{-- <div class="input job_description">
+                                <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
                                 <textarea class="form-control @error('desc_kerja.*') is-invalid @enderror" name="desc_kerja[]" placeholder="Job Description" required></textarea>
                                 @error('desc_kerja')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
+
+                            
 
                             <button type="button" class="btn btn-danger" @click="removeInput1(index)">Delete</button>
                         </div>

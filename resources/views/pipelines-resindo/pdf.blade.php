@@ -231,7 +231,7 @@
                     
                     </table>
                     <div class="responsibilities">
-                        <p class="font_paragraph description">{{ $experience->desc_kerja }}</p>
+                        <p class="font_paragraph description">{!! $experience->desc_kerja !!}</p>
                     </div>
                 </div>
             @endforeach
