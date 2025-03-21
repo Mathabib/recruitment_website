@@ -87,6 +87,15 @@
         /* td, tr{
             border: 1px solid red
         } */
+         .display_table{
+            display: table
+         }
+         .display_row{
+            display: table-row
+         }
+         .display_cell{
+            display: table-cell
+         }
     </style>
         
 </head>
@@ -104,14 +113,43 @@
                     <div>                                            
                         {{-- <a style="text-align: center; margin: 0px" href="www.resindori.com"><p>www.resindori.com</p></a> --}}
                         <table style="width: 100%">
-                            <tr>
+                            <tr>                                
                                 <td style="width: 33%">
                                     <table>
-                                        t
+                                        <tr>
+                                            <td>
+                                                <img style="height: 30px" src="{{ public_path('assets/icon_youtube.png') }}" alt="">
+                                            </td>
+                                            <td>
+                                                <p>@RESINDOGroup</p>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </td>
-                                <td style="width: 33%"><img src="{{ public_path('assets/icon_youtube.png') }}" alt=""></td>
-                                <td style="width: 33%"><img src="{{ public_path('assets/icon_website.png') }}" alt=""></td>                                
+                                <td style="width: 33%">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <img style="height: 30px" src="{{ public_path('assets/icon_linkdin.png') }}" alt="">
+                                            </td>
+                                            <td>
+                                                <p>pt-resindo-group</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width: 33%">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <img style="height: 30px" src="{{ public_path('assets/icon_website.png') }}" alt="">
+                                            </td>
+                                            <td>
+                                                <p>www.resindori.com</p>
+                                            </td>
+                                        </tr>
+                                    </table>    
+                                </td>                                
                             </tr>
                         </table>
                     </div>

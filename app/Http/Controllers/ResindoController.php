@@ -35,8 +35,7 @@ class ResindoController extends Controller
 
     public function generateSummary($id)
     {
-        $applicant = Applicant::find($id);
-
+        $applicant = Applicant::find($id);              
         if (!$applicant) {
             return redirect()->route('pipelines-resindo.index')->with('error', 'Applicant not found.');
         }
@@ -525,7 +524,7 @@ class ResindoController extends Controller
 
     public function edit($id)
     {
-        $applicant = Applicant::with(['workExperiences', 'projects', 'references'])->findOrFail($id);
+        $applicant = Applicant::with(['workExperiences', 'projects', 'references', 'languages'])->findOrFail($id);
         $jobs = Job::all();
         $educations = Education::all();
         $jobs = Language::all();
@@ -540,7 +539,7 @@ class ResindoController extends Controller
 
     public function edit_api($id)
     {
-        $applicant = Applicant::with(['workExperiences', 'projects', 'references'])->findOrFail($id);
+        $applicant = Applicant::with(['workExperiences', 'projects', 'references', 'languages'])->findOrFail($id);
         $jobs = Job::all();
         $jobs = Language::all();
         $educations = Education::all();

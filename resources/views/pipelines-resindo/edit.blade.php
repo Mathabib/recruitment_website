@@ -275,7 +275,7 @@
 
                             <h1 style="margin-top: 30px">Languages Skills</h1>
                         <div class="language_kontainer">
-                            <div class="language" v-for="(language, index) in language">
+                            <div class="language" v-for="(language, index) in languages">
                             <div class="">
                                     <input type="hidden" name="language_id" v-model="language.id">
                                     <input type="hidden" name="applicant_id" value="{{$applicant->id}}">
@@ -517,7 +517,7 @@
                 certificates : [
                     ''
                 ],
-                language : [
+                languages : [
                     {
                         id: '',
                         applicant_id: '',
@@ -534,12 +534,14 @@
         methods: {
 
             fetchData() {
-                fetch('{{route('edit_api', ['id' => $applicant->id ])}}')
+                fetch('{{route('edit_api_resindo', ['id' => $applicant->id ])}}')
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     this.experiences = data.work_experiences;
                     this.projects = data.projects;
                     this.references = data.references;
+                    this.languages = data.languages;
                     // this.language = data.language;  
 
                     this.skills = data.skills.split("|");
@@ -550,6 +552,7 @@
                     console.log(this.experiences);
                     console.log(this.projects);
                     console.log(this.references);
+                    console.log(this.languages);
                 })
             },
             addInput1() {
@@ -617,19 +620,19 @@
             removeInput6(index) {
                 this.certificates.splice(index, 1);
             },
-            // addInput7() {
-            //     this.language.push(
-            //         {
-            //             id: '',
-            //             applicant_id: '',
-            //             language: '',
-            //             verbal: '',
-            //             writen: ''
-            //     }
-            // )},
-            // removeInput7(index) {
-            //     this.language.splice(index, 1);
-            // },
+            addInput7() {
+                this.languages.push(
+                    {
+                        id: '',
+                        applicant_id: '',
+                        language: '',
+                        verbal: '',
+                        writen: ''
+                }
+            )},
+            removeInput7(index) {
+                this.languages.splice(index, 1);
+            },
         }
     }).mount('#app')
 
