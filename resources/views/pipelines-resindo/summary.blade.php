@@ -115,10 +115,7 @@
             width: 100%;
 
         }                
-
-        *{
-            border: 1px solid red;
-        }
+        
     </style>
 </head>
 <body>
@@ -144,16 +141,43 @@
                 <td style="width: 70%; text-align: center">
                     <div style="width: 100%">
                         <table style="width: 100%">
-                            <tr>
+                            <tr>                                
                                 <td style="width: 33%">
-                                    <img height="50px;" src="{{ public_path('assets/icon_youtube.png') }}" alt="">                        
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <img style="height: 30px" src="{{ public_path('assets/icon_youtube.png') }}" alt="">
+                                            </td>
+                                            <td>
+                                                <p>@RESINDOGroup</p>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                                 <td style="width: 33%">
-                                    <img height="50px;" src="{{ public_path('assets/icon_linkdin.png') }}" alt="">                        
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <img style="height: 30px" src="{{ public_path('assets/icon_linkdin.png') }}" alt="">
+                                            </td>
+                                            <td>
+                                                <p>pt-resindo-group</p>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                                 <td style="width: 33%">
-                                    <img height="50px;" src="{{ public_path('assets/icon_website.png') }}" alt="">
-                                </td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <img style="height: 30px" src="{{ public_path('assets/icon_website.png') }}" alt="">
+                                            </td>
+                                            <td>
+                                                <p>www.resindori.com</p>
+                                            </td>
+                                        </tr>
+                                    </table>    
+                                </td>                                
                             </tr>
                         </table>
                     </div>
@@ -170,11 +194,11 @@
             <table style="width: 100%">
                 <tr>
                     <td><strong><p class="font-paragraph">Position / Title</p></strong></td>
-                    <td><strong><p class="font-paragraph">President Director / Project Sponsor</p></strong></td>
+                    <td><strong><p class="font-paragraph">{{ $applicant->job->job_name }}</p></strong></td>
                 </tr>
                 <tr>
                     <td><p class="font-paragraph">Total Working Experiences</p></td>
-                    <td><p class="font-paragraph">35 Years</p></td>
+                    <td><p class="font-paragraph">{{ $applicant->experience_period }}</p></td>
                 </tr>
                 <tr>
                     <td><p class="font-paragraph">Citizenship</p></td>
