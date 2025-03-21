@@ -59,7 +59,7 @@ class ResindoController extends Controller
     
     public function kirimresindo(Request $request)
     {
-        // return $request->jurusan[0];
+        // return $request;
         // Validasi input
         
         $request->validate([
@@ -79,11 +79,11 @@ class ResindoController extends Controller
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
             'salary_expectation' => 'nullable|numeric|min:0',
-            'role.*' => 'required|string|max:255',
-            'name_company.*' => 'required|string',
-            'desc_kerja.*' => 'required|string',
-            'mulai.*' => 'required|date',
-            'selesai.*' => 'required|date',
+            'role.*' => 'nullable|string|max:255',
+            'name_company.*' => 'nullable|string',
+            'desc_kerja.*' => 'nullable|string',
+            'mulai.*' => 'nullable|date',
+            'selesai.*' => 'nullable|date',
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
             'desc_project.*' => 'nullable|string',
@@ -92,8 +92,8 @@ class ResindoController extends Controller
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
-            'education*' => 'required|exists:education,id',
-            'jurusan*' => 'required|string|max:255',
+            'education*' => 'nullable|exists:education,id',
+            'jurusan*' => 'nullable|string|max:255',
         ]);
     
         // return $request;
@@ -382,6 +382,7 @@ class ResindoController extends Controller
     public function store(Request $request)
     {
         // Validasi input
+        return $request;
         $request->validate([
             'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
