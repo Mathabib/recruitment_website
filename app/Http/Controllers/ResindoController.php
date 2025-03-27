@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Jurusan;
 use App\Models\Jurusan2;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Carbon;
 
 
 class ResindoController extends Controller
@@ -21,13 +22,15 @@ class ResindoController extends Controller
     public function generateCV($id)
     {
         $applicant = Applicant::find($id);
+        // return  $applicant->workExperience;
         // return $applicant->job->job_name;
 
         if (!$applicant) {
             return redirect()->route('pipelines-resindo.index')->with('error', 'Applicant not found.');
         }
 
-        $pdf = PDF::loadView('pipelines-resindo.pdf', ['applicant' => $applicant])
+        $pdf = PDF::loadView('pipelines-resindo.pdf', ['applicant' => $applicant,
+        'position' => isset($applicant->workExperiences[0]->role) ? $applicant->workExperiences[0]->role : 'none'])
             ->setPaper('a4', 'portrait');
 
         return $pdf->stream('applicant-cv-' . $applicant->name . '.pdf');
@@ -59,9 +62,9 @@ class ResindoController extends Controller
     
     public function kirimresindo(Request $request)
     {
-        // return $request->jurusan[0];
-        // Validasi input
         
+        // Validasi input
+        // return $request;
         $request->validate([
             'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
@@ -78,24 +81,27 @@ class ResindoController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'nullable|numeric|min:0',
-            'role.*' => 'required|string|max:255',
-            'name_company.*' => 'required|string',
-            'desc_kerja.*' => 'required|string',
-            'mulai.*' => 'required|date',
-            'selesai.*' => 'required|date',
+            // 'salary_expectation' => 'nullable|numeric|min:0',
+            'role.*' => 'nullable|string|max:255',
+            'name_company.*' => 'nullable|string',
+            'desc_kerja.*' => 'nullable|string',
+            'mulai.*' => 'nullable|date',
+            'selesai.*' => 'nullable|date',
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
-            'desc_project.*' => 'nullable|string',
-            'mulai_project.*' => 'nullable|date',
-            'selesai_project.*' => 'nullable|date',
+            'position.*' => 'nullable|string|max:255',
+            'location.*' => 'nullable|string|max:255',
+            // 'desc_project.*' => 'nullable|string',
+            // 'mulai_project.*' => 'nullable|date',
+            // 'selesai_project.*' => 'nullable|date',
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
-            'education*' => 'required|exists:education,id',
-            'jurusan*' => 'required|string|max:255',
+            'education*' => 'nullable|exists:education,id',
+            'jurusan*' => 'nullable|string|max:255',
+            'present*' => 'nullable|string|max:255'
         ]);
-    
+        // return $request;
         // return $request;
         // Menangani upload file photo_pass jika ada
         $path = null;
@@ -170,7 +176,8 @@ class ResindoController extends Controller
                     'name_company' => $request->name_company[$index],
                     'desc_kerja' => $request->desc_kerja[$index],
                     'mulai' => $request->mulai[$index],
-                    'selesai' => $request->selesai[$index],
+                    'selesai' => $request->present[$index] == 'present' ? Carbon::now() : $request->selesai[$index],
+                    'present' => $request->present[$index],
                 ]);
             }
         }
@@ -180,10 +187,12 @@ class ResindoController extends Controller
             foreach ($request->project_name as $index => $project_name) {
                 $applicant->projects()->create([
                     'project_name' => $project_name,
-                    'desc_project' => $request->desc_project[$index],
+                    // 'desc_project' => $request->desc_project[$index],
                     'client' => $request->client[$index],
-                    'mulai_project' => $request->mulai_project[$index],
-                    'selesai_project' => $request->selesai_project[$index],
+                    'position' => $request->position[$index],
+                    'location' => $request->location[$index],
+                    // 'mulai_project' => $request->mulai_project[$index],
+                    // 'selesai_project' => $request->selesai_project[$index],
                 ]);
             }
         }
@@ -378,10 +387,11 @@ class ResindoController extends Controller
     }
 
 
-
     public function store(Request $request)
     {
+        
         // Validasi input
+        // return $request;
         $request->validate([
             'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
@@ -398,24 +408,27 @@ class ResindoController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'nullable|numeric|min:0',
-            'role.*' => 'required|string|max:255',
-            'name_company.*' => 'required|string',
-            'desc_kerja.*' => 'required|string',
-            'mulai.*' => 'required|date',
-            'selesai.*' => 'required|date',
+            // 'salary_expectation' => 'nullable|numeric|min:0',
+            'role.*' => 'nullable|string|max:255',
+            'name_company.*' => 'nullable|string',
+            'desc_kerja.*' => 'nullable|string',
+            'mulai.*' => 'nullable|date',
+            'selesai.*' => 'nullable|date',
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
-            'desc_project.*' => 'nullable|string',
-            'mulai_project.*' => 'nullable|date',
-            'selesai_project.*' => 'nullable|date',
+            'position.*' => 'nullable|string|max:255',
+            'location.*' => 'nullable|string|max:255',
+            // 'desc_project.*' => 'nullable|string',
+            // 'mulai_project.*' => 'nullable|date',
+            // 'selesai_project.*' => 'nullable|date',
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
-            'education*' => 'required|exists:education,id',
-            'jurusan*' => 'required|string|max:255',
+            'education*' => 'nullable|exists:education,id',
+            'jurusan*' => 'nullable|string|max:255',
+            'present*' => 'nullable|string|max:255'
         ]);
-    
+        // return $request;
         // return $request;
         // Menangani upload file photo_pass jika ada
         $path = null;
@@ -490,7 +503,8 @@ class ResindoController extends Controller
                     'name_company' => $request->name_company[$index],
                     'desc_kerja' => $request->desc_kerja[$index],
                     'mulai' => $request->mulai[$index],
-                    'selesai' => $request->selesai[$index],
+                    'selesai' => $request->present[$index] == 'present' ? Carbon::now() : $request->selesai[$index],
+                    'present' => $request->present[$index],
                 ]);
             }
         }
@@ -500,10 +514,12 @@ class ResindoController extends Controller
             foreach ($request->project_name as $index => $project_name) {
                 $applicant->projects()->create([
                     'project_name' => $project_name,
-                    'desc_project' => $request->desc_project[$index],
+                    // 'desc_project' => $request->desc_project[$index],
                     'client' => $request->client[$index],
-                    'mulai_project' => $request->mulai_project[$index],
-                    'selesai_project' => $request->selesai_project[$index],
+                    'position' => $request->position[$index],
+                    'location' => $request->location[$index],
+                    // 'mulai_project' => $request->mulai_project[$index],
+                    // 'selesai_project' => $request->selesai_project[$index],
                 ]);
             }
         }
@@ -521,13 +537,14 @@ class ResindoController extends Controller
     
         return redirect()->route('pipelines-resindo.index', $request->job_id)->with('success', 'Your application has been sent');
     }
-
+    
     public function edit($id)
     {
+        $applicant = Applicant::find($id);        
         $applicant = Applicant::with(['workExperiences', 'projects', 'references', 'languages'])->findOrFail($id);
         $jobs = Job::all();
         $educations = Education::all();
-        $jobs = Language::all();
+        // $jobs = Language::all();
         $jurusans = Jurusan::where('education_id', $applicant->education_id)->get();
         $references = Reference::all();
         $project = Project::all();
@@ -539,24 +556,29 @@ class ResindoController extends Controller
 
     public function edit_api($id)
     {
-        $applicant = Applicant::with(['workExperiences', 'projects', 'references', 'languages'])->findOrFail($id);
+        $applicant = Applicant::with(['workExperiences', 'projects', 'references', 'languages', 'jurusan2'])->findOrFail($id);
         $jobs = Job::all();
-        $jobs = Language::all();
+        $language = Language::all();
         $educations = Education::all();
         $jurusans = Jurusan::where('education_id', $applicant->education_id)->get();
 
-        return json_encode($applicant);
+        return json_encode([
+            'applicant' => $applicant,
+            'educations' => $educations
+        ]);
     }
 
     public function update(Request $request, $id)
     {
+        // return $request->jurusan[0]; 
+                           
         $request->validate([            
-        //    'job_id' => 'nullable|exists:jobs,id',
+           'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
-            'address' => 'required|string',
-            'number' => 'required|string|max:15',
-            'email' => 'required|email',
-            'profil_linkedin' => 'nullable|url',
+            'address' => 'nullable|string',
+            // 'number' => 'nullable|string|max:15',
+            // 'email' => 'nullable|email',
+            // 'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
             'experience_period' => 'nullable|string',
             'photo_pass' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -567,45 +589,51 @@ class ResindoController extends Controller
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
             'salary_expectation' => 'nullable|numeric|min:0',
-            'role.*' => 'required|string|max:255',
-            'name_company.*' => 'required|string',
-            'desc_kerja.*' => 'required|string',
-            'mulai.*' => 'required|date',
-            'selesai.*' => 'required|date',
+            'role.*' => 'nullable|string|max:255',
+            'name_company.*' => 'nullable|string',
+            'desc_kerja.*' => 'nullable|string',
+            'mulai.*' => 'nullable|date',
+            'selesai.*' => 'nullable|date',
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
-            'desc_project.*' => 'nullable|string',
-            'mulai_project.*' => 'nullable|date',
-            'selesai_project.*' => 'nullable|date',
+            'position.*' => 'nullable|string|max:255',
+            'location.*' => 'nullable|string|max:255',
+            // 'desc_project.*' => 'nullable|string',
+            // 'mulai_project.*' => 'nullable|date',
+            // 'selesai_project.*' => 'nullable|date',
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
-            'education' => 'required|exists:education,id',
-            'jurusan' => 'required|string|max:255', // Atur sesuai kebutuhan
+            'education*' => 'nullable|exists:education,id',
+            'jurusan*' => 'nullable|string|max:255', // Atur sesuai kebutuhan
             
         ]);
 
-        // Retrieve the applicant
-        $applicant = Applicant::findOrFail($id);
-
-        if ($applicant->jurusan) {
+        // Retrieve the applicant                
+        $applicant = Applicant::findOrFail($id);         
+        if ($request->jurusan[0] != $applicant->jurusan->name_jurusan) {
             $applicant->jurusan->update([
-                'name_jurusan' => $request->jurusan
+                'name_jurusan' => $request->jurusan[0],
+                'education_id' => $request->education[0]
             ]);
-        } else {
-            // Jika tidak ada, buat data jurusan baru
-            $newJurusan = Jurusan::create([
-                'name_jurusan' => $request->jurusan
-            ]);
-            $applicant->jurusan_id = $newJurusan->id;
-            $applicant->save();
+            
         }
+        $applicant->jurusan2()->delete();
+        foreach($request->education as $index => $item){
+            $applicant->jurusan2()->create([
+                'education_id' => $request->education[$index],
+                'jurusan2' => $request->jurusan[$index]
+            ]);
+        }
+
 
         // Handle file upload for photo_pass if provided
         if ($request->hasFile('photo_pass')) {
             Storage::disk('public')->delete($applicant->photo_pass);
             $path = $request->file('photo_pass')->store('photos', 'public');
             $applicant->update(['photo_pass' => $path]);
+        }else{
+            $path = $applicant->photo_pass;
         }
 
         // Update applicant data
@@ -625,24 +653,23 @@ class ResindoController extends Controller
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
-            'salary_expectation' => $request->salary_expectation,
-            'education_id' => $request->education, // Pastikan ini mengacu
-            'jurusan_id' => $jurusan->id, // Gunakan ID dari jurusan
+            'salary_expectation' => $request->salary_expectation,            
             'type' => 'resindo',
+            'job_id' => $request->job_id
         ]);
-
-        dd($applicant);
-
+        
         // Update or create work experiences
         $applicant->workExperiences()->delete(); // Delete previous work experiences
         if ($request->has('role')) {
             foreach ($request->role as $index => $role) {
                 $applicant->workExperiences()->create([
                     'role' => $role,
-                    'desc_kerja' => $request->desc_kerja[$index],
+                    'desc_kerja' =>  preg_replace('/\s*/u', '', $request->desc_kerja[$index]),
                     'name_company' => $request->name_company[$index],
                     'mulai' => $request->mulai[$index],
                     'selesai' => $request->selesai[$index],
+                    'selesai' => $request->selesai[$index],
+                    'present' => $request->present[$index]
                 ]);
             }
         }
@@ -653,10 +680,12 @@ class ResindoController extends Controller
             foreach ($request->project_name as $index => $project_name) {
                 $applicant->projects()->create([
                     'project_name' => $project_name,
-                    'desc_project' => $request->desc_project[$index],
+                    // 'desc_project' => $request->desc_project[$index],
                     'client' => $request->client[$index],
-                    'mulai_project' => $request->mulai_project[$index],
-                    'selesai_project' => $request->selesai_project[$index],
+                    'position' => $request->position[$index],
+                    'location' => $request->location[$index],
+                    // 'mulai_project' => $request->mulai_project[$index],
+                    // 'selesai_project' => $request->selesai_project[$index],
                 ]);
             }
         }

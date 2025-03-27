@@ -10,15 +10,15 @@ class Project extends Model
     use HasFactory;
 
     protected $table = 'project';
-
-    protected $fillable = [
-        'project_name', 
-        'desc_project', 
-        'client', 
-        'mulai_project', 
-        'selesai_project',
-        'applicant_id', // Ensure this is included
-    ];
+    protected $guarded = [];
+    // protected $fillable = [
+    //     'project_name', 
+    //     'desc_project', 
+    //     'client', 
+    //     'mulai_project', 
+    //     'selesai_project',
+    //     'applicant_id', 
+    // ];
 
     public function applicant()
     {

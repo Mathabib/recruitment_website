@@ -9,16 +9,15 @@
 @stop
 
 @section('content')
-
+{{-- @dd($jobs) --}}
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Form Edit Applicant</h3>
             </div>
-
             <div class="card-body">
-                <form action="{{ route('pipelines.update', $applicant->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('pipelines-resindo.update', $applicant->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="bagian_atas row g-5">
@@ -219,6 +218,41 @@
                     <div class="mulitple-section" id="app">
                             <div class="tengah">
 
+                                <div class="outer_educations">
+                                    <div class="wraping_education_button" v-for="(jurusan, index) in jurusans" :key='index'>
+                                        <div class="input row">
+                                            <div class="pendidikan col-md-3">
+                                                <label for="education" class="form-label">Last Education<span class="important_input"> *</span></label>
+                                                <select id="education" name="education[]" class="form-control" v-model="jurusan.education_id" onchange="updateEducationId(this)">
+                                                    <option value="">Choose Education</option>
+                                                    @foreach ($educations as $education)
+                                                    <option value="{{ $education->id }}">{{ $education->name_education }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('education')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                
+                                            <div class="jurusan col-md-9">
+                                                <div class="input" >
+                                                    <label for="jurusan" class="form-label">Major<span class="important_input"> *</span></label>
+                                                    <input type="text" id="jurusan" name="jurusan[]" class="form-control" placeholder="Enter Major" v-model="jurusan.jurusan2" required>
+                                                    <input type="hidden" id="education_id" name="education_id" v-model="jurusan.education_id">
+                                                    <input type="hidden" id="jurusan_id" name="jurusan_id" v-model="jurusan.applicant_id">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button @click="removeInput8(index)" class="btn btn-danger">-</button>
+                                        </div>                                        
+                                    </div>
+        
+                                    <div>
+                                        <button type="button" @click="addInput8" class="btn btn-secondary">+</button>
+                                    </div>
+                                </div>
+
                                 <label for="skills" class="mb-1">Skills</label>
                                 <div class="keahlian d-flex flex-grow-* row mb-3">
                                     <div v-for="(skill, index) in skills" :key='index' class="input skills d-flex flex-grow-* col-md-3 row-sm-10">
@@ -336,8 +370,15 @@
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
+
+                                    <div style="display: flex; align-items:flex-end">
+                                        <select class="form-control status-select" :data-id="index" name="present[]" id="">
+                                            <option selected value="end_date">Input End Date</option>
+                                            <option value="present">Present</option>
+                                        </select>
+                                    </div>
                 
-                                    <div class="date work_end">
+                                    <div class="date work_end" :id="'work_end' + index">
                                         <label class="form-label" for="selesai[]">End</label>
                                         <input class="form-control" type="date" name="selesai[]" v-model="experience.selesai">
                                         @error('selesai.*')
@@ -348,9 +389,15 @@
 
                                 <div class="input job_description">
                                     <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
-                                    <textarea class="form-control @error('desc_kerja.*') is-invalid @enderror" name="desc_kerja[]" placeholder="Deskripsi Pekerjaan" required v-model="experience.desc_kerja"></textarea>
-                                    {{-- <input class="trix-editor" :id="'desc_kerja' + (index + 1)" name="desc_kerja[]" type="hidden">
-                                    <trix-editor :input="'desc_kerja' + (index + 1)"></trix-editor> --}}
+                                    {{-- <textarea class="form-control @error('desc_kerja.*') is-invalid @enderror" name="desc_kerja[]" placeholder="Deskripsi Pekerjaan" required v-model="experience.desc_kerja"></textarea> --}}
+                                    
+                                    <main>                                        
+                                        <div class="more-stuff-inbetween"></div>
+                                        <trix-toolbar :id="'toolbar-' + index"></trix-toolbar>
+                                        <input type="hidden" :id="'desc_kerja-' + index" name="desc_kerja[]" :value="experience.desc_kerja">
+                                        <trix-editor :toolbar="'toolbar-' + index" :input="'desc_kerja-' + index"></trix-editor>
+                                    </main>
+
                                     @error('desc_kerja')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -386,7 +433,22 @@
                                 @enderror
                             </div>
 
-                            <div class="input date_kontainer">
+                            <div class="input position_name">
+                                <label class="form-label" for="position[]">position @{{index + 1}}</label>
+                                <input class="form-control" name="position[]" type="text" v-model="project.position">
+                                @error('position.*')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="input location_name">
+                                <label class="form-label" for="location[]">location @{{index + 1}}</label>
+                                <input class="form-control" name="location[]" type="text" v-model="project.location">
+                                @error('location.*')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            {{-- <div class="input date_kontainer">
                                 <div class="date project_start">
                                     <label class="form-label" for="mulai_project[]">Start</label>
                                     <input class="form-control" type="date" name="mulai_project[]" v-model="project.mulai_project">
@@ -402,15 +464,12 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                            </div> --}}
 
-                            </div>
-
-                            <div class="input project_description">
+                            {{-- <div class="input project_description">
                                 <label class="form-label" for="desc_project[]">Project Description @{{index + 1}}</label>
-                                <textarea class="form-control @error('desc_project.*') is-invalid @enderror" :id="'desc_project' + (index + 1)"  name="desc_project[]" v-model="project.desc_project"></textarea>
-                                {{-- <input class="trix-editor" :id="'desc_project' + (index + 1)"  name="desc_project[]" type="hidden">
-                                <trix-editor :input="'desc_project' + (index +1)"></trix-editor> --}}
-                            </div>
+                                <textarea class="form-control @error('desc_project.*') is-invalid @enderror" :id="'desc_project' + (index + 1)"  name="desc_project[]" v-model="project.desc_project"></textarea>                                
+                            </div> --}}
 
                             <button type="button" class="btn btn-danger" @click="removeInput2(index)">Delete</button>
                         </div>
@@ -485,7 +544,8 @@
                         name_company: '',
                         desc_kerja: '',
                         mulai: '',
-                        selesai: ''
+                        selesai: '',
+                        present: ''
                     }
                 ],
                 projects : [
@@ -495,6 +555,8 @@
                         project_name: '',
                         desc_project: '',
                         client: '',
+                        position: '',
+                        location: '',
                         mulai_project: '',
                         selesai_project: '',  
                     }
@@ -526,6 +588,14 @@
                         writen: ''
                     }
                 ],
+                jurusans : [
+                    {
+                        id: '',
+                        applicant_id: '',
+                        education_id: '',
+                        jurusan2: '',
+                    }
+                ]
             }
         },
         mounted() {
@@ -536,23 +606,21 @@
             fetchData() {
                 fetch('{{route('edit_api_resindo', ['id' => $applicant->id ])}}')
                 .then(response => response.json())
-                .then(data => {
+                .then(data => {                    
                     console.log(data);
-                    this.experiences = data.work_experiences;
-                    this.projects = data.projects;
-                    this.references = data.references;
-                    this.languages = data.languages;
-                    // this.language = data.language;  
+                    this.experiences = data.applicant.work_experiences;
+                    this.projects = data.applicant.projects;
+                    this.references = data.applicant.references;
+                    this.languages = data.applicant.languages;
+                    this.jurusans = data.applicant.jurusan2;
+                    // this.language = data.applicant.language;  
 
-                    this.skills = data.skills.split("|");
-                    this.achievements = data.achievement.split("|");
-                    this.certificates = data.certificates.split("|");
-                    console.log(this.skills);
-                    console.log(this.achievements);
-                    console.log(this.experiences);
-                    console.log(this.projects);
-                    console.log(this.references);
-                    console.log(this.languages);
+                    this.skills = data.applicant.skills.split("|");
+                    this.achievements = data.applicant.achievement.split("|");
+                    this.certificates = data.applicant.certificates.split("|");
+                    
+                    this.jurusans = data.applicant.jurusan2;
+                    console.log(this.experiences);                    
                 })
             },
             addInput1() {
@@ -633,14 +701,42 @@
             removeInput7(index) {
                 this.languages.splice(index, 1);
             },
+            addInput8() {
+                this.jurusans.push(
+                    {
+                        id: '',
+                        applicant_id: '',
+                        education_id: '',
+                        jurusan2: '',
+                }
+            )},
+            removeInput8(index) {
+                this.jurusans.splice(index, 1);
+            },
+            
         }
     }).mount('#app')
 
+    $(document).on('change', '.status-select', function () {
+            let dataId = $(this).data('id');
+            let status = $(this).val();
+            console.log("Data ID:", dataId);
+            console.log("Status:", status);
+            if(status == 'present'){
+                $(`#work_end${dataId}`).hide();
+            } else {
+                $(`#work_end${dataId}`).show();
+            }
+});
 
+    
       function updateEducationId(select) {
         document.getElementById('education_id').value = select.value;
     }
 </script>
+
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}
+<script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script> {{-- library untuk text editor --}}
 
 
 @stop
