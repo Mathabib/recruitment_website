@@ -100,7 +100,6 @@
         
 </head>
 <body>
-
     <footer>
         <table class="header1">
             <tr>
@@ -169,7 +168,8 @@
                 <div>
                     <h2 class="title">{{ $applicant->name }}</h2>
                     <hr>
-                    <h4 class="title">{{ $applicant->job->job_name }}</h4>
+                    {{-- <h4 class="title">{{ $applicant->job->job_name }}</h4> --}}
+                    <h4 class="title">{{ $position }}</h4>
                 </div>
             </td>
             <td class="td2">
@@ -251,16 +251,20 @@
                     <table>
                     
                         <tr>
-                            <td><strong><p class="font_paragraph">Date</p></strong></td>
-                            <td>: <strong>{{ $experience->mulai }} - {{ $experience->selesai }}</strong></td>
+                            <td style="vertical-align: top"><strong><p class="font_paragraph">Date</p></strong></td>
+                            <td style="vertical-align: top">: </td>
+                            <td style="vertical-align: top"><strong>{{ \Carbon\Carbon::parse($experience->mulai)->translatedFormat('F Y') }} - {{ ($experience->present == 'present') ? 'present' : \Carbon\Carbon::parse($experience->selesai)->translatedFormat('F Y') }}</strong></td>
+                            {{-- <td>: <strong>{{ \Carbon\Carbon::parse($experience->mulai)->translatedFormat('F Y') }} - {{ \Carbon\Carbon::parse($experience->selesai)->translatedFormat('F Y') }}</strong></td> --}}
                         </tr>
                         <tr>
-                            <td><strong><p class="font_paragraph">Company</p></strong></td>
-                            <td>: <strong>{{ $experience->name_company }}</strong></td>
+                            <td style="vertical-align: top"><strong><p class="font_paragraph">Company</p></strong></td>
+                            <td style="vertical-align: top">: </td>
+                            <td style="vertical-align: top"><strong>{{ $experience->name_company }}</strong></td>
                         </tr>
                         <tr>
-                            <td><strong><p class="font_paragraph">Position</p></strong></td>
-                            <td>: <strong>{{ $experience->role }}</strong></td>
+                            <td style="vertical-align: top"><strong><p class="font_paragraph">Position</p></strong></td>
+                            <td style="vertical-align: top">: </td>
+                            <td style="vertical-align: top"><strong>{{ $experience->role }}</strong></td>
                         </tr>
                         <tr>
                             <td><strong><p class="font_paragraph">Responsibilities</p></strong></td>
@@ -285,27 +289,31 @@
         <hr>
         <div class="projects_section">
             @if($applicant->Projects->isNotEmpty())
-            @foreach($applicant->projects as $project)
+            @foreach($applicant->projects as $index => $project)
                 <table class="projects_content">
                     <tr>
-                        <td><strong><p class="font_paragraph">Project</p></strong></td>
-                        <td><p class="font_paragraph">: {{ $project->project_name }}</p></td>
+                        <td style="vertical-align: top"><strong><p class="font_paragraph">Project</p></strong></td>
+                        <td style="vertical-align: top">: </td>
+                        <td style="vertical-align: top"><p class="font_paragraph">{{ $project->project_name }}</p></td>
                     </tr>
-                    <tr class="hide">
-                        <td><strong><p class="font_paragraph">Position</p></strong></td>
-                        <td><p class="font_paragraph">: </p></td>
+                    <tr class="">
+                        <td style="vertical-align: top"><strong><p class="font_paragraph">Position</p></strong></td>
+                        <td style="vertical-align: top">: </td>
+                        <td style="vertical-align: top"><p class="font_paragraph">{{ isset($project->position[$index]) ? $project->position : "-" }}</p></td>
+                    </tr>
+                    {{-- <tr>
+                        <td style="vertical-align: top"><strong><p class="font_paragraph">Period</p></strong></td>
+                        <td style="vertical-align: top"><p class="font_paragraph">: {{ \Carbon\Carbon::parse($project->mulai_project)->translatedFormat('F Y') }} - {{ \Carbon\Carbon::parse($project->selesai_project)->translatedFormat('F Y') }}</p></td>
+                    </tr> --}}
+                    <tr class="">
+                        <td style="vertical-align: top"><strong><p class="font_paragraph">Location</p></strong></td>
+                        <td style="vertical-align: top">: </td>
+                        <td style="vertical-align: top"><p class="font_paragraph">{{ isset($project->location[$index]) ? $project->location : "-" }}</p></td>
                     </tr>
                     <tr>
-                        <td><strong><p class="font_paragraph">Period</p></strong></td>
-                        <td><p class="font_paragraph">: {{ $project->mulai_project }} - {{ $project->selesai_project }}</p></td>
-                    </tr>
-                    <tr class="hide">
-                        <td><strong><p class="font_paragraph">Location</p></strong></td>
-                        <td><p class="font_paragraph">: </p></td>
-                    </tr>
-                    <tr>
-                        <td><strong><p class="font_paragraph">Client</p></strong></td>
-                        <td><p class="font_paragraph">: {{ $project->client }}</p></td>
+                        <td style="vertical-align: top"><strong><p class="font_paragraph">Client</p></strong></td>
+                        <td style="vertical-align: top">: </td>
+                        <td style="vertical-align: top"><p class="font_paragraph">{{ isset($project->client[$index]) ? $project->client : "-" }}</p></td>
                     </tr>
                 </table>
             @endforeach

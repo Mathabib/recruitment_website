@@ -322,7 +322,7 @@
                             </div>
                             <div class="input role_name">
                                 <label class="form-label" for="role[]">Position Name @{{index + 1}}</label>
-                                <input class="form-control" name="role[]" type="text">
+                                <input class="form-control" name="role[]" type="text" value="">
                                 @error('role.*')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -337,13 +337,26 @@
                                     @enderror
                                 </div>
 
-                                <div class="date work_end">
+                                <div style="display: flex; align-items:flex-end">
+                                    <select class="form-control status-select" :data-id="index" name="present[]" id="">
+                                        <option selected value="end_date">Input End Date</option>
+                                        <option value="present">Present</option>
+                                    </select>
+                                </div>
+
+                                <div class="date work_end" :id="'work_end' + index">
                                     <label class="form-label" for="selesai[]">End</label>
                                     <input class="form-control" type="date" name="selesai[]">
+                                    
                                     @error('selesai.*')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div>
+                                    
+                                </div>
+
                             </div>
 
                             <div class="input job_description">
@@ -352,9 +365,9 @@
                                     {{-- <trix-toolbar id="my_toolbar"></trix-toolbar> --}}
                                     <div class="more-stuff-inbetween"></div>
                                     <trix-toolbar :id="'toolbar-' + index"></trix-toolbar>
-                                    <input type="hidden" :id="'desc_kerja-' + index" name="desc_kerja[]">
+                                    <input type="hidden" :id="'desc_kerja-' + index" name="desc_kerja[]" value="">
                                     <trix-editor :toolbar="'toolbar-' + index" :input="'desc_kerja-' + index"></trix-editor>
-                                  </main>
+                                </main>
                             </div>
 
                             {{-- <div class="input job_description">
@@ -381,7 +394,7 @@
                                 @error('project_name.*')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div>                            
                             <div class="input client_name">
                                 <label class="form-label" for="client[]">Client @{{index + 1}}</label>
                                 <input class="form-control" name="client[]" type="text">
@@ -389,8 +402,22 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="input position_name">
+                                <label class="form-label" for="position[]">position @{{index + 1}}</label>
+                                <input class="form-control" name="position[]" type="text">
+                                @error('position.*')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="input location_name">
+                                <label class="form-label" for="location[]">location @{{index + 1}}</label>
+                                <input class="form-control" name="location[]" type="text">
+                                @error('location.*')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-                            <div class="input date_kontainer">
+                            {{-- <div class="input date_kontainer">
                                 <div class="date project_start">
                                     <label class="form-label" for="mulai_project[]">Start</label>
                                     <input class="form-control" type="date" name="mulai_project[]">
@@ -405,14 +432,13 @@
                                     @error('selesai_project.*')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div>                                
+                            </div> --}}
 
-                            </div>
-
-                            <div class="input project_description">
+                            {{-- <div class="input project_description">
                                 <label class="form-label" for="desc_project[]">Project Description @{{index + 1}}</label>
                                 <textarea class="form-control @error('desc_project.*') is-invalid @enderror" :id="'desc_project' + (index + 1)" name="desc_project[]" placeholder="Project Description"></textarea>
-                            </div>
+                            </div> --}}
 
                             <button type="button" class="btn btn-danger" @click="removeInput2(index)">Delete</button>
                         </div>
@@ -599,7 +625,22 @@
                     $('#jurusan').append('<option value="">Pilih Jurusan</option>');
                 }
             });
+            
         });
+
+        $(document).on('change', '.status-select', function () {
+            let dataId = $(this).data('id');
+            let status = $(this).val();
+            console.log("Data ID:", dataId);
+            console.log("Status:", status);
+            if(status == 'present'){
+                $(`#work_end${dataId}`).hide();
+            } else {
+                $(`#work_end${dataId}`).show();
+            }
+});
+
+
     </script>
     
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}

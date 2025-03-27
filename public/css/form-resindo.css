@@ -33,6 +33,7 @@ hr{
 }
 .date_kontainer{
     display: flex;
+    align-item: bottom;
     gap: 20px;
 }
 .references_kontainer{
@@ -72,4 +73,8 @@ hr{
 
 .important_input{
     color: red;
+}
+
+#trix-toolbar-1{
+    display: none;
 }
