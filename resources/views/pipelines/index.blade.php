@@ -127,6 +127,30 @@
 
                     </div>
 
+                    <div class="pagination">
+                        <form method="GET" action="{{ route('pipelines.index') }}">
+                            
+                            <div class="d-flex flex-start gap-2">
+                                <div>
+                                    
+                                    <select class="form-select" name="pagination" aria-label="Default select example">
+                                        <option value="" {{ !request('pagination') ? 'selected' : '' }}>Pagination</option>
+                                        <option value="5" {{ request('pagination') == '5' ? 'selected' : '' }}>5</option>
+                                        <option value="10" {{ request('pagination') == '10' ? 'selected' : '' }}>10</option>
+                                        <option value="50" {{ request('pagination') == '50' ? 'selected' : '' }}>50</option>
+                                        <option value="100" {{ request('pagination') == '100' ? 'selected' : '' }}>100</option>
+                                        <option value="all" {{ request('pagination') == 'all' ? 'selected' : '' }}>All</option>
+                                      </select>    
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary" type="submit">apply</button>
+                                </div>                                  
+                            </div>
+                        </form>
+                        
+                    </div>
+
+
                     <!-- Right side: Search Input -->
                     <div class="search-bar">
                         <form action="{{ route('pipelines.index') }}" method="GET" class="d-flex align-items-center gap-2">

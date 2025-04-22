@@ -64,7 +64,7 @@ class ResindoController extends Controller
     {
         
         // Validasi input
-        // return $request;
+        return $request;
         $request->validate([
             'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
@@ -217,8 +217,11 @@ class ResindoController extends Controller
         
         $query = Applicant::with('job', 'education', 'jurusan');
     
-    
-    
+        $pagination = 10;
+        if(isset($request['pagination'])){
+            $pagination = $request['pagination'];
+        }
+        
         $query->where('type',  'resindo');
         $jobId = $request->get('job_id');
         $jobTitle = $jobId ? optional(Job::find($jobId))->job_name : null;
@@ -337,8 +340,12 @@ class ResindoController extends Controller
         $results = $query->get();
     
         // Pagination
-        $perPage = 10;
-        $applicants = $query->paginate($perPage);
+        // $perPage = 10;
+        // pagination dibawah ini akan membawa format jumlah pagination yang sama pada setiap tombol pagination nya 
+        // misal kita seting paginationnya 10, maka kalau kita pencet lagi pagination selanjutnya, akan menampilkan 10 data juga
+        // berbeda ketika kita cuman menggunakan paginate(jumlah_pagination) aja , paginate selanjutnya bakal balik lagi ke jumlah default
+        $applicants = $query->paginate($pagination)->appends($request->all());
+        // return $applicants;
     
         // Get the count of applicants based on status
         $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request
@@ -571,7 +578,7 @@ class ResindoController extends Controller
     public function update(Request $request, $id)
     {
         // return $request->jurusan[0]; 
-                           
+                  
         $request->validate([            
            'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
@@ -657,6 +664,18 @@ class ResindoController extends Controller
             'type' => 'resindo',
             'job_id' => $request->job_id
         ]);
+
+        $applicant->languages()->delete();
+        if ($request->has('language')) {
+            foreach ($request->language as $index => $language) {
+                // Menyimpan data ke tabel language yang berelasi dengan applicant_id
+                $applicant->languages()->create([
+                    'language' => $language,
+                    'verbal' => $request->verbal[$index],
+                    'writen' => $request->writen[$index],
+                ]);
+            }
+        }
         
         // Update or create work experiences
         $applicant->workExperiences()->delete(); // Delete previous work experiences
