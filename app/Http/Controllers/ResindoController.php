@@ -557,7 +557,7 @@ class ResindoController extends Controller
         $project = Project::all();
 
 
-
+        // return $applicant->workExperiences;
         return view('pipelines-resindo.edit', compact('applicant', 'jobs', 'educations', 'jurusans'));
     }
 
