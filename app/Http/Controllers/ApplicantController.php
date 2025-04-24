@@ -199,6 +199,10 @@ class ApplicantController extends Controller
     $query = Applicant::with('job', 'education', 'jurusan');
 
 
+    $pagination = 10;
+    if(isset($request['pagination'])){
+        $pagination = $request['pagination'];
+    }
 
     $query->whereNull('type');
     $jobId = $request->get('job_id');
@@ -318,8 +322,9 @@ class ApplicantController extends Controller
     $results = $query->get();
 
     // Pagination
-    $perPage = 10;
-    $applicants = $query->paginate($perPage);
+    $perPage = 20;
+    // $applicants = $query->paginate($perPage);
+    $applicants = $query->paginate($pagination)->appends($request->all());
 
     // Get the count of applicants based on status
     $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request

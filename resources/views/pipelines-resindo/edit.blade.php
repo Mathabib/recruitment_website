@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-{{-- @dd($jobs) --}}
+{{-- @dd($applicant) --}}
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -388,8 +388,7 @@
                                 </div>
 
                                 <div class="input job_description">
-                                    <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
-                                    {{-- <textarea class="form-control @error('desc_kerja.*') is-invalid @enderror" name="desc_kerja[]" placeholder="Deskripsi Pekerjaan" required v-model="experience.desc_kerja"></textarea> --}}
+                                    <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>                                    
                                     
                                     <main>                                        
                                         <div class="more-stuff-inbetween"></div>
@@ -407,7 +406,85 @@
                             </div>
                             <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput1" >Add</button> 
                 
-                        
+                       
+
+                        {{-- =============================================================== --}}
+                        {{-- ================== VUE JS ADD INPUT =========================== --}}
+                        {{-- =============================================================== --}}
+
+                        <div id="work_experience" class="work_experience" v-for='(experience, index) in experiences2' :key='index'>
+        
+                                    <div class="input company_name">
+                                        <label class="form-label" for="name_company[]">Company Name @{{index + 1}}</label>
+                                        <input class="form-control" name="name_company[]" type="text">
+                                        @error('role_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="input role_name">
+                                        <label class="form-label" for="role[]">Position Name @{{index + 1}}</label>
+                                        <input class="form-control" name="role[]" type="text" value="">
+                                        @error('role.*')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+        
+                                    <div class="input date_kontainer">
+                                        <div class="date work_start">
+                                            <label class="form-label" for="mulai[]">Start</label>
+                                            <input class="form-control" type="date" name="mulai[]">
+                                            @error('mulai.*')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+        
+                                        <div style="display: flex; align-items:flex-end">
+                                            <select class="form-control status-select" :data-id="index" name="present[]" id="">
+                                                <option selected value="end_date">Input End Date</option>
+                                                <option value="present">Present</option>
+                                            </select>
+                                        </div>
+        
+                                        <div class="date work_end" :id="'work_end' + index">
+                                            <label class="form-label" for="selesai[]">End</label>
+                                            <input class="form-control" type="date" name="selesai[]">
+                                            
+                                            @error('selesai.*')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+        
+                                        <div>
+                                            
+                                        </div>
+        
+                                    </div>
+        
+                                    <div class="input job_description">
+                                        <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
+                                        <main>
+                                            {{-- <trix-toolbar id="my_toolbar"></trix-toolbar> --}}
+                                            <div class="more-stuff-inbetween"></div>
+                                            <trix-toolbar :id="'toolbar-new-' + index"></trix-toolbar>
+                                            <input type="hidden" :id="'desc_kerja-new-' + index" name="desc_kerja[]" value="">
+                                            <trix-editor :toolbar="'toolbar-new-' + index" :input="'desc_kerja-new-' + index"></trix-editor>
+                                        </main>
+                                    </div>
+        
+                                    {{-- <div class="input job_description">
+                                        <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
+                                        <textarea class="form-control @error('desc_kerja.*') is-invalid @enderror" name="desc_kerja[]" placeholder="Job Description" required></textarea>
+                                        @error('desc_kerja')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div> --}}
+        
+                                    
+        
+                                    <button type="button" class="btn btn-danger" @click="removeInput_experience(index)">Delete</button>
+                                </div>
+                                <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput_experience">Add</button>
+                                
                         <!-- Project Section -->
 
 
@@ -548,6 +625,11 @@
                         present: ''
                     }
                 ],
+                experiences2 : [
+                    {
+                        values: ''
+                    }
+                ],
                 projects : [
                     {
                         id: '',
@@ -623,6 +705,15 @@
                     console.log(this.experiences);                    
                 })
             },
+            addInput_experience() {
+                this.experiences2.push({
+                    value: ''
+                });
+            },
+            removeInput_experience(index) {
+                this.experiences2.splice(index, 1);
+            },
+
             addInput1() {
                 this.experiences.push(
                     {
