@@ -351,7 +351,7 @@
                                 @enderror
                             </div>
 
-                            <div class="input date_kontainer">
+                            {{-- <div class="input date_kontainer">
                                 <div class="date project_start">
                                     <label class="form-label" for="mulai_project[]">Start</label>
                                     <input class="form-control" type="date" name="mulai_project[]" v-model="project.mulai_project">
@@ -368,7 +368,7 @@
                                     @enderror
                                 </div>
 
-                            </div>
+                            </div> --}}
 
                             <div class="input project_description">
                                 <label class="form-label" for="desc_project[]">Project Description @{{index + 1}}</label>

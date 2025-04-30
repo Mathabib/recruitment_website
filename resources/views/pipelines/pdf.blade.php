@@ -347,9 +347,9 @@
                 <tr class="tr-content-cv">
                     <td class="title-content-cv"><strong>Description</strong></td> <td>:</td> <td class="content-cv">{{ $project->desc_project }}</td>
                 </tr>
-                <tr class="tr-content-cv">
+                {{-- <tr class="tr-content-cv">
                     <td class="title-content-cv"><strong>Period</strong></td> <td>:</td> <td class="content-cv">{{ $project->mulai_project }} - {{ $project->selesai_project }}</td>
-                </tr>
+                </tr> --}}
             </table>        
           
             @endforeach
