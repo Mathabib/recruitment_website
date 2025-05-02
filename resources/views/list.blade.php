@@ -60,7 +60,7 @@
             width: 100px;
         }
 
-        .job-list-container {
+        /* .job-list-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
@@ -69,7 +69,38 @@
             -ms-overflow-style: none; 
             scrollbar-width: none; 
             margin-top: 20px;
-        }
+        } */
+         
+        /* .job-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+    margin-top: 20px;
+} */
+
+.row-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    height: 70vh;
+    align-items: flex-start;
+}
+
+.job-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    max-height: 100%; /* ini akan mengikuti 70vh dari parent */
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-top: 20px;
+}
+
 
         .job-list-container::-webkit-scrollbar {
             display: none;
@@ -87,11 +118,12 @@
             border-color: #007bff;
         }
 
-        .row-container {
+        /* .row-container {
             display: flex;
             gap: 30px;
+            
             margin-top: 20px;
-        }
+        } */
 
         .job-details-link {
             text-decoration: none;
