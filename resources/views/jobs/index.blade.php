@@ -9,68 +9,67 @@
 @section('content')
 <div class="row">
     <div class="col-12">
-    <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0 "><b style="color: white;">Jobs List</b></h5>
-        <div class="ms-auto d-flex">
-            <!-- Form Search Job dengan tampilan modern -->
-            <div class="search-bar me-3">
-                <form action="{{ route('jobs.index') }}" method="GET">
-                    <input type="text" name="search" placeholder="Search jobs..." value="{{ request()->get('search') }}">
-                    <button type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
+        <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">            
+            <div>
+                <h5 class="mb-0 "><b style="color: white;">Total Jobs : {{ $jobs->count() }}</b></h5>
             </div>
             
-            <!-- Dropdown untuk Sort -->
-            <div class="filter-item-sort me-2">
-    <form action="{{ route('jobs.index') }}" method="GET" class="d-flex align-items-center">
-        <input type="hidden" name="search" value="{{ request()->get('search') }}">
-        
-        <div class="dropdown">
-        <button class="btn btn-primary btn-extended" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-    Sort By: 
-    <strong>
-        @if(request()->input('sort'))
-            {{ request()->input('sort') == 'desc' ? 'Sort Z-A' : 'Sort A-Z' }}
-    
-        @endif
-    </strong>
+            <div class="ms-auto d-flex">
+                        <!-- Form Search Job dengan tampilan modern -->
+                        <div class="search-bar me-3">
+                            <form action="{{ route('jobs.index') }}" method="GET">
+                                <input type="text" name="search" placeholder="Search jobs..." value="{{ request()->get('search') }}">
+                                <button type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Dropdown untuk Sort -->
+                        <div class="filter-item-sort me-2">
+                                    <form action="{{ route('jobs.index') }}" method="GET" class="d-flex align-items-center">
+                                        <input type="hidden" name="search" value="{{ request()->get('search') }}">
+                                        
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary btn-extended" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Sort By: 
+                                                <strong>
+                                                    @if(request()->input('sort'))
+                                                        {{ request()->input('sort') == 'desc' ? 'Sort Z-A' : 'Sort A-Z' }}
+                                                
+                                                    @endif
+                                                </strong>
 
-    @if(!request()->input('sort'))
-        <i class="fas fa-chevron-down ms-2"></i>
-    @endif
-</button>
+                                                @if(!request()->input('sort'))
+                                                    <i class="fas fa-chevron-down ms-2"></i>
+                                                @endif
+                                            </button>
 
 
-            
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li>
-                    <a class="dropdown-item {{ request()->input('sort') == 'asc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'asc', 'search' => request()->get('search')]) }}">
-                        Sort A-Z
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item {{ request()->input('sort') == 'desc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'desc', 'search' => request()->get('search')]) }}">
-                        Sort Z-A
-                    </a>
-                </li>
-            </ul>
+                                                
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <li>
+                                                        <a class="dropdown-item {{ request()->input('sort') == 'asc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'asc', 'search' => request()->get('search')]) }}">
+                                                            Sort A-Z
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item {{ request()->input('sort') == 'desc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'desc', 'search' => request()->get('search')]) }}">
+                                                            Sort Z-A
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                        </div>
+                                    </form>
+                        </div>
+            </div>
+                <!-- Button untuk Create Job -->
+                <a href="{{ route('jobs.create') }}" class="btn btn-primary btn-extended">
+                    <i class=""></i> Create Job
+                </a>
+            </div>
         </div>
-    </form>
-</div>
-
-</div>
-
-
-
-            <!-- Button untuk Create Job -->
-            <a href="{{ route('jobs.create') }}" class="btn btn-primary btn-extended">
-                <i class=""></i> Create Job
-            </a>
-        </div>
-    </div>
 </div>
 
             <div class="card-body">
