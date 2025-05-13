@@ -169,7 +169,12 @@
                 </div>
 
                 <div>
+                    @if(request('pagination') == 'all')
+                        <h3>Total Applicant : {{ $applicants->count() }}</h3>
+                    @else
                     <h3>Total Applicant : {{ $applicants->total() }}</h3>                    
+                    @endif                    
+                    
                 </div>
 
                 <!-- Modal Filter -->
@@ -252,7 +257,7 @@
                             @foreach($applicants as $key => $applicant)
                           
                             <tr>
-                                <td>{{ $key + $applicants->firstItem() }}</td>
+                                <td>{{ $key + 1 }}</td>
                                 <td>
                                     <div style="display: flex; align-items: center; cursor: pointer;" onclick="showApplicantInfo({{ json_encode($applicant) }})">
                                         @if($applicant->photo_pass)
@@ -337,10 +342,12 @@
                 @endforeach
                 </tbody>
                 </table>
-                <div class="d-flex justify-content-center">
-                    {{ $applicants->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
-                </div>
-
+                @if(request('pagination') != 'all')
+                    <div class="d-flex justify-content-center">
+                        {{ $applicants->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
+                    </div>
+                @endif()
+                
             </div>
         </div>
     </div>
