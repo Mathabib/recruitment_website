@@ -344,7 +344,12 @@ class ResindoController extends Controller
         // pagination dibawah ini akan membawa format jumlah pagination yang sama pada setiap tombol pagination nya 
         // misal kita seting paginationnya 10, maka kalau kita pencet lagi pagination selanjutnya, akan menampilkan 10 data juga
         // berbeda ketika kita cuman menggunakan paginate(jumlah_pagination) aja , paginate selanjutnya bakal balik lagi ke jumlah default
-        $applicants = $query->paginate($pagination)->appends($request->all());
+        // $applicants = $query->paginate($pagination)->appends($request->all());
+        if ($pagination == 'all'){
+            $applicant = $query->get();
+        } else {
+            $applicants = $query->paginate($pagination)->appends($request->all());
+        }
         // return $applicants;
     
         // Get the count of applicants based on status

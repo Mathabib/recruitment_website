@@ -324,7 +324,13 @@ class ApplicantController extends Controller
     // Pagination
     $perPage = 20;
     // $applicants = $query->paginate($perPage);
-    $applicants = $query->paginate($pagination)->appends($request->all());
+    if ($pagination == 'all'){
+        $applicant = $query->get();
+    } else {
+        $applicants = $query->paginate($pagination)->appends($request->all());
+    }
+    
+    
 
     // Get the count of applicants based on status
     $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request
