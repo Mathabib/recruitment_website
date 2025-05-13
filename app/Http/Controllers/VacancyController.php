@@ -157,8 +157,8 @@ class VacancyController extends Controller
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
             'desc_project.*' => 'nullable|string',
-            'mulai_project.*' => 'nullable|date',
-            'selesai_project.*' => 'nullable|date',
+            // 'mulai_project.*' => 'nullable|date',
+            // 'selesai_project.*' => 'nullable|date',
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
@@ -225,8 +225,8 @@ class VacancyController extends Controller
                     'project_name' => $project_name,
                     'desc_project' => $request->desc_project[$index],
                     'client' => $request->client[$index],
-                    'mulai_project' => $request->mulai_project[$index],
-                    'selesai_project' => $request->selesai_project[$index],
+                    // 'mulai_project' => $request->mulai_project[$index],
+                    // 'selesai_project' => $request->selesai_project[$index],
                 ]);
             }
         }

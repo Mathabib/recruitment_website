@@ -166,11 +166,11 @@
                         </form>
                     </div>
 
-                   
-
-
                 </div>
 
+                <div>
+                    <h3>Total Applicant : {{ $applicants->total() }}</h3>                    
+                </div>
 
                 <!-- Modal Filter -->
                 <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">

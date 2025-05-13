@@ -167,6 +167,9 @@
                         </form>
                     </div>
 
+                </div>
+                <div>
+                    <h3>Total Applicant : {{ $applicants->total() }}</h3>                    
 
                 </div>
 
