@@ -269,7 +269,8 @@
                                     </div>
                                 </td>
                                 <td>{{ $applicant->education->name_education }} - {{ $applicant->jurusan->name_jurusan }}</td>
-                                <td>{{ $applicant->job->job_name }}</td>
+                                <td>{{ $applicant->job->job_name ?? '' }}</td>
+
 
 
                                 <td class="pipeline_stage">

@@ -279,21 +279,24 @@ class ApplicantController extends Controller
     }
 
     // Search 
-    if ($request->has('search')) {
-        $search = $request->get('search');
+if ($request->has('search')) {
+    $search = $request->get('search');
+    $search_by = $request->get('search_by');
 
-        if ($jobId && $status) {
-            $query->where('name', 'like', $search . '%');
-        } else {
-
-            $query->where(function ($query) use ($search) {
-                $query->where('name', 'like', $search . '%')
-                    ->orWhereHas('job', function ($query) use ($search) {
-                        $query->where('job_name', 'like', $search . '%');
-                    });
+    if ($jobId && $status) {
+        $query->where('name', 'like', "%{$search}%");
+    } else {
+        if ($search_by === 'name') {
+            // Filter langsung di kolom applicant
+            $query->where('name', 'like', "%{$search}%");
+        } elseif ($search_by === 'job_name') {
+            // Filter di relasi job
+            $query->whereHas('job', function ($q) use ($search) {
+                $q->where('job_name', 'like', "%{$search}%");
             });
         }
     }
+}
 
 
 
@@ -316,8 +319,20 @@ class ApplicantController extends Controller
         $query->orderBy('name', 'asc');
     } elseif ($sort === 'z_to_a') {
         $query->orderBy('name', 'desc');
-    }
-    
+    }  elseif ($sort === 'name_asc') {
+        $query->orderBy('name', 'asc');
+    }  elseif ($sort === 'name_desc') {
+        $query->orderBy('name', 'desc');
+    } elseif ($sort === 'job_asc') {
+        $query->orderBy(Job::select('job_name')->whereColumn('jobs.id', 'applicants.job_id'), 'asc');
+    } elseif ($sort === 'job_desc') {
+        $query->orderBy(Job::select('job_name')->whereColumn('jobs.id', 'applicants.job_id'), 'desc');
+    } elseif ($sort === 'education_asc') {
+        $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'asc');
+    } elseif ($sort === 'education_desc') {
+        $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'desc');
+    } 
+        
     // Eksekusi query untuk mendapatkan hasil
     $results = $query->get();
 

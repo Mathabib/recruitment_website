@@ -9,7 +9,7 @@
 .search-bar input {
     width: 100%;
     padding: 8px 15px; 
-    border-radius: 25px; 
+    /* border-radius: 25px;  */
     border: 1px solid #aae3ea;
     transition: border-color 0.3s ease;
     font-size: 0.875rem; 
@@ -21,7 +21,7 @@
 }
 
 .search-bar select {
-    border-radius: 25px;
+    /* border-radius: 25px; */
     border: 1px solid #aae3ea;
     padding: 8px 10px;
     font-size: 0.875rem; 

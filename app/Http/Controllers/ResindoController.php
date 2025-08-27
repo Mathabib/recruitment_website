@@ -384,7 +384,7 @@ class ResindoController extends Controller
         $jurusans = Jurusan::all();
         // $applicants = Applicant::where('type', 'resindo')
         // ->paginate(10);  // Tentukan jumlah data per halaman, misalnya 10
-    
+        
         return view('pipelines-resindo.index', compact('applicants', 'jobs', 'jobTitle', 'educations', 'jurusans', 'request', 'statusCounts', 'stageName'));
     }
 

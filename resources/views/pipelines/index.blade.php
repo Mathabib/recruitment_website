@@ -152,7 +152,7 @@
 
 
                     <!-- Right side: Search Input -->
-                    <div class="search-bar">
+                    {{-- <div class="search-bar">
                         <form action="{{ route('pipelines.index') }}" method="GET" class="d-flex align-items-center gap-2">
                             <input type="text" name="search" class="form-control form-control-sm custom-search-input"
                                 style="margin-left: 300px;" placeholder="Search..."
@@ -165,7 +165,7 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
-                    </div>
+                    </div> --}}
 
                 </div>
                 <div>
@@ -175,6 +175,30 @@
                     <h3>Total Applicant : {{ $applicants->total() }}</h3>                    
                     @endif                    
 
+                </div>
+
+                <div class="search-bar">
+                    <form action="{{ route('pipelines.index') }}" method="GET" class="d-flex align-items-center gap-2">
+                        <div>
+                            <label for="search">Keyword</label>
+                            <input type="text" name="search" class="form-control custom-search-input"
+                            style="" placeholder="Search Applicant"
+                            value="{{ request('search') }}" aria-label="Search Applicant">
+                        </div>
+                        <div>
+                            <label for="search_by">Search By</label>
+                            <select style="width: 150px;" class="form-select" name="search_by" id="">
+                                <option value="name" {{ request('search_by') == 'name' ? 'selected' : '' }}>Name</option>
+                                <option value="job_name" {{ request('search_by') == 'job_name' ? 'selected' : '' }}>Job</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="job_id" value="{{ request('job_id') }}">
+                        <input type="hidden" name="status" value="{{ request('status') }}">
+
+                        <button type="submit" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
                 </div>
 
 
@@ -244,9 +268,40 @@
                         <thead>
                             <tr class="blue-gradient">
                                 <th>No.</th>
-                                <th>Name</th>
-                                <th>Education</th>
-                                <th>Job</th>
+                                <th>Input Time</th>
+                                <th>
+                                    <span>Name</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'name_asc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'name_desc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
+                                <th>
+                                    <span>Education</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_asc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_desc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
+                                <th>                    
+                                    <span>Job</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_asc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_desc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
 
 
                                 <th>Move Stage</th>
@@ -257,100 +312,103 @@
                         <tbody>
                             @foreach($applicants as $key => $applicant)
                             @if ( $applicant->type !== 'resindo')
-                            <tr>
-                                {{-- <td>{{ $key + $applicants->firstItem() }}</td> --}}
-                                <td>{{ $key + 1 }}</td>
-                                <td>
-                                    <div style="display: flex; align-items: center; cursor: pointer;" onclick="showApplicantInfo({{ json_encode($applicant) }})">
-                                        @if($applicant->photo_pass)
-                                        <img src="{{ asset('storage/' . $applicant->photo_pass) }}" alt="Applicant Photo" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
-                                        @else
-                                        <span style="width: 50px; height: 50px; display: inline-block; background-color: #f0f0f0; margin-right: 10px; border-radius: 50%;"></span>
-                                        @endif
-                                        <span>{{ $applicant->name }}</span>
-                                    </div>
-                                </td>
-                                <td>{{ $applicant->education->name_education }} - {{ $applicant->jurusan->name_jurusan }}</td>
-                                <td>{{ $applicant->job->job_name }}</td>
+                                <tr>
+                                    {{-- <td>{{ $key + $applicants->firstItem() }}</td> --}}
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>
+                                       <div class="">
+                                            <span>{{ \Carbon\Carbon::parse($applicant->created_at)->locale('id')->translatedFormat('l, d F Y') }}</span>
+                                            |
+                                            <span>{{ \Carbon\Carbon::parse($applicant->created_at)->format('H:i') }}</span>
+                                       </div>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; cursor: pointer;" onclick="showApplicantInfo({{ json_encode($applicant) }})">
+                                            @if($applicant->photo_pass)
+                                            <img src="{{ asset('storage/' . $applicant->photo_pass) }}" alt="Applicant Photo" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                                            @else
+                                            <span style="width: 50px; height: 50px; display: inline-block; background-color: #f0f0f0; margin-right: 10px; border-radius: 50%;"></span>
+                                            @endif
+                                            <span>{{ $applicant->name }}</span>
+                                        </div>
+                                    </td>
+                                    <td>{{ $applicant->education->name_education }} - {{ $applicant->jurusan->name_jurusan }}</td>
+                                    <td>{{ $applicant->job->job_name }}</td>
 
 
-                                <td class="pipeline_stage">
-                                    <div>
-                                        <form action="{{ route('applicants.updateStatus', $applicant->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="dropdown">
-                                                <button class="btn btn-white dropdown-toggle btn-fixed-width" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    {{ ucfirst($applicant->status) ?: 'Pilih Status' }}
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <button type="submit" name="status" value="applied" class="dropdown-item">Applicant</button>
-                                                    <button type="submit" name="status" value="interview" class="dropdown-item">Interview</button>
-                                                    <button type="submit" name="status" value="offer" class="dropdown-item">Offer</button>
-                                                    <button type="submit" name="status" value="accepted" class="dropdown-item">Accepted</button>
-                                                    <!-- <button type="submit" name="status" value="rejected" class="dropdown-item">Rejected</button> -->
-                                                    <button type="submit" name="status" value="bankcv" class="dropdown-item">Bank CV</button>
+                                    <td class="pipeline_stage">
+                                        <div>
+                                            <form action="{{ route('applicants.updateStatus', $applicant->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="dropdown">
+                                                    <button class="btn btn-white dropdown-toggle btn-fixed-width" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        {{ ucfirst($applicant->status) ?: 'Pilih Status' }}
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <button type="submit" name="status" value="applied" class="dropdown-item">Applicant</button>
+                                                        <button type="submit" name="status" value="interview" class="dropdown-item">Interview</button>
+                                                        <button type="submit" name="status" value="offer" class="dropdown-item">Offer</button>
+                                                        <button type="submit" name="status" value="accepted" class="dropdown-item">Accepted</button>
+                                                        <!-- <button type="submit" name="status" value="rejected" class="dropdown-item">Rejected</button> -->
+                                                        <button type="submit" name="status" value="bankcv" class="dropdown-item">Bank CV</button>
 
+                                                    </div>
                                                 </div>
-                                <td>
-                                    <div class="recommendation-remark" onclick="toggleDropdown(this)" style="position: relative;">
-                                        <span class="selected-option" style="color: white; background-color: <?php echo $applicant->recommendation_status === 'recommended' ? 'green' : 'orange'; ?>;">
-                                            <?php echo ucfirst(str_replace('_', ' ', $applicant->recommendation_status)); ?>
-                                        </span>
-                                        <div class="options" style="display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000;">
-                                            <div class="option" data-value="recommended" onclick="updateRecommendation(this, <?php echo $applicant->id; ?>)" style="background-color: white; color: black;">
-                                                Recommended
-                                            </div>
-                                            <div class="option" data-value="not_recommended" onclick="updateRecommendation(this, <?php echo $applicant->id; ?>)" style="background-color: white; color: black;">
-                                                Not Recommended
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="recommendation-remark" onclick="toggleDropdown(this)" style="position: relative;">
+                                            <span class="selected-option" style="color: white; background-color: <?php echo $applicant->recommendation_status === 'recommended' ? 'green' : 'orange'; ?>;">
+                                                <?php echo ucfirst(str_replace('_', ' ', $applicant->recommendation_status)); ?>
+                                            </span>
+                                            <div class="options" style="display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000;">
+                                                <div class="option" data-value="recommended" onclick="updateRecommendation(this, <?php echo $applicant->id; ?>)" style="background-color: white; color: black;">
+                                                    Recommended
+                                                </div>
+                                                <div class="option" data-value="not_recommended" onclick="updateRecommendation(this, <?php echo $applicant->id; ?>)" style="background-color: white; color: black;">
+                                                    Not Recommended
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                    
+                                                                
+                                    <td>
+                                        <div class="action-icons">
+                                            <!-- Edit button -->
+                                            <a href="{{ route('pipelines.edit', $applicant->id) }}" class="action-icon" title="Edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
 
+                                            <!-- Delete button -->
+                                            <a href="#" class="action-icon"
+                                                onclick="event.preventDefault(); 
+                                                if (confirm('Are you sure you want to delete this item?')) {
+                                                    document.getElementById('delete-form-{{ $applicant->id }}').submit();
+                                                }" title="Delete">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
 
-
-
-                                </form>
+                                            <!-- Hidden delete form -->
+                                            <form id="delete-form-{{ $applicant->id }}" action="{{ route('pipelines.destroy', $applicant) }}" method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @if(request('pagination') != 'all')
+                        <div class="d-flex justify-content-center">
+                            {{ $applicants->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
+                        </div>
+                    @endif()
                 </div>
-                </td>
-                <td>
-                    <div class="action-icons">
-                        <!-- Edit button -->
-                        <a href="{{ route('pipelines.edit', $applicant->id) }}" class="action-icon" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
-
-                        <!-- Delete button -->
-                        <a href="#" class="action-icon"
-                            onclick="event.preventDefault(); 
-            if (confirm('Are you sure you want to delete this item?')) {
-                document.getElementById('delete-form-{{ $applicant->id }}').submit();
-            }" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>
-
-                        <!-- Hidden delete form -->
-                        <form id="delete-form-{{ $applicant->id }}" action="{{ route('pipelines.destroy', $applicant) }}" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </div>
-                </td>
-
-
-                </tr>
-           @endif
-                @endforeach
-                </tbody>
-                </table>
-                @if(request('pagination') != 'all')
-                    <div class="d-flex justify-content-center">
-                        {{ $applicants->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
-                    </div>
-                @endif()
-
-            </div>
         </div>
     </div>
 </div>

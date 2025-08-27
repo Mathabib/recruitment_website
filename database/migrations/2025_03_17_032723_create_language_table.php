@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('verbal')->nullable();
             $table->string('writen')->nullable();
             $table->unsignedBigInteger('applicant_id');
-            $table->foreign('applicant_id')->references('id')->on('applicant')->onDelete('cascade');
+            $table->foreign('applicant_id')->references('id')->on('applicants')->onDelete('cascade');
             $table->timestamps();
           
         });
