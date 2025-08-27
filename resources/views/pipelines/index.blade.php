@@ -178,7 +178,7 @@
                 </div>
 
                 <div class="search-bar">
-                    <form action="{{ route('pipelines.index') }}" method="GET" class="d-flex align-items-center gap-2">
+                    <form action="{{ route('pipelines.index') }}" method="GET" class="d-flex align-items-end gap-2">
                         <div>
                             <label for="search">Keyword</label>
                             <input type="text" name="search" class="form-control custom-search-input"
