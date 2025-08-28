@@ -98,9 +98,14 @@
                             <!-- Salary Expectation -->
                             <div class="form-group">
                                 <label for="salary_expectation">Salary Expectation</label>
-                                <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation', $applicant->salary_expectation) }}" placeholder="Ekspektasi Gaji" required>
+                                <input type="text" 
+                                        class="form-control @error('salary_expectation') is-invalid @enderror" 
+                                        id="salary_expectation" 
+                                        name="salary_expectation" 
+                                        value="{{ old('salary_expectation', $salary_expectation) }}" 
+                                        placeholder="Ekspektasi Gaji" required>
                                 @error('salary_expectation')
-                                <span class="text-danger">{{ $message }}</span>
+                                    <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -438,6 +443,13 @@
 @section('js')
 
 <script>
+
+    // ============untuk angka expected salary================
+    document.getElementById('salary_expectation').addEventListener('input', function(e) {
+    let value = this.value.replace(/\D/g, ""); // hanya angka
+    this.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
+});
+
     const {createApp} = Vue
     createApp({
         data(){
