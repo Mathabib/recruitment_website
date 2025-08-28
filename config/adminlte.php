@@ -316,9 +316,7 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'Home',
-            'url' => '/home',
-            'icon' => 'fa fa-home',
+
         ],
         [
             'text' => 'jobs',
