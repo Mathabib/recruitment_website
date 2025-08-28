@@ -148,7 +148,7 @@ class VacancyController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'nullable|numeric|min:0',
+            'salary_expectation' => 'nullable|min:0',
             'role.*' => 'required|string|max:255',
             'name_company.*' => 'required|string',
             'desc_kerja.*' => 'required|string',
@@ -183,6 +183,12 @@ class VacancyController extends Controller
         }
         // $jurusan = $education->Jurusan()->firstOrCreate(['name_jurusan' => $request->jurusan], ['education_id' => $educationId]);
         // $jurusan = Jurusan::firstOrCreate(['name_jurusan' => $request->jurusan], ['education_id' => $educationId]);
+
+         //ubah format salary expectation
+        $salary = str_replace('.', '', $request->salary_expectation); // hilangkan titik
+        $salary = str_replace(',', '.', $salary); // ubah koma jadi titik (jika ada)
+        $salary = (int) $salary;
+
         // Create applicant
         $applicant = Applicant::create([
             'job_id' => $request->job_id,
@@ -200,7 +206,7 @@ class VacancyController extends Controller
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
-            'salary_expectation' => $request->salary_expectation,
+            'salary_expectation' => $salary,
             'education_id' => $request->education, // Pastikan ini mengacu ke id yang benar
             'jurusan_id' => $jurusan->id, // Gunakan ID dari jurusan
         ]);
