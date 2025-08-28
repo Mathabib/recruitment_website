@@ -315,9 +315,13 @@ if ($request->has('search')) {
         $query->orderBy('created_at', 'desc');
     } elseif ($sort === 'oldest') {
         $query->orderBy('created_at', 'asc');
-    } elseif (in_array($sort, ['a_to_z', 'name_asc'])) {
+    } elseif ($sort === 'a_to_z') {
         $query->orderBy('name', 'asc');
-    } elseif (in_array($sort, ['z_to_a', 'name_desc'])) {
+    } elseif ($sort === 'z_to_a') {
+        $query->orderBy('name', 'desc');
+    }  elseif ($sort === 'name_asc') {
+        $query->orderBy('name', 'asc');
+    }  elseif ($sort === 'name_desc') {
         $query->orderBy('name', 'desc');
     } elseif ($sort === 'job_asc') {
         $query->orderBy(Job::select('job_name')->whereColumn('jobs.id', 'applicants.job_id'), 'asc');
@@ -327,12 +331,17 @@ if ($request->has('search')) {
         $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'asc');
     } elseif ($sort === 'education_desc') {
         $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'desc');
+    }  else {
+    $query->orderBy('created_at', 'desc'); 
+}
 
+//bug pagination all : karena query diload 2 kali dan variabel applicant tidak konsisten ada yang ($applicants dan $applicant)
+   
+    if ($pagination === 'all'){
+        $applicants = $query->get();
     } else {
         $applicants = $query->paginate($pagination)->appends($request->all());
     }
-
- 
     
     
 
