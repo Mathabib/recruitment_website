@@ -303,6 +303,9 @@
                                     </a>
                                 </th>
 
+                                 @if(request('status') === 'offer')
+                                    <th></th>
+                                @endif
 
                                 <th>Move Stage</th>
                                 <th></th>
@@ -332,9 +335,30 @@
                                             <span>{{ $applicant->name }}</span>
                                         </div>
                                     </td>
-                                    <td>{{ $applicant->education->name_education }} - {{ $applicant->jurusan->name_jurusan }}</td>
+                                    <td style="width: 180px;">{{ $applicant->education->name_education }} - {{ $applicant->jurusan->name_jurusan }}</td>
                                     <td>{{ $applicant->job->job_name }}</td>
 
+                                  @if(request('status') === 'offer')
+                                    @if($applicant->status === 'offer')
+                                        <td>
+                                            @if($applicant->offerLetter)
+                                                {{-- Sudah ada offer letter --}}
+                                                <a href="{{ route('offer_letters.show', $applicant->offerLetter->id) }}" 
+                                                class="btn btn-sm btn-info">
+                                                    View Offering Letter
+                                                </a>
+                                            @else
+                                                {{-- Belum ada, tampilkan tombol create --}}
+                                                <a href="{{ route('offer_letters.create', $applicant->id) }}" 
+                                                class="btn btn-sm btn-warning">
+                                                    Create Offering Letter
+                                                </a>
+                                            @endif
+                                        </td>
+                                    @else
+                                        <td></td>
+                                    @endif
+                                @endif
 
                                     <td class="pipeline_stage">
                                         <div>
@@ -358,6 +382,7 @@
                                             </form>
                                         </div>
                                     </td>
+                                    
                                     <td>
                                         <div class="recommendation-remark" onclick="toggleDropdown(this)" style="position: relative;">
                                             <span class="selected-option" style="color: white; background-color: <?php echo $applicant->recommendation_status === 'recommended' ? 'green' : 'orange'; ?>;">
@@ -447,6 +472,11 @@
                 <a id="download-cv" href="#" class="btn btn-success">Download CV</a>
                 <a id="download-cv2" href="#" class="btn btn-success">Download CV RESINDO</a>
                 <a id="download-summary" href="#" class="btn btn-success">Download SUMMARY RESINDO</a>
+                 <!-- @if($applicant->status === 'offer')
+                <a href="{{ route('offer_letters.create', $applicant->id) }}" class="btn btn-warning">
+                    Create Offering Letter
+                </a>
+                @endif -->
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
             </div>

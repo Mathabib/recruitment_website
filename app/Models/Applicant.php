@@ -81,4 +81,9 @@ class Applicant extends Model
     {
         return $this->hasOne(Notes::class);
     }
+
+    public function offerLetter()
+    {
+        return $this->hasOne(OfferLetter::class, 'applicant_id');
+    }
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\VacancyController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ResindoController;
+use App\Http\Controllers\OfferLetterController;
 
 
 use App\Models\Applicant;
@@ -85,7 +86,24 @@ Route::post('/delete-notes', [ApplicantController::class, 'deleteNotes'])->name(
 Route::get('showEducationMajor/{id}', [JurusanController::class, 'showEducationMajor'])->name('showEducationMajor');
 Route::get('educationMajorCreate/{id}', [JurusanController::class, 'educationMajorCreate'])->name('educationMajorCreate');
 
+//route for offer letter
+Route::prefix('offer-letters')->group(function () {
+    Route::get('create/{applicantId}', [OfferLetterController::class, 'create'])->name('offer_letters.create');
+    Route::post('store', [OfferLetterController::class, 'store'])->name('offer_letters.store');
+    Route::get('{id}', [OfferLetterController::class, 'show'])->name('offer_letters.show');
+    Route::get('{id}/download', [OfferLetterController::class, 'downloadPdf'])->name('offer_letters.download');
+
+    //edit update route
+    Route::get('{id}/edit', [OfferLetterController::class, 'edit'])->name('offer_letters.edit');
+    Route::put('{id}', [OfferLetterController::class, 'update'])->name('offer_letters.update');
+
+    //route send mail
+    Route::post('/offer_letters/{id}/send_email', [OfferLetterController::class, 'sendEmail'])
+    ->name('offer_letters.send_email');
+});
+
 //testing 
 Route::get('/test/{id}', [JurusanController::class, 'showEducationMajor'])->name('test');
+
 
 
