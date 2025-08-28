@@ -315,14 +315,10 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-        [
-<<<<<<< HEAD
-            'text' => 'Dashboard',
+         [
+            'text' => 'Dasboard',
             'url' => 'home',
-            'icon' => 'fa fa-tachometer-alt', 
-=======
-
->>>>>>> 057a419de12a384ac111bd781769affc4d3f83f3
+            'icon' => 'fa fa-briefcase',
         ],
         [
             'text' => 'jobs',
