@@ -29,7 +29,7 @@
         </div>
         <div>
             <h2>
-                Total Applicants : {{ $number_applicants }}
+                Database Total : {{ $number_applicants }}
             </h2> 
         </div>
     </div>
