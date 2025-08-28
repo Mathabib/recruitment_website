@@ -28,12 +28,13 @@ class HomeController extends Controller
    
      public function index()
 {
-   
+   $number_applicants = count(Applicant::where('status', 'applied')->get());
+//    return $number_applicants;
     $applicantData = Applicant::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
         ->groupBy('date')
         ->orderBy('date', 'asc')
         ->get();
-
+    
    
     $jobData = Job::select('department', DB::raw('count(*) as count'))
         ->groupBy('department')
@@ -56,7 +57,7 @@ class HomeController extends Controller
         ->pluck('applicants_count', 'job_name') 
         ->toArray();
 
-    return view('home', compact('applicantData', 'departmentCounts', 'jobCounts'));
+    return view('home', compact('applicantData', 'departmentCounts', 'jobCounts', 'number_applicants'));
 }
 
 }

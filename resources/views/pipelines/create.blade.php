@@ -89,9 +89,14 @@
                             <!-- Salary Expectation -->
                             <div class="form-group">
                                 <label for="salary_expectation">Salary Expectation</label>
-                                <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation') }}" placeholder="Ex. 150000" required>
+                                <input type="text" 
+                                        class="form-control @error('salary_expectation') is-invalid @enderror" 
+                                        id="salary_expectation" 
+                                        name="salary_expectation" 
+                                        value="{{ old('salary_expectation') }}" 
+                                        placeholder="Ekspektasi Gaji" required>
                                 @error('salary_expectation')
-                                <span class="text-danger">{{ $message }}</span>
+                                    <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -334,7 +339,7 @@
                                 @enderror
                             </div>
 
-                            <div class="input date_kontainer">
+                            {{-- <div class="input date_kontainer">
                                 <div class="date project_start">
                                     <label class="form-label" for="mulai_project[]">Start</label>
                                     <input class="form-control" type="date" name="mulai_project[]">
@@ -351,7 +356,7 @@
                                     @enderror
                                 </div>
 
-                            </div>
+                            </div> --}}
 
                             <div class="input project_description">
                                 <label class="form-label" for="desc_project[]">Project Description @{{index + 1}}</label>
@@ -413,6 +418,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
+
+ // ============untuk angka expected salary================
+    document.getElementById('salary_expectation').addEventListener('input', function(e) {
+    let value = this.value.replace(/\D/g, ""); // hanya angka
+    this.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
+});
+
     $(document).ready(function() {
         $('#education').on('change', function() {
             var educationId = $(this).val();

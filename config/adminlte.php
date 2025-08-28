@@ -316,9 +316,7 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'Dasboard',
-            'url' => 'home',
-            'icon' => 'fa fa-tachometer-alt', 
+
         ],
         [
             'text' => 'jobs',

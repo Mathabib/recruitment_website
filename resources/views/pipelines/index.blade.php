@@ -268,7 +268,17 @@
                         <thead>
                             <tr class="blue-gradient">
                                 <th>No.</th>
-                                <th>Input Time</th>
+                                <th>
+                                    <span>Input Time</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'newest']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'oldest']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
                                 <th>
                                     <span>Name</span>
                                     <a href="{{ request()->fullUrlWithQuery(['sort' => 'name_asc']) }}"
@@ -307,7 +317,17 @@
                                     <th></th>
                                 @endif
 
-                                <th>Move Stage</th>
+                                <th>
+                                    <span>Move Stage</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'status_asc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'status_desc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
                                 <th></th>
                                 <th>Action</th>
                             </tr>
@@ -512,16 +532,18 @@
     let currentApplicantId = null;
 
     function showApplicantInfo(applicant) {
+
+        let formatted_salary = new Intl.NumberFormat('id-ID').format(applicant.salary_expectation);
         $('#applicant-photo').attr('src', applicant.photo_pass ? "{{ asset('storage/') }}/" + applicant.photo_pass : 'https://via.placeholder.com/100');
         $('#applicant-name').text(applicant.name);
         $('#applicant-email').text(applicant.email);
         $('#applicant-number').text(applicant.number);
         $('#applicant-address').text(applicant.address);
         $('#applicant-job').text(applicant.job ? applicant.job.job_name : 'N/A');
-        $('#applicant-salary').text(applicant.salary_expectation);
-        $('#download-cv').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf");
-        $('#download-cv2').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf2");
-        $('#download-summary').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/summary");
+        $('#applicant-salary').text(formatted_salary);
+        $('#download-cv').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf").attr('target', '_blank');
+        $('#download-cv2').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf2").attr('target', '_blank');
+        $('#download-summary').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/summary").attr('target', '_blank');
 
         currentApplicantId = applicant.id;
 

@@ -327,14 +327,7 @@ if ($request->has('search')) {
         $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'asc');
     } elseif ($sort === 'education_desc') {
         $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'desc');
-    }  else {
-    $query->orderBy('created_at', 'desc'); 
-}
 
-//bug pagination all : karena query diload 2 kali dan variabel applicant tidak konsisten ada yang ($applicants dan $applicant)
-   
-    if ($pagination === 'all'){
-        $applicants = $query->get();
     } else {
         $applicants = $query->paginate($pagination)->appends($request->all());
     }
@@ -426,7 +419,7 @@ if ($request->has('search')) {
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'required|numeric|min:0',
+            'salary_expectation' => 'required|min:0',
             'role.*' => 'required|string|max:255',
             'name_company.*' => 'required|string',
             'desc_kerja.*' => 'required|string',
@@ -435,8 +428,8 @@ if ($request->has('search')) {
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
             'desc_project.*' => 'nullable|string',
-            'mulai_project.*' => 'nullable|date',
-            'selesai_project.*' => 'nullable|date',
+            // 'mulai_project.*' => 'nullable|date',
+            // 'selesai_project.*' => 'nullable|date',
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
@@ -452,6 +445,11 @@ if ($request->has('search')) {
         $educationId = $request->education;
         // Cek dan simpan jurusan
         $jurusan = Jurusan::firstOrCreate(['name_jurusan' => $request->jurusan], ['education_id' => $educationId]);
+
+         //ubah format salary expectation
+        $salary = str_replace('.', '', $request->salary_expectation); // hilangkan titik
+        $salary = str_replace(',', '.', $salary); // ubah koma jadi titik (jika ada)
+        $salary = (int) $salary;
 
         // Create applicant
         $applicant = Applicant::create([
@@ -470,7 +468,7 @@ if ($request->has('search')) {
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
-            'salary_expectation' => $request->salary_expectation,
+            'salary_expectation' => $salary,
             'education_id' => $request->education, // Pastikan ini mengacu ke id yang benar
             'jurusan_id' => $jurusan->id, // Gunakan ID dari jurusan
         ]);
@@ -495,8 +493,8 @@ if ($request->has('search')) {
                     'project_name' => $project_name,
                     'desc_project' => $request->desc_project[$index],
                     'client' => $request->client[$index],
-                    'mulai_project' => $request->mulai_project[$index],
-                    'selesai_project' => $request->selesai_project[$index],
+                    // 'mulai_project' => $request->mulai_project[$index],
+                    // 'selesai_project' => $request->selesai_project[$index],
                 ]);
             }
         }
@@ -524,6 +522,7 @@ if ($request->has('search')) {
     public function edit($id)
     {
         $applicant = Applicant::with(['workExperiences', 'projects', 'references'])->findOrFail($id);
+        $salary_expectation = number_format($applicant->salary_expectation, 0, ',', '.');
         $jobs = Job::all();
         $educations = Education::all();
         $jurusans = Jurusan::where('education_id', $applicant->education_id)->get();
@@ -532,7 +531,7 @@ if ($request->has('search')) {
 
 
 
-        return view('pipelines.edit', compact('applicant', 'jobs', 'educations', 'jurusans'));
+        return view('pipelines.edit', compact('applicant', 'jobs', 'educations', 'jurusans', 'salary_expectation'));
     }
 
     public function edit_api($id)
@@ -546,7 +545,7 @@ if ($request->has('search')) {
     }
 
     public function update(Request $request, $id)
-    {
+    {        
         // dd($request->all());
 
         // Validate input
@@ -569,7 +568,7 @@ if ($request->has('search')) {
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'required|numeric|min:0',
+            'salary_expectation' => 'required|string|min:0',
 
             'role.*' => 'required|string|max:255',
             'desc_kerja.*' => 'required|string',
@@ -614,6 +613,10 @@ if ($request->has('search')) {
             $applicant->update(['photo_pass' => $path]);
         }
 
+        //ubah format salary expectation
+        $salary = str_replace('.', '', $request->salary_expectation); // hilangkan titik
+        $salary = str_replace(',', '.', $salary); // ubah koma jadi titik (jika ada)
+        $salary = (int) $salary;
         // Update applicant data
         $applicant->update([
             'job_id' => $request->job_id,
@@ -630,7 +633,7 @@ if ($request->has('search')) {
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements),
             'skills' => implode("|", $request->skills),
-            'salary_expectation' => $request->salary_expectation,
+            'salary_expectation' => $salary,
             'education_id' => $request->education,
             // 'jurusan_id' => $request->jurusan,
         ]);
@@ -657,8 +660,8 @@ if ($request->has('search')) {
                     'project_name' => $project_name,
                     'desc_project' => $request->desc_project[$index],
                     'client' => $request->client[$index],
-                    'mulai_project' => $request->mulai_project[$index],
-                    'selesai_project' => $request->selesai_project[$index],
+                    // 'mulai_project' => $request->mulai_project[$index] ? $request->mulai_project[$index] : NULL,
+                    // 'selesai_project' => $request->selesai_project[$index] ? $request->selesai_project[$index] : NULL,
                 ]);
             }
         }

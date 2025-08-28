@@ -19,28 +19,45 @@
         <div class="card overflow-scroll">
             <div class="card-body pe-3">
 
-
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div class="search-bar me-3">
-                        <form action="{{ route('jurusan.index') }}" method="GET" class="d-flex">
-                            <input type="text" name="search" class="form-control" placeholder="Search Jurusan..." value="{{ request()->get('search') }}">
-                            <button type="submit" class="btn btn-outline-secondary">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
+                <div class="mb-3">
+                <form action="{{ route('jurusan.index') }}" method="GET" class="row g-2 align-items-end">
+                    <div class="col-md-4">
+                        <label for="search" class="form-label">Keyword</label>
+                        <input 
+                            type="text" 
+                            name="search" 
+                            id="search" 
+                            class="form-control" 
+                            placeholder="Search Jurusan..." 
+                            value="{{ request()->get('search') }}">
                     </div>
 
-                    @if(isset($jurusanFilter))
+                    <div class="col-md-2">
+                        <label for="search_by" class="form-label">Search by</label>
+                        <select class="form-control" name="search_by" id="search_by">
+                            <option value="education" {{ request()->get('search_by') == 'name_education' ? 'selected' : '' }}>Education</option>
+                            <option value="name_jurusan" {{ request()->get('search_by') == 'name_jurusan' ? 'selected' : '' }}>Major</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-1 d-flex">
+                        <button type="submit" class="btn btn-outline-secondary mt-auto w-100">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+    
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    {{-- @if(isset($jurusanFilter))
                         <a href="{{ route('educationMajorCreate', $educationFilter->id) }}" class="btn btn-primary">
                             <i class="fa fa-plus"></i> Create Major for {{$educationFilter->name_education}}
                         </a>
                     @else
-                        <!-- <a href="{{ route('jurusan.create') }}" class="btn btn-primary">
+                        <a href="{{ route('jurusan.create') }}" class="btn btn-primary">
                             <i class="fa fa-plus"></i> Create Major
-                        </a> -->
-                    @endif
-
-
+                        </a>
+                    @endif --}}
                 </div>
                 <!-- Search bar and filters -->
 
@@ -49,7 +66,17 @@
                         <thead>
                             <tr class="blue-gradient">
                                 <th>No.</th>
-                                <th>Major</th>
+                                <th>
+                                    <span>Major</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_asc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_desc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
 
                                 <th></th>
                             </tr>
