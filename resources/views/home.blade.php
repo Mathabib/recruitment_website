@@ -21,6 +21,19 @@
         </div>
     </div>
 </div>
+
+<div class="alert alert-info shadow-sm p-4 rounded" style="background: linear-gradient(45deg, #007bff, #0056b3); color: white;">
+    <div class="d-flex align-items-center">
+        <div style="font-size: 2.5rem; margin-right: 15px;">
+            <i class="fas fa-users"></i>
+        </div>
+        <div>
+            <h2>
+                Total Applicants : {{ $number_applicants }}
+            </h2> 
+        </div>
+    </div>
+</div>
 @stop
 
 @section('content')

@@ -9,21 +9,40 @@ use Illuminate\Support\Js;
 
 class JurusanController extends Controller
 {
-    public function index(Request $request)
+   public function index(Request $request)
     {
-        // return view('jurusan.index', ['jurusan' =>jurusan::all()]);
+        $query = Jurusan::with('education'); // ambil relasi education
 
-        $query =Jurusan::query();
-
-        if ($request->has('search')) {
+        // filter pencarian
+        if ($request->filled('search')) {
             $search = $request->get('search');
-            $query->where('name_jurusan', 'like', '%' . $search . '%');
+            $searchBy = $request->get('search_by');
+
+            if ($searchBy === 'education') {
+                // cari berdasarkan nama education (misalnya kolomnya name_education)
+                $query->whereHas('education', function ($q) use ($search) {
+                    $q->where('name_education', 'like', '%' . $search . '%');
+                });
+            } elseif ($searchBy === 'name_jurusan') {
+                // cari berdasarkan jurusan
+                $query->where('name_jurusan', 'like', '%' . $search . '%');
+            }
+        }
+
+        // sorting
+        if ($request->has('sort')) {
+            if ($request->get('sort') == 'job_asc') {
+                $query->orderBy('name_jurusan', 'asc');
+            } elseif ($request->get('sort') == 'job_desc') {
+                $query->orderBy('name_jurusan', 'desc');
+            }
         }
 
         $jurusan = $query->get();
 
-        return view('jurusan.index', compact('jurusan')); // Memperbaiki nama variabel
+        return view('jurusan.index', compact('jurusan'));
     }
+
 
     public function showEducationMajor($id)
     {
