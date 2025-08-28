@@ -28,7 +28,7 @@ class HomeController extends Controller
    
      public function index()
 {
-   $number_applicants = count(Applicant::where('status', 'applied')->get());
+   $number_applicants = count(Applicant::whereNull('type')->get());
 //    return $number_applicants;
     $applicantData = Applicant::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
         ->groupBy('date')
