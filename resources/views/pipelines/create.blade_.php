@@ -304,15 +304,12 @@
                                 </div>
                             </div>
 
-                             <div class="input job_description">
+                            <div class="input job_description">
                                 <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
-                                <main>
-                                    {{-- <trix-toolbar id="my_toolbar"></trix-toolbar> --}}
-                                    <div class="more-stuff-inbetween"></div>
-                                    <trix-toolbar :id="'toolbar-' + index"></trix-toolbar>
-                                    <input type="hidden" :id="'desc_kerja-' + index" name="desc_kerja[]" value="">
-                                    <trix-editor :toolbar="'toolbar-' + index" :input="'desc_kerja-' + index"></trix-editor>
-                                </main>
+                                <textarea class="form-control @error('desc_kerja.*') is-invalid @enderror" name="desc_kerja[]" placeholder="Job Description" required v-model="experience.desc_kerja"></textarea>
+                                @error('desc_kerja')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <button type="button" class="btn btn-danger" @click="removeInput1(index)">Delete</button>

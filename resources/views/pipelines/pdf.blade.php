@@ -320,7 +320,8 @@
                     <td class="title-content-cv"><strong>Company</strong></td> <td>:</td> <td class="content-cv">{{ $experience->name_company }}</td>
                 </tr>
                 <tr class="tr-content-cv">
-                    <td class="title-content-cv"><strong>Description</strong></td> <td>:</td> <td class="content-cv">{{ $experience->desc_kerja }}</td>
+                    <td class="title-content-cv"><strong>Description</strong></td> <td>:</td> <td class="content-cv">{!! $experience->desc_kerja !!}</td>
+                    {{-- <td class="title-content-cv"><strong>Description</strong></td> <td>:</td> <td class="content-cv">{{ $experience->desc_kerja }}</td> --}}
                 </tr>
                 <tr class="tr-content-cv">
                     <td class="title-content-cv"><strong>Period</strong></td> <td>:</td> <td>{{ $experience->mulai }} - {{ $experience->selesai }}</td>

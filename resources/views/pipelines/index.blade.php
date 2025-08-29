@@ -170,9 +170,9 @@
                 </div>
                 <div>
                     @if(request('pagination') == 'all')
-                        <h3>Total Applicant : {{ $applicants->count() }}</h3>
+                        <h3>Applicant Total : {{ $applicants->count() }}</h3>
                     @else
-                    <h3>Total Applicant : {{ $applicants->total() }}</h3>                    
+                    <h3>Applicant Total : {{ $applicants->total() }}</h3>                    
                     @endif                    
 
                 </div>
