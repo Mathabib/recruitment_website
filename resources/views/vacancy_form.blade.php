@@ -80,7 +80,7 @@
                         <div class="input row">
                             <div class="pendidikan col-md-3">
                                 <label for="education" class="form-label">Last Education<span class="important_input"> *</span></label>
-                                <select id="education" name="education" class="form-control" onchange="updateEducationId(this)">
+                                <select id="education" name="education" class="form-control" onchange="updateEducationId(this)" required>
                                     <option value="">Choose Education</option>
                                     @foreach ($educations as $education)
                                     <option value="{{ $education->id }}">{{ $education->name_education }}</option>
@@ -104,7 +104,7 @@
 
                         <div class="input">
                             <label for="profile">Profile<span class="important_input"> *</span></label>
-                            <textarea class="form-control @error('profile') is-invalid @enderror" id="profile" name="profile" placeholder="describe yourself">{{ old('profile') }}</textarea>
+                            <textarea class="form-control @error('profile') is-invalid @enderror" id="profile" name="profile" placeholder="describe yourself" required>{{ old('profile') }}</textarea>
                             @error('profile')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -169,7 +169,7 @@
 
                         <div class="input">
                             <label for="experience_period">Work Experience Period<span class="important_input"> *</span></label>
-                            <input type="text" class="form-control @error('experience_period') is-invalid @enderror" id="experience_period" name="experience_period" value="{{ old('experience_period') }}" placeholder="based on year">
+                            <input type="text" class="form-control @error('experience_period') is-invalid @enderror" id="experience_period" name="experience_period" value="{{ old('experience_period') }}" placeholder="based on year" required>
                             @error('experience_period')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -278,8 +278,9 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            
 
-                            <div class="input date_kontainer">
+                            <div class="input date_kontainer d-flex align-items-end">
                                 <div class="date work_start">
                                     <label class="form-label" for="mulai[]">Start</label>
                                     <input class="form-control" type="date" name="mulai[]">
@@ -288,22 +289,42 @@
                                     @enderror
                                 </div>
 
-                                <div class="date work_end">
+                                <div>
+                                    <span>-</span>
+                                </div>
+
+                                <div class="date work_end" :id="'work_end' + index">
                                     <label class="form-label" for="selesai[]">End</label>
                                     <input class="form-control" type="date" name="selesai[]">
                                     @error('selesai.*')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                
+                                <div class="">
+                                    <input class="form-check-input present-status" :data-id="index" type="checkbox" name="present[]" id="present">
+                                    <label class="form-check-label ms-2" for="present[]">Present</label>                                    
+                                </div>
                             </div>
 
                             <div class="input job_description">
+                                <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
+                                <main>
+                                    {{-- <trix-toolbar id="my_toolbar"></trix-toolbar> --}}
+                                    <div class="more-stuff-inbetween"></div>
+                                    <trix-toolbar :id="'toolbar-' + index"></trix-toolbar>
+                                    <input type="hidden" :id="'desc_kerja-' + index" name="desc_kerja[]" value="">
+                                    <trix-editor :toolbar="'toolbar-' + index" :input="'desc_kerja-' + index"></trix-editor>
+                                </main>
+                            </div>
+
+                            {{-- <div class="input job_description">
                                 <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
                                 <textarea class="form-control @error('desc_kerja.*') is-invalid @enderror" name="desc_kerja[]" placeholder="Job Description" required></textarea>
                                 @error('desc_kerja')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <button type="button" class="btn btn-danger" @click="removeInput1(index)">Delete</button>
                         </div>
@@ -522,6 +543,20 @@
                 }
             });
         });
+
+
+        $(document).on('change', '.present-status', function () {
+            let dataId = $(this).data('id');
+            let isChecked = $(this).is(':checked');
+            console.log("Data ID:", dataId);
+            console.log("Status:", status);
+            if(isChecked){
+                $(`#work_end${dataId}`).hide();
+            } else {
+                $(`#work_end${dataId}`).show();
+            }
+        });
+
     </script>
     
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}
