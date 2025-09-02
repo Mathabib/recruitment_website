@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Applicant;
 use App\Models\Jurusan;
+use Illuminate\Support\Carbon;
 
 class VacancyController extends Controller
 {
@@ -219,7 +220,8 @@ class VacancyController extends Controller
                     'name_company' => $request->name_company[$index],
                     'desc_kerja' => $request->desc_kerja[$index],
                     'mulai' => $request->mulai[$index],
-                    'selesai' => $request->selesai[$index],
+                    'selesai' => isset($request->present[$index]) ? Carbon::now() : $request->selesai[$index],
+                    'present' => isset($request->present[$index]) ? 'present' : ''
                 ]);
             }
         }
