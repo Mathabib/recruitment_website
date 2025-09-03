@@ -60,10 +60,10 @@
 
 @section('content')
 @if(session('success'))
-            <div class="alert alert-success mb-0">
-                {{ session('success') }}
-            </div>
-        @endif
+    <div class="alert alert-success mb-0">
+        {{ session('success') }}
+    </div>
+@endif
 
 <div class="row">
     <div class="col-12">
@@ -249,6 +249,18 @@
                                             <option value="">Select Recommendation</option>
                                             <option value="recommended" {{ request('recommendation') == 'recommended' ? 'selected' : '' }}>Recommended</option>
                                             <option value="not_recommended" {{ request('recommendation') == 'not_recommended' ? 'selected' : '' }}>Not Recommended</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="recommendation-dropdown" class="form-label">Job Position</label>
+                                        <select name="job_filter" class="form-select" id="recommendation-dropdown">
+                                            <option value="">Select job</option>
+                                            @foreach ($jobs as $item)
+                                                <option value="{{ $item->id }}" {{ request('job_filter') == $item->job_name ? 'selected' : '' }} >{{ $item->job_name }}</option>
+                                            @endforeach
+                                            {{-- <option value="recommended" {{ request('recommendation') == 'recommended' ? 'selected' : '' }}>Recommended</option>
+                                            <option value="not_recommended" {{ request('recommendation') == 'not_recommended' ? 'selected' : '' }}>Not Recommended</option> --}}
                                         </select>
                                     </div>
 

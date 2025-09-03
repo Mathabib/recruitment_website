@@ -334,7 +334,15 @@ class ResindoController extends Controller
             $query->orderBy('name', 'asc');
         } elseif ($sort === 'z_to_a') {
             $query->orderBy('name', 'desc');
-        }
+        } elseif ($sort === 'job_asc') {
+            $query->orderBy(Job::select('job_name')->whereColumn('jobs.id', 'applicants.job_id'), 'asc');
+        } elseif ($sort === 'job_desc') {
+            $query->orderBy(Job::select('job_name')->whereColumn('jobs.id', 'applicants.job_id'), 'desc');
+        } elseif ($sort === 'education_asc') {
+            $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'asc');
+        } elseif ($sort === 'education_desc') {
+            $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'desc');
+        } 
         
         // Eksekusi query untuk mendapatkan hasil
         $results = $query->get();

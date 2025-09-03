@@ -243,9 +243,50 @@
                         <thead>
                             <tr class="blue-gradient">
                                 <th>No.</th>
-                                <th>Name</th>
-                                <th>Education</th>
-                                <th>Job</th>
+                                <th style="width: 15%">
+                                    <span>Input Time</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'newest']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'oldest']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
+                                <th>
+                                    <span>Name</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'a_to_z']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'z_to_a']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
+                                <th>
+                                    <span>Education</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_asc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_desc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
+                                <th>
+                                    <span>Job</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_asc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_desc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>
+                                </th>
 
 
                                 <th>Move Stage</th>
@@ -258,6 +299,11 @@
                           
                             <tr>
                                 <td>{{ $key + 1 }}</td>
+                                <td>
+                                    <span>{{ \Carbon\Carbon::parse($applicant->created_at)->locale('id')->translatedFormat('l, d F Y') }}</span>
+                                    |
+                                    <span>{{ \Carbon\Carbon::parse($applicant->created_at)->format('H:i') }}</span>
+                                </td>
                                 <td>
                                     <div style="display: flex; align-items: center; cursor: pointer;" onclick="showApplicantInfo({{ json_encode($applicant) }})">
                                         @if($applicant->photo_pass)
