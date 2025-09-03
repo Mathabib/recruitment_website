@@ -197,7 +197,7 @@ class ApplicantController extends Controller
 {   
     
     $query = Applicant::with('job', 'education', 'jurusan');
-
+    
 
     $pagination = 10;
     if(isset($request['pagination'])){
@@ -271,6 +271,11 @@ class ApplicantController extends Controller
         if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
             $jurusanId = $request->get('jurusan');
             $query->where('jurusan_id', $jurusanId);
+        }
+        
+        if ($request->has('job_filter') && !empty($request->get('job_filter'))) {
+            $jobId = $request->get('job_filter');
+            $query->where('job_id', $jobId);
         }
 
         if ($request->has('recommendation') && $request->get('recommendation') != '') {

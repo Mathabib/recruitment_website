@@ -11,6 +11,8 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ResindoController;
 use App\Http\Controllers\OfferLetterController;
+use App\Http\Controllers\UserController;
+
 
 
 use App\Models\Applicant;
@@ -30,6 +32,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth/login');
 });
+
+// profile
+Route::get('/profile',[UserController::class, 'index'])->name('profile.index');
+Route::post('/profile_update',[UserController::class, 'update'])->name('profile.update');
 
 Auth::routes();
 Route::resource('jobs', \App\Http\Controllers\JobController::class)->middleware('auth');
