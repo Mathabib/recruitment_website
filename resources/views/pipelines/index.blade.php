@@ -504,11 +504,11 @@
                 <a id="download-cv" href="#" class="btn btn-success">Download CV</a>
                 <a id="download-cv2" href="#" class="btn btn-success">Download CV RESINDO</a>
                 <a id="download-summary" href="#" class="btn btn-success">Download SUMMARY RESINDO</a>
-                 <!-- @if($applicant->status === 'offer')
+                {{-- @if($applicant->status === 'offer')
                 <a href="{{ route('offer_letters.create', $applicant->id) }}" class="btn btn-warning">
                     Create Offering Letter
                 </a>
-                @endif -->
+                @endif --}}
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
             </div>
