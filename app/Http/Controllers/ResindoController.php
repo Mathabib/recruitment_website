@@ -359,7 +359,7 @@ class ResindoController extends Controller
         // berbeda ketika kita cuman menggunakan paginate(jumlah_pagination) aja , paginate selanjutnya bakal balik lagi ke jumlah default
         // $applicants = $query->paginate($pagination)->appends($request->all());
         if ($pagination == 'all'){
-            $applicant = $query->get();
+            $applicants = $query->get();
         } else {
             $applicants = $query->paginate($pagination)->appends($request->all());
         }
