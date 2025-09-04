@@ -334,7 +334,12 @@ class ResindoController extends Controller
             $query->orderBy('name', 'asc');
         } elseif ($sort === 'z_to_a') {
             $query->orderBy('name', 'desc');
-        } elseif ($sort === 'job_asc') {
+        } elseif ($sort === 'status_asc') {
+            $query->orderBy('status', 'asc');
+        } elseif ($sort === 'status_desc') {
+            $query->orderBy('status', 'desc');
+        }
+        elseif ($sort === 'job_asc') {
             $query->orderBy(Job::select('job_name')->whereColumn('jobs.id', 'applicants.job_id'), 'asc');
         } elseif ($sort === 'job_desc') {
             $query->orderBy(Job::select('job_name')->whereColumn('jobs.id', 'applicants.job_id'), 'desc');
