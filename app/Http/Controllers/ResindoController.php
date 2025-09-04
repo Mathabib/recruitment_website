@@ -64,13 +64,13 @@ class ResindoController extends Controller
     {
         
         // Validasi input
-        return $request;
+        // return $request;
         $request->validate([
             'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
-            // 'address' => 'required|string',
-            // 'number' => 'required|string|max:15',
-            // 'email' => 'nullable|email',
+            'address' => 'required|string',
+            'number' => 'required|string|max:15',
+            'email' => 'nullable|email',
             // 'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
             'experience_period' => 'nullable|string',
@@ -81,7 +81,8 @@ class ResindoController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            // 'salary_expectation' => 'nullable|numeric|min:0',
+            'salary_expectation' => 'nullable|numeric|min:0',
+            'salary_current' => 'nullable|numeric|min:0',
             'role.*' => 'nullable|string|max:255',
             'name_company.*' => 'nullable|string',
             'desc_kerja.*' => 'nullable|string',
@@ -142,6 +143,7 @@ class ResindoController extends Controller
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
             'salary_expectation' => $request->salary_expectation,
+            'salary_current' => $request->salary_current,
             'education_id' => $request->education[0],
             'jurusan_id' => $jurusan->id,
             'type' => 'resindo',
