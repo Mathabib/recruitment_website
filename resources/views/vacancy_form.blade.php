@@ -301,10 +301,10 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="">
+                                {{-- <div class="">
                                     <input class="form-check-input present-status" :data-id="index" type="checkbox" name="present[]" id="present">
                                     <label class="form-check-label ms-2" for="present[]">Present</label>                                    
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="input job_description">
