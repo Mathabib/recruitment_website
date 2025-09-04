@@ -23,17 +23,18 @@ class Applicant extends Model
         'email',
         'profil_linkedin',
         'certificates',
-        'experience_period', // Added this field
+        'experience_period', 
         'photo_pass',
         'profile',
         'languages',
-        'mbti', // Added this field
-        'iq', // Added this field
-        'achievement', // Added this field
+        'mbti', 
+        'iq', 
+        'achievement', 
         'skills',
         'salary_expectation',
         'status',
-        'type'
+        'type',
+        'salary_current', 
     ];
 
     // Define the relationship with the Job model

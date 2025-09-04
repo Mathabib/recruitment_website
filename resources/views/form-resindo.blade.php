@@ -32,6 +32,7 @@
             </div>
         </div>
         
+        
       
 
 
@@ -52,21 +53,21 @@
                             @enderror
                         </div>
 
-                        <!-- <div class="input">
+                        <div class="input">
                             <label for="email">Email<span class="important_input"> *</span></label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Email" required>
                             @error('email')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div> -->
+                        </div>
 
-                        <!-- <div class="input">
+                        <div class="input">
                             <label for="number">Phone Number<span class="important_input"> *</span></label>
                             <input type="text" class="form-control @error('number') is-invalid @enderror" id="number" name="number" value="{{ old('number') }}" placeholder="Phone Number" required>
                             @error('number')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div> -->
+                        </div>
 
                         <div class="input">
                             <label for="address">Citizenship<span class="important_input"> *</span></label>
@@ -166,13 +167,24 @@
                             @enderror
                         </div>
 
-                        <!-- <div class="input">
+
+                        <div class="input">
+                            <label for="salary_current">Salary Current<span class="important_input"></span></label>
+                            <input type="number" class="form-control @error('salary_current') is-invalid @enderror" id="salary_current" name="salary_current" value="{{ old('salary_current') }}" placeholder="Ex. 15000000">
+                            @error('salary_current')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="input">
                             <label for="salary_expectation">Salary Expectation<span class="important_input"></span></label>
                             <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation') }}" placeholder="Ex. 15000000">
                             @error('salary_expectation')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div> -->
+                        </div>
+
+                    
 
                        
                         <div class="input row">
@@ -646,6 +658,19 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script> {{-- library untuk text editor --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- Tambahkan di bagian <head> atau sebelum </body> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session('success'))
+    <script>
+        Swal.fire({
+            title: 'Success!',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    @endif
 
 
 </body>

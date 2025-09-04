@@ -433,6 +433,8 @@
                         <p><strong>Job:</strong> <span id="applicant-job"></span></p>
                         <!-- <p><strong>Skills:</strong> <span id="applicant-skills"></span></p> -->
                         <p><strong>Salary Expectation:</strong> Rp.<span id="applicant-salary"></span></p>
+                        <p><strong>Salary Current:</strong> Rp.<span id="applicant-salarycurrent"></span></p>
+
                         <textarea id="applicant-notes" placeholder="Add notes here..." style="width: 100%; height: 100px;" disabled></textarea>
                     </div>
                 </div>
@@ -481,6 +483,8 @@
     function showApplicantInfo(applicant) {
 
         let formatted_salary = new Intl.NumberFormat('id-ID').format(applicant.salary_expectation);
+        let formatted_salarycurrent = new Intl.NumberFormat('id-ID').format(applicant.salary_current);
+
         $('#applicant-photo').attr('src', applicant.photo_pass ? "{{ asset('storage/') }}/" + applicant.photo_pass : 'https://via.placeholder.com/100');
         $('#applicant-name').text(applicant.name);
         $('#applicant-email').text(applicant.email);
@@ -488,6 +492,7 @@
         $('#applicant-address').text(applicant.address);
         $('#applicant-job').text(applicant.job ? applicant.job.job_name : 'N/A');
         $('#applicant-salary').text(formatted_salary);
+        $('#applicant-salarycurrent').text(formatted_salarycurrent);
         $('#download-cv').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf").attr('target', '_blank');
         $('#download-cv2').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf2").attr('target', '_blank');
         $('#download-summary').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/summary").attr('target', '_blank');
