@@ -289,7 +289,17 @@
                                 </th>
 
 
-                                <th>Move Stage</th>
+                                <th>
+                                    <span>Move Stage</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'status_asc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9650;
+                                    </a>
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'status_desc']) }}"
+                                    style="text-decoration: none; color: white;">
+                                        &#9660;
+                                    </a>    
+                                </th>
                                 <th></th>
                                 <th>Action</th>
                             </tr>

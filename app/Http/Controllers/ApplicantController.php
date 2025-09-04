@@ -324,7 +324,7 @@ if ($request->has('search')) {
         $query->orderBy('name', 'asc');
     } elseif (in_array($sort, ['z_to_a', 'name_desc'])) {
         $query->orderBy('name', 'desc');
-    }  elseif ($sort === 'status_asc') {
+    } elseif ($sort === 'status_asc') {
         $query->orderBy('status', 'asc');
     } elseif ($sort === 'status_desc') {
         $query->orderBy('status', 'desc');
