@@ -133,7 +133,7 @@
                                 
                                 <div class="col">
                                     <label for="minimum_salary">Minimum Salary</label>
-                                    <input type="number" class="form-control @error('minimum_salary') is-invalid @enderror"
+                                    <input type="text" class="salary_formatted form-control @error('minimum_salary') is-invalid @enderror"
                                         id="minimum_salary" placeholder="Minimum salary" name="minimum_salary"
                                         value="{{ old('minimum_salary') }}">
                                     @error('minimum_salary')
@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="col">
                                     <label for="maximum_salary">Maximum Salary</label>
-                                    <input type="number" class="form-control @error('maximum_salary') is-invalid @enderror"
+                                    <input type="text" class="salary_formatted form-control @error('maximum_salary') is-invalid @enderror"
                                         id="maximum_salary" placeholder="Maximum Salary" name="maximum_salary"
                                         value="{{ old('maximum_salary') }}">
                                     @error('maximum_salary')
@@ -202,12 +202,24 @@
 </form>
 
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/jobs.create.css') }}"> {{-- library untuk text editor --}}
 
-@push('js')
+@push('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('css/jobs.create.css') }}"> {{-- library untuk text editor --}}
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}
 @endpush
 
+@push('js')
+<script>
+    document.querySelectorAll('.salary_formatted').forEach(function(input) {
+        input.addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, ""); // hanya angka
+            this.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
+        });
+    });
+</script>
 <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script> {{-- library untuk text editor --}}
+@endpush
+
+
 
 @stop

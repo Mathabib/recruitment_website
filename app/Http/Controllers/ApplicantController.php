@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ApplicantController extends Controller
 {
@@ -419,6 +420,7 @@ if ($request->has('search')) {
 
     public function store(Request $request)
     {
+        
         // Validate input
         $request->validate([
             'job_id' => 'required|exists:jobs,id',
@@ -441,7 +443,7 @@ if ($request->has('search')) {
             'name_company.*' => 'required|string',
             'desc_kerja.*' => 'required|string',
             'mulai.*' => 'required|date',
-            'selesai.*' => 'required|date',
+            // 'selesai.*' => 'required|date',
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
             'desc_project.*' => 'nullable|string',
@@ -499,7 +501,8 @@ if ($request->has('search')) {
                     'name_company' => $request->name_company[$index],
                     'desc_kerja' => $request->desc_kerja[$index],
                     'mulai' => $request->mulai[$index],
-                    'selesai' => $request->selesai[$index],
+                    'selesai' => $request->present[$index] == 'present' ? Carbon::today() : $request->selesai[$index],
+                    'present' => $request->present[$index],
                 ]);
             }
         }
@@ -541,7 +544,7 @@ if ($request->has('search')) {
     {
         $applicant = Applicant::with(['workExperiences', 'projects', 'references'])->findOrFail($id);
         $jobs = Job::all();
-        $salary_expectation = number_format($applicant->salary_expectation, 2, ',', '.');
+        $salary_expectation = number_format($applicant->salary_expectation, 0, ',', '.');
         $educations = Education::all();
         $jurusans = Jurusan::where('education_id', $applicant->education_id)->get();
         $references = Reference::all();
@@ -564,6 +567,7 @@ if ($request->has('search')) {
 
     public function update(Request $request, $id)
     {
+        // return $request;
         // dd($request->all());
 
         // Validate input
@@ -592,7 +596,7 @@ if ($request->has('search')) {
             'desc_kerja.*' => 'required|string',
             'name_company.*' => 'required|string',
             'mulai.*' => 'required|date',
-            'selesai.*' => 'required|date',
+            // 'selesai.*' => 'date',
 
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
@@ -661,12 +665,14 @@ if ($request->has('search')) {
         $applicant->workExperiences()->delete(); // Delete previous work experiences
         if ($request->has('role')) {
             foreach ($request->role as $index => $role) {
+                
                 $applicant->workExperiences()->create([
                     'role' => $role,
                     'desc_kerja' => $request->desc_kerja[$index],
                     'name_company' => $request->name_company[$index],
                     'mulai' => $request->mulai[$index],
-                    'selesai' => $request->selesai[$index],
+                    'selesai' => $request->present[$index] == 'present' ? Carbon::today() : $request->selesai[$index],
+                    'present' => $request->present[$index],
                 ]);
             }
         }

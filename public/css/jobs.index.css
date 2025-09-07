@@ -14,11 +14,11 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Bayangan lebih lembut */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+/* 
 .card:hover {
-    transform: translateY(-10px); /* Efek hover mengangkat */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Bayangan saat hover */
-}
+    transform: translateY(-10px); 
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); 
+} */
 
 .card-header {
     background: linear-gradient(135deg, #007bff, #0056b3); /* Gradasi biru untuk header */

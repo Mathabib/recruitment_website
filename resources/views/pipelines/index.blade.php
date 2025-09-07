@@ -24,30 +24,30 @@
   
     <!-- Kode untuk menampilkan stage -->
     <div class="status-boxes">
-    <a href="{{ route('pipelines.index', ['stage' => null, 'education' => null, 'job_id' => $request->get('job_id')]) }}" class="status-box status-all {{ $request->get('stage') == 'all' ? 'active' : '' }}">
-        <small>All</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'applied', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-applied {{ $request->get('status') == 'applied' ? 'active' : '' }}">
-        <p>{{ $statusCounts['applied'] }}</p>
-        <small>Applied</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'interview', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-interview {{ $request->get('status') == 'interview' ? 'active' : '' }}">
-        <p>{{ $statusCounts['interview'] }}</p>
-        <small>Interview</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'offer', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-offer {{ $request->get('status') == 'offer' ? 'active' : '' }}">
-        <p>{{ $statusCounts['offer'] }}</p>
-        <small>Offer</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'accepted', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-accepted {{ $request->get('status') == 'accepted' ? 'active' : '' }}">
-        <p>{{ $statusCounts['accepted'] }}</p>
-        <small>Accepted</small>
-    </a>
-    <a href="{{ route('pipelines.index', ['status' => 'bankcv', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-bankcv {{ $request->get('status') == 'bankcv' ? 'active' : '' }}">
-        <p>{{ $statusCounts['bankcv'] }}</p>
-        <small>Bank CV</small>
-    </a>
-</div>
+        <a href="{{ route('pipelines.index', ['stage' => null, 'education' => null, 'job_id' => $request->get('job_id')]) }}" class="status-box status-all {{ $request->get('stage') == 'all' ? 'active' : '' }}">
+            <small>All</small>
+        </a>
+        <a href="{{ route('pipelines.index', ['status' => 'applied', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-applied {{ $request->get('status') == 'applied' ? 'active' : '' }}">
+            <p>{{ $statusCounts['applied'] }}</p>
+            <small>Applied</small>
+        </a>
+        <a href="{{ route('pipelines.index', ['status' => 'interview', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-interview {{ $request->get('status') == 'interview' ? 'active' : '' }}">
+            <p>{{ $statusCounts['interview'] }}</p>
+            <small>Interview</small>
+        </a>
+        <a href="{{ route('pipelines.index', ['status' => 'offer', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-offer {{ $request->get('status') == 'offer' ? 'active' : '' }}">
+            <p>{{ $statusCounts['offer'] }}</p>
+            <small>Offer</small>
+        </a>
+        <a href="{{ route('pipelines.index', ['status' => 'accepted', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-accepted {{ $request->get('status') == 'accepted' ? 'active' : '' }}">
+            <p>{{ $statusCounts['accepted'] }}</p>
+            <small>Accepted</small>
+        </a>
+        <a href="{{ route('pipelines.index', ['status' => 'bankcv', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-bankcv {{ $request->get('status') == 'bankcv' ? 'active' : '' }}">
+            <p>{{ $statusCounts['bankcv'] }}</p>
+            <small>Bank CV</small>
+        </a>
+    </div>
 
 
 
@@ -60,8 +60,11 @@
 
 @section('content')
 @if(session('success'))
-    <div class="alert alert-success mb-0">
+    <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
         {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 @endif
 

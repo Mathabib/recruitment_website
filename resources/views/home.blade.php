@@ -3,6 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
+
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="m-0 text-dark">
         <i class="fas fa-tachometer-alt text-primary"></i> Dashboard
@@ -22,18 +24,63 @@
     </div>
 </div>
 
-<div class="alert alert-info shadow-sm p-4 rounded" style="background: linear-gradient(45deg, #007bff, #0056b3); color: white;">
-    <div class="d-flex align-items-center">
-        <div style="font-size: 2.5rem; margin-right: 15px;">
-            <i class="fas fa-users"></i>
+<div class="alert alert-info shadow-sm p-4 rounded" 
+     style="background: linear-gradient(45deg, #3399ff, #0056b3); color: white;">
+    <div class="d-flex align-items-center justify-content-between">
+
+        {{-- Icon + Total --}}
+        <div class="d-flex align-items-center">
+            <div style="font-size: 2.5rem; margin-right: 15px;">
+                <i class="fas fa-users"></i>
+            </div>
+            <div>
+                <h2>Database Total : {{ $overall_data }}</h2>
+            </div>
         </div>
-        <div>
-            <h2>
-                Database Total : {{ $number_applicants }}
-            </h2> 
+
+        {{-- Kotak pipeline --}}
+        <div class="d-flex">
+            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #a3d5ff, #66b2ff);">
+                Applicant <br> {{ $statusCounts['applied'] }}
+            </div>
+            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #99ccff, #4da6ff);">
+                Interview <br> {{ $statusCounts['interview'] }}
+            </div>
+            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #80c1ff, #3399ff);">
+                Offer <br> {{ $statusCounts['offer'] }}
+            </div>
+            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #66b2ff, #1a8cff);">
+                Accepted <br> {{ $statusCounts['accepted'] }}
+            </div>
+            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #4da6ff, #007bff);">
+                Bank CV <br> {{ $statusCounts['bankcv'] }}
+            </div>
         </div>
     </div>
 </div>
+
+
+{{-- CSS custom --}}
+<style>
+    .pipeline-box {
+        font-size: 20px;
+        min-width: 100px;
+        min-height: 100px;
+        padding: 10px;
+        border-radius: 15px; /* sudut tumpul */
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.15); /* lebih lembut */
+        transition: transform 0.2s ease;
+    }
+
+    .pipeline-box:hover {
+        transform: translateY(-5px); /* efek hover ringan */
+    }
+</style>
+
+
 @stop
 
 @section('content')
