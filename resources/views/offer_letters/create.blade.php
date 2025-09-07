@@ -16,7 +16,7 @@
 
        <div class="mb-3">
             <label>Job</label>
-            <input type="text" class="form-control" value="{{ $applicant->job->job_name }} ({{ ucfirst($applicant->job->employee_type) }})" readonly>
+            <input type="text" class="form-control" value="{{ $applicant->job->job_name }} ({{ ucfirst($applicant->job->employment_type) }})" readonly>
             <input type="hidden" name="job_id" value="{{ $applicant->job->id }}">
         </div>
 
