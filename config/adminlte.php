@@ -315,7 +315,7 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-         [
+        [
             'text' => 'Dashboard',
             'url' => 'home',
             'icon' => 'fa fa-home',
@@ -326,11 +326,7 @@ return [
             'icon' => 'fa fa-briefcase',
         ],
 
-        [
-            'text' => 'Department',
-            'url' => '/departements',
-            'icon' => 'fa fa-id-card',
-        ],
+       
 
         [
             'text' => 'Pipeline',
@@ -355,8 +351,8 @@ return [
         //     'icon' => 'fas fa-fw fa-lock',
         // ],
         [
-            'text' => 'Management',
-            'icon' => 'fas fa-fw fa-share',
+            'text' => 'Setting',
+            'icon' => 'fas fa-cog',
             'submenu' => [
                 [
                     'text' => 'Education',
@@ -368,11 +364,11 @@ return [
                     'text' => 'Major',
                     'url' => '/jurusan',
                 ],
+                [
+                    'text' => 'Department',
+                    'url' => '/departements',
+                ],
 
-                // [
-                //     'text' => 'Work Location',
-                //     'url' => '/worklocation',
-                // ],
             ],
         ],
         // ['header' => 'labels'],

@@ -295,9 +295,17 @@
                                     @enderror
                                 </div>
 
-                                <div class="date work_end">
+                                <div style="display: flex; align-items:flex-end">
+                                    <select class="form-control status-select" :data-id="index" name="present[]" id="">
+                                        <option selected value="end_date">Input End Date</option>
+                                        <option value="present">Present</option>
+                                    </select>
+                                </div>
+
+                                <div class="date work_end" :id="'work_end' + index">
                                     <label class="form-label" for="selesai[]">End</label>
                                     <input class="form-control" type="date" name="selesai[]">
+                                    
                                     @error('selesai.*')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -421,6 +429,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
+
+  $(document).on('change', '.status-select', function () {
+            let dataId = $(this).data('id');
+            let status = $(this).val();
+            console.log("Data ID:", dataId);
+            console.log("Status:", status);
+            if(status == 'present'){
+                $(`#work_end${dataId}`).hide();
+            } else {
+                $(`#work_end${dataId}`).show();
+            }
+});
 
  // ============untuk angka expected salary================
     document.getElementById('salary_expectation').addEventListener('input', function(e) {

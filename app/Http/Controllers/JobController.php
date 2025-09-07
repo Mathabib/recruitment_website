@@ -39,7 +39,14 @@ class JobController extends Controller
         $query->orderBy('job_name', 'desc');
     } elseif ($sort === 'asc') {
         $query->orderBy('job_name', 'asc');
+    } elseif ($sort === 'date_desc') {
+        $query->orderBy('created_at', 'desc');
+    } elseif ($sort === 'date_asc') {
+        $query->orderBy('created_at', 'asc');
+    } else {
+        $query->orderBy('created_at', 'desc');
     }
+    
 
     
     $jobs = $query->get();
@@ -66,14 +73,28 @@ class JobController extends Controller
             'work_location_id' => 'required|exists:work_location,id', // Validate that work_location_id exists
             'department' => 'required|exists:departements,id',
             'employment_type' => 'required|string',
-            'minimum_salary' => 'required|numeric',
-            'maximum_salary' => 'required|numeric',
+            'minimum_salary' => 'required',
+            'maximum_salary' => 'required',
             'benefit' => 'nullable|string',
             'responsibilities' => 'nullable|string',
             'requirements' => 'nullable|string',
             'spesifikasi' => 'nullable|string',
 
         ]);
+        $minimum_salary = $request->input('minimum_salary');
+        $minimum_salary = str_replace(['.', ','], '', $minimum_salary);
+        $minimum_salary = (int) $minimum_salary;
+
+        $maximum_salary = $request->input('maximum_salary');
+        $maximum_salary = str_replace(['.', ','], '', $maximum_salary);
+        $maximum_salary = (int) $maximum_salary;
+        
+        //overide isi $request minimum_salary dan maximum salary 
+        $request->merge([
+            'minimum_salary' => (int) $minimum_salary,
+            'maximum_salary' => (int) $maximum_salary,
+        ]);
+
         // @dd($request);
 
         // dd($request->all()); // This will dump the request data and halt execution
@@ -88,25 +109,27 @@ class JobController extends Controller
     {
         // Ambil job berdasarkan ID
         $job = ModelsJob::findOrFail($id);
-
+        $minimum_salary = number_format($job->minimum_salary, 0, ',', '.');
+        $maximum_salary = number_format($job->maximum_salary, 0, ',', '.');
         // Ambil data work_location dan departement jika ingin ditampilkan dalam dropdown
         $work_locations = WorkLocation::all();
         $departments = Departement::all();
-
+        
         // Tampilkan halaman edit dengan data job
-        return view('jobs.edit', compact('job', 'work_locations', 'departments'));
+        return view('jobs.edit', compact('job', 'work_locations', 'departments', 'minimum_salary', 'maximum_salary'));
     }
 
     public function update(Request $request, $id)
     {
+        // return $request;
         // Validasi input
         $request->validate([
             'job_name' => 'required|string|max:255',
             'work_location_id' => 'required|exists:work_location,id', // Validasi bahwa work_location_id ada
             'department' => 'required|exists:departements,id',
             'employment_type' => 'required|string',
-            'minimum_salary' => 'required|numeric',
-            'maximum_salary' => 'required|numeric',
+            'minimum_salary' => 'required',
+            'maximum_salary' => 'required',
             'benefit' => 'nullable|string',
             'responsibilities' => 'nullable|string',
             'requirements' => 'nullable|string',
@@ -115,8 +138,20 @@ class JobController extends Controller
 
         // Cari job berdasarkan ID
         $job = ModelsJob::findOrFail($id);
+        $minimum_salary = $request->input('minimum_salary');
+        $minimum_salary = str_replace(['.', ','], '', $minimum_salary);
+        $minimum_salary = (int) $minimum_salary;
 
-        // Update data job
+        $maximum_salary = $request->input('maximum_salary');
+        $maximum_salary = str_replace(['.', ','], '', $maximum_salary);
+        $maximum_salary = (int) $maximum_salary;
+        
+        //overide isi $request minimum_salary dan maximum salary 
+        $request->merge([
+            'minimum_salary' => (int) $minimum_salary,
+            'maximum_salary' => (int) $maximum_salary,
+        ]);
+
         $job->update($request->all());
 
         // Redirect kembali ke halaman index dengan pesan sukses

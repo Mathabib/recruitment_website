@@ -3,13 +3,13 @@
 @section('title', 'Edit Job')
 
 @section('content_header')
-<h1 class="m-0 text-dark">Edit Job</h1>
+    <h1 class="m-0 text-dark">Edit Job</h1>
 @stop
 
 @section('content')
 <form action="{{ route('jobs.update', $job->id) }}" method="post">
     @csrf
-    @method('PUT') <!-- Metode HTTP PUT untuk update data -->
+    @method('PUT')
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -45,7 +45,7 @@
                                 @enderror
                             </div>
 
-                            <!-- Spesifikasi -->
+                            <!-- Company Name -->
                             <div class="form-group">
                                 <label for="spesifikasi">Company Name</label>
                                 <input type="text" class="form-control @error('spesifikasi') is-invalid @enderror"
@@ -59,9 +59,9 @@
                             <!-- Minimum Salary -->
                             <div class="form-group">
                                 <label for="minimum_salary">Minimum Salary</label>
-                                <input type="number" class="form-control @error('minimum_salary') is-invalid @enderror"
+                                <input type="text" class="form-control @error('minimum_salary') is-invalid @enderror salary_formatted"
                                     id="minimum_salary" placeholder="Minimum Salary" name="minimum_salary"
-                                    value="{{ old('minimum_salary', $job->minimum_salary) }}">
+                                    value="{{ old('minimum_salary', $minimum_salary) }}">
                                 @error('minimum_salary')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -103,9 +103,9 @@
                             <!-- Maximum Salary -->
                             <div class="form-group">
                                 <label for="maximum_salary">Maximum Salary</label>
-                                <input type="number" class="form-control @error('maximum_salary') is-invalid @enderror"
+                                <input type="text" class="form-control @error('maximum_salary') is-invalid @enderror salary_formatted"
                                     id="maximum_salary" placeholder="Maximum Salary" name="maximum_salary"
-                                    value="{{ old('maximum_salary', $job->maximum_salary) }}">
+                                    value="{{ old('maximum_salary', $maximum_salary) }}">
                                 @error('maximum_salary')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -152,13 +152,21 @@
         </div>
     </div>
 </form>
+@stop
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/jobs.edit.css') }}"> {{-- library untuk text editor --}}
-
-@push('js')
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}
+@push('css')
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
 @endpush
 
-<script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script> {{-- library untuk text editor --}}
+@push('js')
+<script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
 
-@stop
+<script>
+    document.querySelectorAll('.salary_formatted').forEach(function(input) {
+        input.addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, ""); // hanya angka
+            this.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
+        });
+    });
+</script>
+@endpush

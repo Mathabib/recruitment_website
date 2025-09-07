@@ -28,7 +28,15 @@ class HomeController extends Controller
    
      public function index()
 {
-   $number_applicants = count(Applicant::whereNull('type')->get());
+    $overall_data = count(Applicant::whereNull('type')->get());
+    $statusCounts = [
+            'applied' => Applicant::where('status', 'applied')->whereNull('type')->count(),
+            'interview' => Applicant::where('status', 'interview')->count(),
+            'offer' => Applicant::where('status', 'offer')->count(),
+            'accepted' => Applicant::where('status', 'accepted')->count(),
+            'bankcv' => Applicant::where('status', 'bankcv')->count(),
+        ];
+
 //    return $number_applicants;
     $applicantData = Applicant::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
         ->groupBy('date')
@@ -57,7 +65,7 @@ class HomeController extends Controller
         ->pluck('applicants_count', 'job_name') 
         ->toArray();
 
-    return view('home', compact('applicantData', 'departmentCounts', 'jobCounts', 'number_applicants'));
+    return view('home', compact('applicantData', 'departmentCounts', 'jobCounts', 'overall_data', 'statusCounts'));
 }
 
 }

@@ -11,83 +11,124 @@
     <div class="col-12">
         <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">            
+            
             <div>
                 <h5 class="mb-0 "><b style="color: white;">Total Jobs : {{ $jobs->count() }}</b></h5>
             </div>
             
             <div class="ms-auto d-flex">
-                        <!-- Form Search Job dengan tampilan modern -->
-                        <div class="search-bar me-3">
-                            <form action="{{ route('jobs.index') }}" method="GET">
-                                <input type="text" name="search" placeholder="Search jobs..." value="{{ request()->get('search') }}">
-                                <button type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </form>
-                        </div>
+                <!-- Form Search Job dengan tampilan modern -->
+                <div class="search-bar me-3">
+                    <form action="{{ route('jobs.index') }}" method="GET">
+                        <input type="text" name="search" placeholder="Search jobs..." value="{{ request()->get('search') }}">
+                        <button type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Dropdown untuk Sort -->
+                <div class="filter-item-sort me-2 d-flex align-items-center gap-3">
+                    <form action="{{ route('jobs.index') }}" method="GET" class="d-flex align-items-center">
+                        <input type="hidden" name="search" value="{{ request()->get('search') }}">
                         
-                        <!-- Dropdown untuk Sort -->
-                        <div class="filter-item-sort me-2">
-                                    <form action="{{ route('jobs.index') }}" method="GET" class="d-flex align-items-center">
-                                        <input type="hidden" name="search" value="{{ request()->get('search') }}">
-                                        
-                                        <div class="dropdown">
-                                            <button class="btn btn-primary btn-extended" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Sort By: 
-                                                <strong>
-                                                    @if(request()->input('sort'))
-                                                        {{ request()->input('sort') == 'desc' ? 'Sort Z-A' : 'Sort A-Z' }}
-                                                
-                                                    @endif
-                                                </strong>
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-extended" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                @if(!request()->input('sort'))
+                                    Sort By
+                                @endif
+                                {{-- <i class="fas fa-chevron-down ms-2"></i> --}}
+                                <strong>
+                                    @if(request()->input('sort'))
+                                        {{-- {{ request()->input('sort') == 'desc' ? 'Sort Z-A' : 'Sort A-Z' }} --}}
+                                        @if( request()->input('sort') == 'desc')
+                                            Sort Z-A
+                                        @elseif( request()->input('sort') == 'asc')
+                                            Sort A-Z
+                                        @elseif( request()->input('sort') == 'date_desc')
+                                            Newest to Oldest
+                                        @elseif( request()->input('sort') == 'date_asc')
+                                            Oldest to Newest
+                                        @endif
+                                
+                                    @endif
+                                </strong>
 
-                                                @if(!request()->input('sort'))
-                                                    <i class="fas fa-chevron-down ms-2"></i>
-                                                @endif
-                                            </button>
+                                @if(!request()->input('sort'))
+                                    <i class="fas fa-chevron-down ms-2"></i>
+                                @endif
+                            </button>
 
 
-                                                
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <li>
-                                                        <a class="dropdown-item {{ request()->input('sort') == 'asc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'asc', 'search' => request()->get('search')]) }}">
-                                                            Sort A-Z
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item {{ request()->input('sort') == 'desc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'desc', 'search' => request()->get('search')]) }}">
-                                                            Sort Z-A
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                        </div>
-                                    </form>
+                                
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <a class="dropdown-item {{ request()->input('sort') == 'asc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'asc', 'search' => request()->get('search')]) }}">
+                                        Sort A-Z
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item {{ request()->input('sort') == 'desc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'desc', 'search' => request()->get('search')]) }}">
+                                        Sort Z-A
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item {{ request()->input('sort') == 'date_desc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'date_desc', 'search' => request()->get('search')]) }}">
+                                        Newest to Oldest
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item {{ request()->input('sort') == 'date_asc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'date_asc', 'search' => request()->get('search')]) }}">
+                                        Oldest to Newest
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
+                    </form>
+                     <!-- Button untuk Create Job -->
+                    <a href="{{ route('jobs.create') }}" class="btn btn-primary btn-extended">
+                        <i class=""></i> Create Job
+                    </a>
+                </div>
+                   
             </div>
-                <!-- Button untuk Create Job -->
-                <a href="{{ route('jobs.create') }}" class="btn btn-primary btn-extended">
-                    <i class=""></i> Create Job
-                </a>
+               
+
+            
             </div>
         </div>
 </div>
+
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 
             <div class="card-body">
                 <table class="table">
                     @forelse ($jobs as $job)
                     <tr>
-                        <td>
-                            <div class="kontainer_name_location" data-bs-toggle="modal" data-bs-target="#jobModal" data-job="{{ json_encode($job) }}">
-                                <p class="job_name" style="font-weight: bold;">{{ $job->job_name }}</p>
-                                <p class="text-muted">{{ $job->workLocation->location }} - <span>{{ $job->spesifikasi }} </span></p>
-
+                        <td style="width: 40%">
+                            <div class="d-flex justify-content-between kontainer_name_location" data-bs-toggle="modal" data-bs-target="#jobModal" data-job="{{ json_encode($job) }}">
+                                <div class="">
+                                    <p class="job_name" style="font-weight: bold;">{{ $job->job_name }}</p>
+                                    <p class="text-muted">{{ $job->workLocation->location }} - <span>{{ $job->spesifikasi }} </span></p>
+                                </div>
+                                <div class="d-flex flex-column align-items-end">
+                                    <p class="text-muted">{{ $job->created_at->translatedFormat('d-m-Y') }}</p>
+                                    <p class="text-muted">{{ $job->created_at->translatedFormat('H:i') }}</p>
+                                </div>
                             </div>
                         </td>
                         @foreach (['applied', 'interview', 'offer', 'accepted', 'bankcv'] as $status)
                         <td class="pipeline_stage">
                             <a href="{{ route('pipelines.index', ['status' => $status, 'job_id' => $job->id]) }}" class="stage-link">
                                 <div>
-                                    <p class="amount">{{ $job->applicants->where('status', $status)->count() }}</p>
+                                    <p class="amount">{{ $job->applicants->where('status', $status)->where('type', '!=', 'resindo')->count() }}</p>
                                     <small>{{ ($status == 'bankcv') ? 'Bank CV' :  ucfirst($status) }}</small>
                                 </div>
                             </a>
@@ -163,7 +204,7 @@
                             <p><strong>Minimum Salary</strong></p>
                         </td>
                         <td>
-                            <p>: <span id="modal-minimum-salary"></span></p>
+                            <p>: Rp <span id="modal-minimum-salary"></span></p>
                         </td>
                     </tr>
                     <tr>
@@ -171,7 +212,7 @@
                             <p><strong>Maximum Salary</strong></p>
                         </td>
                         <td>
-                            <p>: <span id="modal-maximum-salary"></span></p>
+                            <p>: Rp <span id="modal-maximum-salary"></span></p>
                         </td>
                     </tr>
                     <tr>
@@ -208,11 +249,14 @@
     $(document).ready(function() {
         // Job details modal
         $('.kontainer_name_location').on('click', function() {
+      
             var job = $(this).data('job');
+              let formatted_minimum_salary = new Intl.NumberFormat('id-ID').format(job.minimum_salary);
+        let formatted_maximum_salary = new Intl.NumberFormat('id-ID').format(job.maximum_salary);
             $('#modal-job-name').text(job.job_name);
 
-            $('#modal-minimum-salary').text(job.minimum_salary);
-            $('#modal-maximum-salary').text(job.maximum_salary);
+            $('#modal-minimum-salary').text(formatted_minimum_salary);
+            $('#modal-maximum-salary').text(formatted_maximum_salary);
             $('#modal-employment-type').text(job.employment_type);
             $('#modal-benefit').html(job.benefit);
             $('#modal-responsibilities').html(job.responsibilities);

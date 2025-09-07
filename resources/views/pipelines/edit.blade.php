@@ -306,8 +306,15 @@
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
+
+                                    <div style="display: flex; align-items:flex-end">
+                                        <select class="form-control status-select" :data-id="index" name="present[]" id="" v-model="experience.present">
+                                            <option selected value="end_date">Input End Date</option>
+                                            <option value="present">Present</option>
+                                        </select>
+                                    </div>
                 
-                                    <div class="date work_end">
+                                    <div class="date work_end" :id="'work_end' + index" v-show="experience.present !== 'present'">
                                         <label class="form-label" for="selesai[]">End</label>
                                         <input class="form-control" type="date" name="selesai[]" v-model="experience.selesai">
                                         @error('selesai.*')
@@ -372,7 +379,7 @@
                                         </select>
                                     </div>
     
-                                    <div class="date work_end" :id="'work_end' + index">
+                                    <div class="date work_end" :id="'work_end_' + index">
                                         <label class="form-label" for="selesai[]">End</label>
                                         <input class="form-control" type="date" name="selesai[]">
                                         
@@ -526,6 +533,29 @@
 
 <script>
 
+    $(document).on('change', '.status-select', function () {
+            let dataId = $(this).data('id');
+            let status = $(this).val();
+            console.log("Data ID:", dataId);
+            console.log("Status:", status);
+            if(status == 'present'){
+                $(`#work_end${dataId}`).hide();
+            } else {
+                $(`#work_end${dataId}`).show();
+            }
+});
+    $(document).on('change', '.status-select', function () {
+            let dataId = $(this).data('id');
+            let status = $(this).val();
+            console.log("Data ID:", dataId);
+            console.log("Status:", status);
+            if(status == 'present'){
+                $(`#work_end_${dataId}`).hide();
+            } else {
+                $(`#work_end_${dataId}`).show();
+            }
+});
+
     // ============untuk angka expected salary================
     document.getElementById('salary_expectation').addEventListener('input', function(e) {
     let value = this.value.replace(/\D/g, ""); // hanya angka
@@ -544,7 +574,8 @@
                         name_company: '',
                         desc_kerja: '',
                         mulai: '',
-                        selesai: ''
+                        selesai: '',
+                        present: ''
                     }
                 ],
                 experiences2 : [

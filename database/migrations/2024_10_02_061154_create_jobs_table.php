@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('spesifikasi')->nullable();
             $table->unsignedBigInteger('department');
             $table->string('employment_type');
-            $table->decimal('minimum_salary', 10, 2)->nullable();
-            $table->decimal('maximum_salary', 10, 2)->nullable();
+            $table->bigInteger('minimum_salary')->nullable();
+            $table->bigInteger('maximum_salary')->nullable();
             $table->text('benefit');
             $table->text('responsibilities');
             $table->text('requirements');
