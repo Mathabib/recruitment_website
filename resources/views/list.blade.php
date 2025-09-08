@@ -126,7 +126,7 @@
 </head>
 <body>
   <div class="container container-full">
-    <div class="filter-search-container">
+    <div class="filter-search-container" style="position: sticky; top: 0px;">
       <form class="form-search" method="GET" action="{{ route('vacancy.search') }}">
         <div class="filter-item">
           <input type="text" name="job_name" placeholder="Search by Job Name" value="{{ request()->input('job_name') }}" class="form-control">
