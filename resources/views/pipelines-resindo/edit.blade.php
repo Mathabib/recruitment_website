@@ -404,7 +404,7 @@
 
                                 <button type="button" class="btn btn-danger" @click="removeInput1(index)">Delete</button>
                             </div>
-                            <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput1" >Add</button> 
+                            {{-- <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput1" >Add</button>  --}}
                 
                        
 
@@ -626,9 +626,7 @@
                     }
                 ],
                 experiences2 : [
-                    {
-                        values: ''
-                    }
+                   
                 ],
                 projects : [
                     {
