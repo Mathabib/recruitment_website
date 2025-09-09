@@ -371,6 +371,17 @@ return [
 
             ],
         ],
+
+        [
+            'text' => 'User Management',
+            'icon' => 'fas fa-cog',
+            'submenu' => [
+                [
+                    'text' => 'User List',
+                    'url' => 'management/user'
+                ]
+            ]
+        ]
         // ['header' => 'labels'],
         // [
         //     'text' => 'important',

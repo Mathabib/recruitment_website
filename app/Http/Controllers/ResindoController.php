@@ -379,15 +379,17 @@ class ResindoController extends Controller
                 'offer' => Applicant::where('status', 'offer')->where('job_id', $jobId)->count(),
                 'accepted' => Applicant::where('status', 'accepted')->where('job_id', $jobId)->count(),
                 'bankcv' => Applicant::where('status', 'bankcv')->where('job_id', $jobId)->count(),
+                'not_qualify' => Applicant::where('status', 'not_qualify')->where('job_id', $jobId)->count(),
             ];
         } else {
             // If job_id does not exist, count all statuses
             $statusCounts = [
-                'applied' => Applicant::where('status', 'applied')->count(),
-                'interview' => Applicant::where('status', 'interview')->count(),
-                'offer' => Applicant::where('status', 'offer')->count(),
-                'accepted' => Applicant::where('status', 'accepted')->count(),
-                'bankcv' => Applicant::where('status', 'bankcv')->count(),
+                'applied' => Applicant::where('status', 'applied')->where('type', 'resindo')->count(),
+                'interview' => Applicant::where('status', 'interview')->where('type', 'resindo')->count(),
+                'offer' => Applicant::where('status', 'offer')->where('type', 'resindo')->count(),
+                'accepted' => Applicant::where('status', 'accepted')->where('type', 'resindo')->count(),
+                'bankcv' => Applicant::where('status', 'bankcv')->where('type', 'resindo')->count(),
+                'not_qualify' => Applicant::where('status', 'not_qualify')->where('type', 'resindo')->count(),
             ];
         }
         

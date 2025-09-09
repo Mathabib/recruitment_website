@@ -47,6 +47,10 @@
             <p>{{ $statusCounts['bankcv'] }}</p>
             <small>Bank CV</small>
         </a>
+        <a href="{{ route('pipelines.index', ['status' => 'not_qualify', 'education' => $request->get('education'), 'job_id' => $request->get('job_id')]) }}" class="status-box status-not_qualify {{ $request->get('status') == 'not_qualify' ? 'active' : '' }}">
+            <p>{{ $statusCounts['not_qualify'] }}</p>
+            <small>Not Qualify</small>
+        </a>
     </div>
 
 
@@ -411,7 +415,7 @@
                                                         <button type="submit" name="status" value="accepted" class="dropdown-item">Accepted</button>
                                                         <!-- <button type="submit" name="status" value="rejected" class="dropdown-item">Rejected</button> -->
                                                         <button type="submit" name="status" value="bankcv" class="dropdown-item">Bank CV</button>
-
+                                                        <button type="submit" name="status" value="not_qualify" class="dropdown-item">Not Qualify</button>
                                                     </div>
                                                 </div>
                                             </form>

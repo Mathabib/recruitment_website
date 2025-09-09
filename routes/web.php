@@ -12,6 +12,7 @@ use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ResindoController;
 use App\Http\Controllers\OfferLetterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\userManagementController;
 
 
 
@@ -33,7 +34,7 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-// profile
+// ===== PROFILE =====
 Route::get('/profile',[UserController::class, 'index'])->name('profile.index');
 Route::post('/profile_update',[UserController::class, 'update'])->name('profile.update');
 
@@ -44,7 +45,7 @@ Route::resource('pipelines', ApplicantController::class)->middleware('auth');
 Route::resource('education', EducationController::class)->middleware('auth');
 Route::resource('jurusan', JurusanController::class)->middleware('auth');
 
-// resindo
+// =====RESINDO=====
 
 Route::resource('pipelines-resindo', ResindoController  ::class)->middleware('auth');
 Route::get('/pipelines-resindo/{id}/pdf', [ResindoController::class, 'generateCV'])->name('applicants.generateCV')->middleware('auth');
@@ -83,6 +84,7 @@ Route::get('/form-resindo', [ResindoController::class, 'formresindo'])->name('fo
 Route::post('/kirim', [VacancyController::class, 'kirim'])->name('kirim');
 Route::post('/kirimresindo', [ResindoController::class, 'kirimresindo'])->name('kirimresindo');
 
+// ====NOTES====
 Route::get('/{id}', [App\Http\Controllers\VacancyController::class, 'index'])->name('vacancy');
 Route::get('/getnotes/{id}', [ApplicantController::class, 'getNotes'])->name('getnotes');
 Route::post('/save-notes', [ApplicantController::class, 'saveNotes'])->name('save.notes');
@@ -108,6 +110,11 @@ Route::prefix('offer-letters')->group(function () {
     ->name('offer_letters.send_email');
 });
 
+
+// ======MANAGEMENT USER====
+
+Route::get('/management/user', [userManagementController::class, 'index'])->name('management.user.index');
+Route::get('/management/user/edit/{id}', [userManagementController::class, 'edit'])->name('management.user.edit');
 //testing 
 Route::get('/test/{id}', [JurusanController::class, 'showEducationMajor'])->name('test');
 
