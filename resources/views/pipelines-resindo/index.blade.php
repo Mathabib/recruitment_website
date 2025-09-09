@@ -437,8 +437,8 @@
                         <p><strong>Address:</strong> <span id="applicant-address"></span></p>
                         <p><strong>Job:</strong> <span id="applicant-job"></span></p>
                         <!-- <p><strong>Skills:</strong> <span id="applicant-skills"></span></p> -->
+                        <p><strong>Current Salary:</strong> Rp.<span id="applicant-salarycurrent"></span></p>
                         <p><strong>Salary Expectation:</strong> Rp.<span id="applicant-salary"></span></p>
-                        <p><strong>Salary Current:</strong> Rp.<span id="applicant-salarycurrent"></span></p>
 
                         <textarea id="applicant-notes" placeholder="Add notes here..." style="width: 100%; height: 100px;" disabled></textarea>
                     </div>

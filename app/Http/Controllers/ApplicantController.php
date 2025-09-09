@@ -211,6 +211,16 @@ class ApplicantController extends Controller
     $status = $request->get('status');
     $sort = $request->get('sort', 'newest');
 
+
+    $statusLabels = [
+    'applied' => 'Applied',
+    'interview' => 'Interview',
+    'offer' => 'Offer',
+    'accepted' => 'Accepted',
+    'bankcv' => 'Bank CV',
+];
+
+
     if ($jobId) {
         $query->where('job_id', $jobId);
     }
@@ -230,7 +240,9 @@ class ApplicantController extends Controller
 
 
     // Ambil stage name jika ada job_id
-    $stageName = $jobId ? ($applicants->isNotEmpty() ? $applicants->first()->status : null) : null;
+    // $stageName = $jobId ? ($applicants->isNotEmpty() ? $applicants->first()->status : null) : null;
+    $stageName = $request->has('status') && $request->status !== '' ? ($statusLabels[$request->status] ?? ucfirst($request->status)) : null;
+
 
     if ($jobId || $status) {
         // Jika ada job_id, filter data berdasarkan job_id
@@ -441,6 +453,7 @@ if ($request->has('search')) {
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
             'salary_expectation' => 'required|min:0',
+            'salary_current' => 'required|min:0',
             'role.*' => 'required|string|max:255',
             'name_company.*' => 'required|string',
             'desc_kerja.*' => 'required|string',
@@ -471,6 +484,12 @@ if ($request->has('search')) {
         $salary_expectation = $request->input('salary_expectation');
         $salary_expectation = str_replace(['.', ','], '', $salary_expectation);
         $salary_expectation = (int) $salary_expectation;
+
+        // format current salary
+        $salary_current = $request->input('salary_current');
+        $salary_current = str_replace(['.', ','], '', $salary_current);
+        $salary_current = (int) $salary_current;
+
         //=====================================
         // Update applicant data
         // Create applicant
@@ -491,6 +510,7 @@ if ($request->has('search')) {
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
             'salary_expectation' => $salary_expectation,
+            'salary_current' => $salary_current,
             'education_id' => $request->education, // Pastikan ini mengacu ke id yang benar
             'jurusan_id' => $jurusan->id, // Gunakan ID dari jurusan
         ]);
@@ -547,6 +567,8 @@ if ($request->has('search')) {
         $applicant = Applicant::with(['workExperiences', 'projects', 'references'])->findOrFail($id);
         $jobs = Job::all();
         $salary_expectation = number_format($applicant->salary_expectation, 0, ',', '.');
+        $salary_current = number_format($applicant->salary_current, 0, ',', '.');
+
         $educations = Education::all();
         $jurusans = Jurusan::where('education_id', $applicant->education_id)->get();
         $references = Reference::all();
@@ -554,7 +576,7 @@ if ($request->has('search')) {
 
 
 
-        return view('pipelines.edit', compact('applicant', 'jobs', 'educations', 'jurusans', 'salary_expectation'));
+        return view('pipelines.edit', compact('applicant', 'jobs', 'educations', 'jurusans', 'salary_expectation','salary_current'));
     }
 
     public function edit_api($id)
@@ -593,6 +615,8 @@ if ($request->has('search')) {
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
             'salary_expectation' => 'required|min:0',
+            'salary_current' => 'required|min:0',
+
 
             'role.*' => 'required|string|max:255',
             'desc_kerja.*' => 'required|string',
@@ -641,6 +665,12 @@ if ($request->has('search')) {
         $salary_expectation = $request->input('salary_expectation');
         $salary_expectation = str_replace(['.', ','], '', $salary_expectation);
         $salary_expectation = (int) $salary_expectation;
+
+
+        //=== bagian ubah input text jadi integer, karena di input type nya text untuk keperluan formating =======
+        $salary_current = $request->input('salary_current');
+        $salary_current = str_replace(['.', ','], '', $salary_current);
+        $salary_current = (int) $salary_current;
         //=====================================
         // Update applicant data
         $applicant->update([
@@ -659,6 +689,8 @@ if ($request->has('search')) {
             'achievement' => implode("|", $request->achievements),
             'skills' => implode("|", $request->skills),
             'salary_expectation' => $salary_expectation,
+            'salary_current' => $salary_current,
+
             'education_id' => $request->education,
             // 'jurusan_id' => $request->jurusan,
         ]);

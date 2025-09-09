@@ -150,6 +150,8 @@ class VacancyController extends Controller
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
             'salary_expectation' => 'nullable|min:0',
+            'salary_current' => 'nullable|min:0',
+
             'role.*' => 'required|string|max:255',
             'name_company.*' => 'required|string',
             'desc_kerja.*' => 'required|string',
@@ -190,6 +192,11 @@ class VacancyController extends Controller
         $salary = str_replace(',', '.', $salary); // ubah koma jadi titik (jika ada)
         $salary = (int) $salary;
 
+        // salary current
+         $salary_current = str_replace('.', '', $request->salary_current); // hilangkan titik
+        $salary_current = str_replace(',', '.', $salary_current); // ubah koma jadi titik (jika ada)
+        $salary_current = (int) $salary_current;
+
         // Create applicant
         $applicant = Applicant::create([
             'job_id' => $request->job_id,
@@ -208,6 +215,7 @@ class VacancyController extends Controller
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
             'salary_expectation' => $salary,
+            'salary_current' => $salary_current,
             'education_id' => $request->education, // Pastikan ini mengacu ke id yang benar
             'jurusan_id' => $jurusan->id, // Gunakan ID dari jurusan
         ]);

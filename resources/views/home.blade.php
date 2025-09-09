@@ -40,21 +40,48 @@
 
         {{-- Kotak pipeline --}}
         <div class="d-flex">
-            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #a3d5ff, #66b2ff);">
-                Applicant <br> {{ $statusCounts['applied'] }}
-            </div>
-            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #99ccff, #4da6ff);">
-                Interview <br> {{ $statusCounts['interview'] }}
-            </div>
-            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #80c1ff, #3399ff);">
-                Offer <br> {{ $statusCounts['offer'] }}
-            </div>
-            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #66b2ff, #1a8cff);">
-                Accepted <br> {{ $statusCounts['accepted'] }}
-            </div>
-            <div class="pipeline-box mx-1" style="background: linear-gradient(135deg, #4da6ff, #007bff);">
-                Bank CV <br> {{ $statusCounts['bankcv'] }}
-            </div>
+            <a href="{{ route('pipelines.index', ['status' => 'applied']) }}" 
+                class="pipeline-box mx-1 text-decoration-none text-white d-flex flex-column justify-content-center align-items-center"
+                style="background: linear-gradient(135deg, #a3d5ff, #66b2ff); min-width:120px; padding:10px; border-radius:8px;">
+                    <strong>Applicant</strong>
+                    <span>{{ $statusCounts['applied'] }}</span>
+                </a>
+
+                <a href="{{ route('pipelines.index', ['status' => 'interview']) }}" 
+                class="pipeline-box mx-1 text-decoration-none text-white d-flex flex-column justify-content-center align-items-center"
+                style="background: linear-gradient(135deg, #99ccff, #4da6ff); min-width:120px; padding:10px; border-radius:8px;">
+                    <strong>Interview</strong>
+                    <span>{{ $statusCounts['interview'] }}</span>
+                </a>
+
+                <a href="{{ route('pipelines.index', ['status' => 'offer']) }}" 
+                class="pipeline-box mx-1 text-decoration-none text-white d-flex flex-column justify-content-center align-items-center"
+                style="background: linear-gradient(135deg, #80c1ff, #3399ff); min-width:120px; padding:10px; border-radius:8px;">
+                    <strong>Offer</strong>
+                    <span>{{ $statusCounts['offer'] }}</span>
+                </a>
+
+                <a href="{{ route('pipelines.index', ['status' => 'accepted']) }}" 
+                class="pipeline-box mx-1 text-decoration-none text-white d-flex flex-column justify-content-center align-items-center"
+                style="background: linear-gradient(135deg, #66b2ff, #1a8cff); min-width:120px; padding:10px; border-radius:8px;">
+                    <strong>Accepted</strong>
+                    <span>{{ $statusCounts['accepted'] }}</span>
+                </a>
+
+                <a href="{{ route('pipelines.index', ['status' => 'bankcv']) }}" 
+                class="pipeline-box mx-1 text-decoration-none text-white d-flex flex-column justify-content-center align-items-center"
+                style="background: linear-gradient(135deg, #4da6ff, #007bff); min-width:120px; padding:10px; border-radius:8px;">
+                    <strong>Bank CV</strong>
+                    <span>{{ $statusCounts['bankcv'] }}</span>
+                </a>
+
+                 <a href="{{ route('pipelines.index', ['status' => 'not_qualify']) }}" 
+                class="pipeline-box mx-1 text-decoration-none text-white d-flex flex-column justify-content-center align-items-center"
+                style="background: linear-gradient(135deg, #3b97f4ff, #007bffff); min-width:120px; padding:10px; border-radius:8px;">
+                    <strong>Not Quality</strong>
+                    <span>{{ $statusCounts['not_qualify'] }}</span>
+                </a>
+
         </div>
     </div>
 </div>

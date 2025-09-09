@@ -103,6 +103,36 @@
                                 @enderror
                             </div> -->
 
+                             <!-- current salary -->
+
+                                     <div class="form-group">
+                                <label for="salary_current">Current Salary </label>
+                                <input type="text" 
+                                        class="form-control @error('salary_current') is-invalid @enderror" 
+                                        id="salary_current" 
+                                        name="salary_current" 
+                                        value="{{ old('salary_current', $salary_current) }}" 
+                                        placeholder="Ekspektasi Gaji" required>
+                                @error('salary_current')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+
+                            <!-- Salary Expectation -->
+                            <div class="form-group">
+                                <label for="salary_expectation">Salary Expectation</label>
+                                <input type="text" 
+                                        class="form-control @error('salary_expectation') is-invalid @enderror" 
+                                        id="salary_expectation" 
+                                        name="salary_expectation" 
+                                        value="{{ old('salary_expectation', $salary_expectation) }}" 
+                                        placeholder="Ekspektasi Gaji" required>
+                                @error('salary_expectation')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                             <!-- Profile -->
                             <div class="form-group">
                                 <label for="profile">Profile</label>
@@ -237,7 +267,12 @@
                                             <div class="jurusan col-md-9">
                                                 <div class="input" >
                                                     <label for="jurusan" class="form-label">Major<span class="important_input"> *</span></label>
-                                                    <input type="text" id="jurusan" name="jurusan[]" class="form-control" placeholder="Enter Major" v-model="jurusan.jurusan2" required>
+                                                   <input type="text" id="jurusan" name="jurusan[]" 
+                                                        class="form-control"
+                                                        placeholder="Enter Major"
+                                                        v-model="jurusan.jurusan2"
+                                                        required>
+
                                                     <input type="hidden" id="education_id" name="education_id" v-model="jurusan.education_id">
                                                     <input type="hidden" id="jurusan_id" name="jurusan_id" v-model="jurusan.applicant_id">
                                                 </div>
@@ -822,6 +857,16 @@
       function updateEducationId(select) {
         document.getElementById('education_id').value = select.value;
     }
+
+        document.getElementById('salary_expectation').addEventListener('input', function(e) {
+    let value = this.value.replace(/\D/g, ""); // hanya angka
+    this.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
+});
+
+    document.getElementById('salary_current').addEventListener('input', function(e) {
+    let value = this.value.replace(/\D/g, ""); // hanya angka
+    this.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
+});
 </script>
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}

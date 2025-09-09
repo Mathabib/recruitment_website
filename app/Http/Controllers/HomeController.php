@@ -35,6 +35,8 @@ class HomeController extends Controller
             'offer' => Applicant::where('status', 'offer')->count(),
             'accepted' => Applicant::where('status', 'accepted')->count(),
             'bankcv' => Applicant::where('status', 'bankcv')->count(),
+            'not_qualify' => Applicant::where('status', 'not_qualify')->count(),
+
         ];
 
 //    return $number_applicants;

@@ -437,7 +437,9 @@ class ResindoController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            // 'salary_expectation' => 'nullable|numeric|min:0',
+            'salary_expectation' => 'nullable|numeric|min:0',
+            'salary_current' => 'nullable|numeric|min:0',
+
             'role.*' => 'nullable|string|max:255',
             'name_company.*' => 'nullable|string',
             'desc_kerja.*' => 'nullable|string',
@@ -498,6 +500,8 @@ class ResindoController extends Controller
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
             'salary_expectation' => $request->salary_expectation,
+            'salary_current' => $request->salary_current,
+
             'education_id' => $request->education[0],
             'jurusan_id' => $jurusan->id,
             'type' => 'resindo',
@@ -573,6 +577,9 @@ class ResindoController extends Controller
         $applicant = Applicant::with(['workExperiences', 'projects', 'references', 'languages'])->findOrFail($id);
         $jobs = Job::all();
         $educations = Education::all();
+          $salary_expectation = number_format($applicant->salary_expectation, 0, ',', '.');
+        $salary_current = number_format($applicant->salary_current, 0, ',', '.');
+
         // $jobs = Language::all();
         $jurusans = Jurusan::where('education_id', $applicant->education_id)->get();
         $references = Reference::all();
@@ -580,7 +587,7 @@ class ResindoController extends Controller
 
 
         // return $applicant->workExperiences;
-        return view('pipelines-resindo.edit', compact('applicant', 'jobs', 'educations', 'jurusans'));
+        return view('pipelines-resindo.edit', compact('applicant', 'jobs', 'educations', 'jurusans', 'salary_expectation', 'salary_current' ));
     }
 
     public function edit_api($id)
@@ -618,6 +625,8 @@ class ResindoController extends Controller
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
             'salary_expectation' => 'nullable|numeric|min:0',
+            'salary_current' => 'nullable|numeric|min:0',
+
             'role.*' => 'nullable|string|max:255',
             'name_company.*' => 'nullable|string',
             'desc_kerja.*' => 'nullable|string',
@@ -665,6 +674,18 @@ class ResindoController extends Controller
             $path = $applicant->photo_pass;
         }
 
+         //=== bagian ubah input text jadi integer, karena di input type nya text untuk keperluan formating =======
+        $salary_expectation = $request->input('salary_expectation');
+        $salary_expectation = str_replace(['.', ','], '', $salary_expectation);
+        $salary_expectation = (int) $salary_expectation;
+
+
+        //=== bagian ubah input text jadi integer, karena di input type nya text untuk keperluan formating =======
+        $salary_current = $request->input('salary_current');
+        $salary_current = str_replace(['.', ','], '', $salary_current);
+        $salary_current = (int) $salary_current;
+
+
         // Update applicant data
         $applicant->update([
             // 'job_id' => $request->job_id,
@@ -682,7 +703,9 @@ class ResindoController extends Controller
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
-            'salary_expectation' => $request->salary_expectation,            
+            'salary_expectation' => $request->salary_expectation, 
+            'salary_current' => $request->salary_current,            
+
             'type' => 'resindo',
             'job_id' => $request->job_id
         ]);
