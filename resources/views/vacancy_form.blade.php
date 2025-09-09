@@ -289,20 +289,35 @@
                                     @enderror
                                 </div>
 
-                                <div>
-                                    <span>-</span>
+                                <div style="display: flex; align-items:flex-end">
+                                    <select class="form-select status-select" :data-id="index" name="present[]" id="">
+                                        <option selected value="end_date">Input End Date</option>
+                                        <option value="present">Present</option>
+                                    </select>
                                 </div>
 
                                 <div class="date work_end" :id="'work_end' + index">
                                     <label class="form-label" for="selesai[]">End</label>
                                     <input class="form-control" type="date" name="selesai[]">
+                                    
                                     @error('selesai.*')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                {{-- <div class="date work_end" :id="'work_end' + index">
+                                    <label class="form-label" for="selesai[]">End</label>
+                                    <input class="form-control" type="date" name="selesai[]">
+                                    @error('selesai.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    <input type="hidden" value="end_date" name="present[]">
+                                </div> --}}
+                                
+
                                 
                                 {{-- <div class="">
-                                    <input class="form-check-input present-status" :data-id="index" type="checkbox" name="present[]" id="present">
+                                    <input class="form-check-input present-status" :data-id="index" type="checkbox" name="present[]" id="present" value="present">
                                     <label class="form-check-label ms-2" for="present[]">Present</label>                                    
                                 </div> --}}
                             </div>
@@ -424,6 +439,19 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+
+        $(document).on('change', '.status-select', function () {
+            let dataId = $(this).data('id');
+            let status = $(this).val();
+            console.log("Data ID:", dataId);
+            console.log("Status:", status);
+            if(status == 'present'){
+                $(`#work_end${dataId}`).hide();
+            } else {
+                $(`#work_end${dataId}`).show();
+            }
+        });
+
 
     // ============untuk angka expected salary================
     document.getElementById('salary_expectation').addEventListener('input', function(e) {

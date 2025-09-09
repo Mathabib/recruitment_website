@@ -131,7 +131,7 @@ class VacancyController extends Controller
 
     public function kirim(Request $request)
     {
-       
+    //    return $request;
         // Validate input
         $request->validate([
             'job_id' => 'required|exists:jobs,id',
@@ -154,7 +154,7 @@ class VacancyController extends Controller
             'name_company.*' => 'required|string',
             'desc_kerja.*' => 'required|string',
             'mulai.*' => 'required|date',
-            'selesai.*' => 'required|date',
+            // 'selesai.*' => 'required|date',
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
             'desc_project.*' => 'nullable|string',
@@ -220,8 +220,10 @@ class VacancyController extends Controller
                     'name_company' => $request->name_company[$index],
                     'desc_kerja' => $request->desc_kerja[$index],
                     'mulai' => $request->mulai[$index],
-                    'selesai' => isset($request->present[$index]) ? Carbon::now() : $request->selesai[$index],
-                    'present' => isset($request->present[$index]) ? 'present' : ''
+                    'selesai' => $request->present[$index] == 'present' ? Carbon::today() : $request->selesai[$index],
+                    'present' => $request->present[$index],
+                    // 'selesai' => isset($request->present[$index]) ? Carbon::now() : $request->selesai[$index],
+                    // 'present' => isset($request->present[$index]) ? 'present' : ''
                 ]);
             }
         }
