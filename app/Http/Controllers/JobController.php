@@ -10,48 +10,54 @@ use Illuminate\Http\Request;
 class JobController extends Controller
 {
     // Display all jobs or filter by department
-    public function index(Request $request)
+public function index(Request $request)
 {
-    $sort = $request->input('sort', 'asc');  
-    
-    // Mulai query dari Model Job
+    // Default per page = 20
+    $perPage = $request->get('perPage', 'all');
+
     $query = ModelsJob::query();
 
-    // Filter berdasarkan kata kunci pencarian jika ada
-    if ($request->has('search')) {
-        $search = $request->get('search');
-        $query->where('job_name', 'like', '%' . $search . '%');
+    // Filter search
+    if ($request->filled('search')) {
+        $query->where('job_name', 'like', '%'.$request->search.'%');
     }
 
-    // Filter berdasarkan department jika ada
-    if ($request->has('department')) {
-        $departmentId = $request->get('department');
-        $query->where('department', $departmentId);
+    // Filter status
+    if ($request->filled('status_published')) {
+        $query->where('status_published', $request->status_published);
     }
 
-    if (!$request->has('sort')) {
-        $query->orderByDesc('updated_at');  // Data yang diupdate muncul pertama
-        $query->orderByDesc('created_at');  // Jika belum ada update, urutkan berdasarkan created_at
+    // Sort
+    if ($request->filled('sort')) {
+        switch ($request->sort) {
+            case 'asc':
+                $query->orderBy('job_name', 'asc');
+                break;
+            case 'desc':
+                $query->orderBy('job_name', 'desc');
+                break;
+            case 'date_asc':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'date_desc':
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
     }
 
-    // Filter sorting berdasarkan A-Z atau Z-A
-    if ($sort === 'desc') {
-        $query->orderBy('job_name', 'desc');
-    } elseif ($sort === 'asc') {
-        $query->orderBy('job_name', 'asc');
-    } elseif ($sort === 'date_desc') {
-        $query->orderBy('created_at', 'desc');
-    } elseif ($sort === 'date_asc') {
-        $query->orderBy('created_at', 'asc');
+    // Hitung total jobs (akumulasi semua)
+    $totalJobs = $query->count();
+
+    // Pagination (jika pilih "all" tampilkan semua data)
+    if ($perPage === 'all') {
+        $jobs = $query->get();
     } else {
-        $query->orderBy('created_at', 'desc');
+        $jobs = $query->paginate((int)$perPage)->appends($request->query());
     }
-    
 
-    
-    $jobs = $query->get();
-    return view('jobs.index', compact('jobs'));
+    return view('jobs.index', compact('jobs', 'totalJobs', 'perPage'));
 }
+
 
 
     // Show the form for creating a new job

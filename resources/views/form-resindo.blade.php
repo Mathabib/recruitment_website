@@ -168,21 +168,42 @@
                         </div>
 
 
-                        <div class="input">
-                            <label for="salary_current">Salary Current<span class="important_input"></span></label>
-                            <input type="number" class="form-control @error('salary_current') is-invalid @enderror" id="salary_current" name="salary_current" value="{{ old('salary_current') }}" placeholder="Ex. 15000000">
-                            @error('salary_current')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <div class="mb-3">
+                        <label for="salary_current" class="form-label">Current Salary</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Rp</span>
+                            <input 
+                                type="text" 
+                                class="form-control @error('salary_current') is-invalid @enderror" 
+                                id="salary_current" 
+                                name="salary_current" 
+                                value="{{ old('salary_current') }}" 
+                                placeholder="Ex. 15000000">
                         </div>
+                        @error('salary_current')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="input">
-                            <label for="salary_expectation">Salary Expectation<span class="important_input"></span></label>
-                            <input type="number" class="form-control @error('salary_expectation') is-invalid @enderror" id="salary_expectation" name="salary_expectation" value="{{ old('salary_expectation') }}" placeholder="Ex. 15000000">
-                            @error('salary_expectation')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                    <div class="mb-3">
+                        <label for="salary_expectation" class="form-label">Salary Expectation</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Rp</span>
+                            <input 
+                                type="text" 
+                                class="form-control @error('salary_expectation') is-invalid @enderror" 
+                                id="salary_expectation" 
+                                name="salary_expectation" 
+                                value="{{ old('salary_expectation') }}" 
+                                placeholder="Ex. 20000000">
                         </div>
+                        @error('salary_expectation')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+
+
 
                     
 
@@ -670,6 +691,9 @@
             confirmButtonText: 'OK'
         });
     </script>
+
+
+
     @endif
 
 

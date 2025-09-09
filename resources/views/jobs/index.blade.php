@@ -10,94 +10,84 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">            
-            
-            <div>
-                <h5 class="mb-0 "><b style="color: white;">Total Jobs : {{ $jobs->count() }}</b></h5>
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <!-- Total Jobs -->
+               <h5 class="mb-0">
+                <b style="color: white;">Total Jobs : {{ $totalJobs }}</b>
+            </h5>
+
             </div>
             
-            <div class="ms-auto d-flex">
-                <!-- Form Search Job dengan tampilan modern -->
-                <div class="search-bar me-3">
-                    <form action="{{ route('jobs.index') }}" method="GET">
-                        <input type="text" name="search" placeholder="Search jobs..." value="{{ request()->get('search') }}">
-                        <button type="submit">
-                            <i class="fas fa-search"></i>
+
+            <!-- Filter Bar -->
+            <div class="card-body border-bottom">
+                <form action="{{ route('jobs.index') }}" method="GET" class="row g-2 align-items-center">
+
+                    <!-- Search -->
+                    <div class="col-md-4">
+                        <input type="text"
+                               name="search"
+                               class="form-control"
+                               placeholder="Search jobs..."
+                               value="{{ request()->get('search') }}">
+                    </div>
+
+                    <!-- Sort -->
+                    <div class="col-md-3">
+                        <select name="sort" class="form-select">
+                            <option value="">Sort By</option>
+                            <option value="asc" {{ request()->input('sort') == 'asc' ? 'selected' : '' }}>A - Z</option>
+                            <option value="desc" {{ request()->input('sort') == 'desc' ? 'selected' : '' }}>Z - A</option>
+                            <option value="date_desc" {{ request()->input('sort') == 'date_desc' ? 'selected' : '' }}>Newest</option>
+                            <option value="date_asc" {{ request()->input('sort') == 'date_asc' ? 'selected' : '' }}>Oldest</option>
+                        </select>
+                    </div>
+
+                    <!-- Status Published -->
+                   <div class="col-md-3">
+                        <select name="status_published" class="form-select">
+                            <option value="">All Status</option>
+                            <option value="1" {{ request()->input('status_published') == '1' ? 'selected' : '' }}>Published</option>
+                            <option value="0" {{ request()->input('status_published') == '0' ? 'selected' : '' }}>Unpublished</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Submit -->
+                    <div class="col-md-2 d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-filter"></i> Filter
                         </button>
-                    </form>
-                </div>
-                
-                <!-- Dropdown untuk Sort -->
-                <div class="filter-item-sort me-2 d-flex align-items-center gap-3">
-                    <form action="{{ route('jobs.index') }}" method="GET" class="d-flex align-items-center">
-                        <input type="hidden" name="search" value="{{ request()->get('search') }}">
-                        
-                        <div class="dropdown">
-                            <button class="btn btn-primary btn-extended" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                @if(!request()->input('sort'))
-                                    Sort By
-                                @endif
-                                {{-- <i class="fas fa-chevron-down ms-2"></i> --}}
-                                <strong>
-                                    @if(request()->input('sort'))
-                                        {{-- {{ request()->input('sort') == 'desc' ? 'Sort Z-A' : 'Sort A-Z' }} --}}
-                                        @if( request()->input('sort') == 'desc')
-                                            Sort Z-A
-                                        @elseif( request()->input('sort') == 'asc')
-                                            Sort A-Z
-                                        @elseif( request()->input('sort') == 'date_desc')
-                                            Newest to Oldest
-                                        @elseif( request()->input('sort') == 'date_asc')
-                                            Oldest to Newest
-                                        @endif
-                                
-                                    @endif
-                                </strong>
+                    </div>
+                </form>
 
-                                @if(!request()->input('sort'))
-                                    <i class="fas fa-chevron-down ms-2"></i>
-                                @endif
-                            </button>
+               <!-- Show per page selector -->
+    <div class="mt-3 d-flex justify-content-end">
+        <form action="{{ route('jobs.index') }}" method="GET" class="d-flex align-items-center">
+            @foreach(request()->except('perPage') as $key => $value)
+                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+            @endforeach
 
-
-                                
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li>
-                                    <a class="dropdown-item {{ request()->input('sort') == 'asc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'asc', 'search' => request()->get('search')]) }}">
-                                        Sort A-Z
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item {{ request()->input('sort') == 'desc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'desc', 'search' => request()->get('search')]) }}">
-                                        Sort Z-A
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item {{ request()->input('sort') == 'date_desc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'date_desc', 'search' => request()->get('search')]) }}">
-                                        Newest to Oldest
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item {{ request()->input('sort') == 'date_asc' ? 'active' : '' }}" href="{{ route('jobs.index', ['sort' => 'date_asc', 'search' => request()->get('search')]) }}">
-                                        Oldest to Newest
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </form>
-                     <!-- Button untuk Create Job -->
-                    <a href="{{ route('jobs.create') }}" class="btn btn-primary btn-extended">
-                        <i class=""></i> Create Job
-                    </a>
-                </div>
-                   
+            <label for="perPage" class="me-2 mb-0">Show</label>
+            <select name="perPage" id="perPage" class="form-select form-select-sm w-auto"
+                    onchange="this.form.submit()">
+                <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
+                <option value="20" {{ $perPage == 20 ? 'selected' : '' }}>20</option>
+                <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
+                <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                <option value="all" {{ $perPage == 'all' ? 'selected' : '' }}>All</option>
+            </select>
+            <span class="ms-2">entries</span>
+        </form>
+    </div>
             </div>
-               
 
-            
-            </div>
         </div>
+    </div>
 </div>
+
 
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
