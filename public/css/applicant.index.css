@@ -58,8 +58,8 @@
 }
 
 .status-box {
-    width: 80px; 
-    height: 60px; 
+    width: 85px; 
+    height: 85px; 
     border-radius: 12px; 
     display: flex;
     flex-direction: column;
@@ -79,6 +79,7 @@
 .status-box:hover {
     transform: scale(1.05); 
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); 
+    color: white;
 }
 
 .status-box p {
@@ -93,25 +94,34 @@
     display: block;
 }
 
+.status-all {
+    background: linear-gradient(145deg, #bbdefb, #64b5f6); /* Lightest Blue */
+}
+
 .status-applied {
-    background: linear-gradient(145deg, #4a90e2, #357abd); /* Lighter Blue */
+    background: linear-gradient(145deg, #64b5f6, #2196f3); /* Light to Medium */
 }
 
 .status-interview {
-    background: linear-gradient(145deg, #007bff, #0056b3); /* Standard Blue */
+    background: linear-gradient(145deg, #2196f3, #1976d2); /* Medium to Dark */
 }
 
 .status-offer {
-    background: linear-gradient(145deg, #0056b3, #003f88); /* Darker Blue */
+    background: linear-gradient(145deg, #1976d2, #1565c0); /* Darker Blue */
 }
 
 .status-accepted {
-    background: linear-gradient(145deg, #003f88, #002b5c); /* Even Darker Blue */
+    background: linear-gradient(145deg, #1565c0, #0d47a1); /* Very Dark */
 }
 
-.status-all {
-    background: linear-gradient(145deg, #85c1e9, #4a90e2); /* Light Blue */
+.status-bankcv {
+    background: linear-gradient(145deg, #1565c0, #0d47a1); /* Same as accepted */
 }
+
+.status-not_qualify {
+    background: linear-gradient(145deg, #1565c0, #0d47a1); /* Same as accepted */
+}
+
 
 
 /* Animation Keyframes */
