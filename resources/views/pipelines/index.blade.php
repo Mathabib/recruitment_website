@@ -87,7 +87,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <!-- Left side: Filter By and Sort By -->
                     <div class="d-flex align-items-center gap-3">
-                    @can('create applicant')                                            
+                    @can('create applicants')                                            
                     <a href="{{ route('pipelines.create') }}" class="btn btn-primary btn-extended" style="margin-top: -15px;">
                         <i class="fa fa-plus"></i>New Data
                     </a>
