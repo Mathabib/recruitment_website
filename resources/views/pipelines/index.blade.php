@@ -96,7 +96,7 @@
                     <!-- <a href="{{ route('export.applicant') }}" class="btn btn-success">Export to Excel</a> -->
 
        
-                    @can('create applicant')
+                    @can('create applicants')
                     <!-- Upload Form -->
                     <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
                         @csrf
