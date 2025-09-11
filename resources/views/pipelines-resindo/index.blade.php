@@ -80,10 +80,11 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <!-- Left side: Filter By and Sort By -->
                     <div class="d-flex align-items-center gap-3">
-
+                    @can('create resindo applicants')
                     <a href="{{ route('pipelines-resindo.create') }}" class="btn btn-primary btn-extended" style="margin-top: -15px;">
                         <i class="fa fa-plus"></i>New Data
                     </a>
+                    @endcan
 
                     <!-- <a href="{{ route('export.applicant') }}" class="btn btn-success">Export to Excel</a> -->
 
@@ -292,7 +293,7 @@
                                     </a>
                                 </th>
 
-
+                                @can('pipeline resindo move stage')
                                 <th>
                                     <span>Move Stage</span>
                                     <a href="{{ request()->fullUrlWithQuery(['sort' => 'status_asc']) }}"
@@ -304,8 +305,13 @@
                                         &#9660;
                                     </a>    
                                 </th>
+                                @endcan
+                                @can('pipeline resindo move recomend')
                                 <th></th>
+                                @endcan
+                                @can('pipeline resindo action')
                                 <th>Action</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -332,7 +338,7 @@
                                 <td>{{ $applicant->job->job_name ?? '' }}</td>
 
 
-
+                                @can('pipeline resindo move stage')
                                 <td class="pipeline_stage">
                                     <div>
                                         <form action="{{ route('applicants.updateStatus', $applicant->id) }}" method="POST" style="display:inline;">
@@ -352,6 +358,12 @@
                                                     <button type="submit" name="status" value="not_qualify" class="dropdown-item">Not Qualify</button>
 
                                                 </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </td>
+                                @endcan
+                                @can('pipeline resindo move recomend')
                                 <td>
                                     <div class="recommendation-remark" onclick="toggleDropdown(this)" style="position: relative;">
                                         <span class="selected-option" style="color: white; background-color: <?php echo $applicant->recommendation_status === 'recommended' ? 'green' : 'orange'; ?>;">
@@ -367,39 +379,33 @@
                                         </div>
                                     </div>
                                 </td>
+                                @endcan
+                                @can('pipeline resindo action')
+                                <td>
+                                    <div class="action-icons">
+                                        <!-- Edit button -->
+                                        <a href="{{ route('pipelines-resindo.edit', $applicant->id) }}" class="action-icon" title="Edit">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
 
+                                        <!-- Delete button -->
+                                        <a href="#" class="action-icon"
+                                            onclick="event.preventDefault(); 
+                                            if (confirm('Are you sure you want to delete this item?')) {
+                                                document.getElementById('delete-form-{{ $applicant->id }}').submit();
+                                            }" title="Delete">
+                                                            <i class="fa fa-trash"></i>
+                                        </a>
 
-
-
-                                </form>
-                </div>
-                </td>
-                <td>
-                    <div class="action-icons">
-                        <!-- Edit button -->
-                        <a href="{{ route('pipelines-resindo.edit', $applicant->id) }}" class="action-icon" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
-
-                        <!-- Delete button -->
-                        <a href="#" class="action-icon"
-                            onclick="event.preventDefault(); 
-                            if (confirm('Are you sure you want to delete this item?')) {
-                                document.getElementById('delete-form-{{ $applicant->id }}').submit();
-                            }" title="Delete">
-                                            <i class="fa fa-trash"></i>
-                        </a>
-
-                        <!-- Hidden delete form -->
-                        <form id="delete-form-{{ $applicant->id }}" action="{{ route('pipelines-resindo.destroy', $applicant) }}" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </div>
-                </td>
-
-
-                </tr>
+                                        <!-- Hidden delete form -->
+                                        <form id="delete-form-{{ $applicant->id }}" action="{{ route('pipelines-resindo.destroy', $applicant) }}" method="POST" style="display: none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </div>
+                                </td>
+                                @endcan
+                                </tr>
        
                 @endforeach
                 </tbody>

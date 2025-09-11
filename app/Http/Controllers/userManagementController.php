@@ -20,7 +20,8 @@ class userManagementController extends Controller
     }
 
     public function create(){
-        return view('user_management.create');
+        $roles = Role::all();
+        return view('user_management.create', compact('roles'));
     }
 
     public function store(Request $request){
@@ -28,14 +29,14 @@ class userManagementController extends Controller
           if ($request->hasFile('image')) {
             $image_path = $request->file('image')->store('user_photos', 'public');
         }
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'image' => $image_path,
             'role' => $request->role,
         ]);
-
+        $user->syncRoles($request->role);
         return redirect()->route('management.user.index')->with('success', 'successfully added new user');
     }
 

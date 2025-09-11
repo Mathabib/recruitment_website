@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'User List')
+@section('title', 'Create New User')
 
 @section('content_header')
-<h2>User List</h2>
+<h2>Create New User</h2>
 @stop
 @section('content')
 <div class="card">
@@ -37,8 +37,11 @@
                         <label for="role"></label>
                         <select class="form-control" name="role" id="">
                             <option value="">Choose Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="super_admin">Super Admin</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                            @endforeach
+                            {{-- <option value="admin">Admin</option>
+                            <option value="super_admin">Super Admin</option> --}}
                         </select>
                     </div>
 

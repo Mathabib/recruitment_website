@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'User List')
+@section('title', 'Edit User')
 
 @section('content_header')
-<h2>User List</h2>
+<h2>Edit User</h2>
 @stop
 @section('content')
 <div class="card">
