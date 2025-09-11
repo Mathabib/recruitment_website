@@ -87,15 +87,16 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <!-- Left side: Filter By and Sort By -->
                     <div class="d-flex align-items-center gap-3">
-
+                    @can('create applicant')                                            
                     <a href="{{ route('pipelines.create') }}" class="btn btn-primary btn-extended" style="margin-top: -15px;">
                         <i class="fa fa-plus"></i>New Data
                     </a>
+                    @endcan
 
                     <!-- <a href="{{ route('export.applicant') }}" class="btn btn-success">Export to Excel</a> -->
 
        
-
+                    @can('create applicant')
                     <!-- Upload Form -->
                     <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
                         @csrf
@@ -104,7 +105,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Upload</button>
                     </form>
-
+                    @endcan
 
                         <!-- Filter Button -->
                         <button
@@ -339,7 +340,7 @@
                                  @if(request('status') === 'offer')
                                     <th></th>
                                 @endif
-
+                                @can('pipeline move stage')
                                 <th>
                                     <span>Move Stage</span>
                                     <a href="{{ request()->fullUrlWithQuery(['sort' => 'status_asc']) }}"
@@ -351,8 +352,13 @@
                                         &#9660;
                                     </a>
                                 </th>
+                                @endcan
+                                @can('pipeline move stage')
                                 <th></th>
+                                @endcan
+                                @can('edit applicants')                                                                    
                                 <th>Action</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -402,7 +408,7 @@
                                         <td></td>
                                     @endif
                                 @endif
-
+                                    @can('pipeline move stage')
                                     <td class="pipeline_stage">
                                         <div>
                                             <form action="{{ route('applicants.updateStatus', $applicant->id) }}" method="POST" style="display:inline;">
@@ -425,7 +431,8 @@
                                             </form>
                                         </div>
                                     </td>
-                                    
+                                    @endcan
+                                    @can('pipeline move stage')
                                     <td>
                                         <div class="recommendation-remark" onclick="toggleDropdown(this)" style="position: relative;">
                                             <span class="selected-option" style="color: white; background-color: <?php echo $applicant->recommendation_status === 'recommended' ? 'green' : 'orange'; ?>;">
@@ -441,11 +448,9 @@
                                             </div>
                                         </div>
                                     </td>
-                                    
-                                                                
-                                    <td>
-                                        @can('edit applicants')
-                                                                                    
+                                    @endcan
+                                    @can('edit applicants')                            
+                                    <td>                                                                                                                            
                                         <div class="action-icons">
                                             <!-- Edit button -->
                                             <a href="{{ route('pipelines.edit', $applicant->id) }}" class="action-icon" title="Edit">
@@ -466,10 +471,9 @@
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
-                                        </div>
-
-                                        @endcan
+                                        </div>                                        
                                     </td>
+                                    @endcan
                                 </tr>
                             @endif
                             @endforeach

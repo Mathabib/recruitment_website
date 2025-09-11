@@ -324,6 +324,7 @@ return [
             'text' => 'jobs',
             'url' => '/jobs',
             'icon' => 'fa fa-briefcase',
+            'can' => 'sidemenu jobs',
         ],
 
        
@@ -332,12 +333,14 @@ return [
             'text' => 'Pipeline',
             'url' => '/pipelines',
             'icon' => 'fa fa-users',
+            'can' => 'sidemenu pipeline isolutions'
         ],
 
         [
             'text' => 'Pipeline-resindo',
             'url' => '/pipelines-resindo',
             'icon' => 'fa fa-users',
+            'can' => 'sidemenu pipeline resindo'
         ],
         // ['header' => 'account_settings'],
         // [
@@ -353,7 +356,7 @@ return [
         [
             'text' => 'Setting',
             'icon' => 'fas fa-cog',
-            'can' => 'super_admin',
+            'can' => 'sidemenu setting',
             'submenu' => [
                 [
                     'text' => 'Education',
@@ -375,7 +378,8 @@ return [
 
         [
             'text' => 'User Management',
-            'icon' => 'fas fa-cog',    
+            'icon' => 'fas fa-cog',
+            'can' => 'sidemenu user management',    
             'submenu' => [
                 [
                     'text' => 'User List',

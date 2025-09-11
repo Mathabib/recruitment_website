@@ -81,8 +81,8 @@ class ResindoController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'nullable|numeric|min:0',
-            'salary_current' => 'nullable|numeric|min:0',
+            'salary_expectation' => 'nullable|min:0',
+            'salary_current' => 'nullable|min:0',
             'role.*' => 'nullable|string|max:255',
             'name_company.*' => 'nullable|string',
             'desc_kerja.*' => 'nullable|string',
@@ -102,6 +102,18 @@ class ResindoController extends Controller
             'jurusan*' => 'nullable|string|max:255',
             'present*' => 'nullable|string|max:255'
         ]);
+
+
+        $salary_expectation = $request->input('salary_expectation');
+        $salary_expectation = str_replace(['.', ','], '', $salary_expectation);
+        $salary_expectation = (int) $salary_expectation;
+
+        // format current salary
+        $salary_current = $request->input('salary_current');
+        $salary_current = str_replace(['.', ','], '', $salary_current);
+        $salary_current = (int) $salary_current;
+
+
         // return $request;
         // return $request;
         // Menangani upload file photo_pass jika ada
@@ -121,10 +133,6 @@ class ResindoController extends Controller
             ]);
         }
 
-        
-
-        
-    
         // Simpan data applicant
         $applicant = Applicant::create([
             'job_id' => $request->job_id,
@@ -142,8 +150,8 @@ class ResindoController extends Controller
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
-            'salary_expectation' => $request->salary_expectation,
-            'salary_current' => $request->salary_current,
+            'salary_expectation' => $salary_expectation,
+            'salary_current' => $salary_current,
             'education_id' => $request->education[0],
             'jurusan_id' => $jurusan->id,
             'type' => 'resindo',
@@ -437,8 +445,8 @@ class ResindoController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'nullable|numeric|min:0',
-            'salary_current' => 'nullable|numeric|min:0',
+            'salary_expectation' => 'nullable|min:0',
+            'salary_current' => 'nullable|min:0',
 
             'role.*' => 'nullable|string|max:255',
             'name_company.*' => 'nullable|string',
@@ -459,6 +467,17 @@ class ResindoController extends Controller
             'jurusan*' => 'nullable|string|max:255',
             'present*' => 'nullable|string|max:255'
         ]);
+
+
+        $salary_expectation = $request->input('salary_expectation');
+        $salary_expectation = str_replace(['.', ','], '', $salary_expectation);
+        $salary_expectation = (int) $salary_expectation;
+
+        // format current salary
+        $salary_current = $request->input('salary_current');
+        $salary_current = str_replace(['.', ','], '', $salary_current);
+        $salary_current = (int) $salary_current;
+
         // return $request;
         // return $request;
         // Menangani upload file photo_pass jika ada
@@ -499,8 +518,8 @@ class ResindoController extends Controller
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
-            'salary_expectation' => $request->salary_expectation,
-            'salary_current' => $request->salary_current,
+            'salary_expectation' => $salary_expectation,
+            'salary_current' => $salary_current,
 
             'education_id' => $request->education[0],
             'jurusan_id' => $jurusan->id,

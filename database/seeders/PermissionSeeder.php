@@ -20,10 +20,38 @@ class PermissionSeeder extends Seeder
             'create users',
             'edit users',
             'delete users',
+
+            'view jobs',
+            'create jobs',
+            'edit jobs',
+            'delete jobs',
+
+            'jobs publish',
+            'jobs options',
+
             'view applicants',
             'edit applicants',
             'delete applicants',
-            'setting',
+            'create applicants',
+
+            'view resindo applicants',
+            'edit resindo applicants',
+            'delete resindo applicants',
+            'create resindo applicants',
+
+            'pipeline action',
+            'pipeline move stage',
+            'pipeline move recomend',
+
+            'pipeline resindo action',
+            'pipeline resindo move stage',
+            'pipeline resindo move recomend',
+
+            'sidemenu jobs',
+            'sidemenu pipeline isolutions',
+            'sidemenu pipeline resindo',
+            'sidemenu user management',
+            'sidemenu setting'
         ];
 
         foreach ($permissions as $permission) {

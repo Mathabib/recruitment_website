@@ -63,7 +63,15 @@
                 </form>
 
                <!-- Show per page selector -->
-    <div class="mt-3 d-flex justify-content-end">
+    <div class="mt-3 d-flex justify-content-between">
+        <div>
+            @can('create jobs')
+            <a class="btn btn-success" href="{{ route('jobs.create') }}">
+                <i class="fas fa-plus"></i>
+                Create Jobs
+            </a>
+            @endcan
+        </div>
         <form action="{{ route('jobs.index') }}" method="GET" class="d-flex align-items-center">
             @foreach(request()->except('perPage') as $key => $value)
                 <input type="hidden" name="{{ $key }}" value="{{ $value }}">
@@ -124,7 +132,7 @@
                             </a>
                         </td>
                         @endforeach
-
+                        @can('job options')
                         <!-- Options button -->
                         <td class="options">
                             <div class="dropdown">
@@ -143,6 +151,8 @@
                                 </ul>
                             </div>
                         </td>
+                        @endcan
+                        @can('job publish')
                         <td>
                             <form action="{{ route('jobs.updateStatus', $job->id) }}" method="POST">
                                 @csrf
@@ -155,7 +165,7 @@
                                 <div>
                             </form>
                         </td>
-
+                        @endcan
                     </tr>
                     @empty
                     <tr>

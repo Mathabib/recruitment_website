@@ -663,12 +663,12 @@
     document.getElementById('salary_expectation').addEventListener('input', function(e) {
     let value = this.value.replace(/\D/g, ""); // hanya angka
     this.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
-});
+    });
 
     document.getElementById('salary_current').addEventListener('input', function(e) {
     let value = this.value.replace(/\D/g, ""); // hanya angka
     this.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
-});
+    });
 
 
     </script>

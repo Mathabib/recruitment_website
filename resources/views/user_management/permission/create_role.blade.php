@@ -25,7 +25,12 @@
                         <tr>
                             <th style="width: 5%">No</th>
                             <th>Permission</th>
-                            <th style="width: 5%">Check</th>
+                            <th style="width: 12%">
+                                <div class="form-check form-group">                                    
+                                    <input class="form-check-input" name="checkAll" type="checkbox" id="checkAll">
+                                    <label class="form-check-label mb-1" for="checkAll">Check All</label>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,8 +39,8 @@
                             <td>{{ $index }}</td>
                             <td>{{ $permission->name }}</td>
                             <td>
-                                <div>
-                                    <input type="checkbox" name="permission[]" value="{{ $permission->name }}" id="" >
+                                <div class="d-flex justify-content-center">
+                                    <input type="checkbox" name="permission[]" value="{{ $permission->name }}" id="" class="checkItem">
                                     {{-- <input type="checkbox" name="permission_{{ $index }}" value="{{ $permission->name }}" id=""> --}}
                                 </div>
                             </td>
@@ -52,5 +57,14 @@
     </div>
 </div>
 
+@section('js')
+<script>
+    // Ketika "Check All" dicentang
+    document.getElementById('checkAll').addEventListener('change', function () {
+        let checkboxes = document.querySelectorAll('.checkItem');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+@endsection
 
 @stop
