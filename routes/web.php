@@ -111,10 +111,28 @@ Route::prefix('offer-letters')->group(function () {
 });
 
 
-// ======MANAGEMENT USER====
+// ======MANAGEMENT USER=======
 
-Route::get('/management/user', [userManagementController::class, 'index'])->name('management.user.index');
-Route::get('/management/user/edit/{id}', [userManagementController::class, 'edit'])->name('management.user.edit');
+Route::get('/management/user', [userManagementController::class, 'index'])->name('management.user.index')->middleware('permission:setting');
+Route::get('/management/user/edit/{id}', [userManagementController::class, 'edit'])->name('management.user.edit')->middleware('auth');
+Route::post('/management/user/update', [userManagementController::class, 'update'])->name('management.user.update')->middleware('auth');
+Route::get('/management/user/create', [userManagementController::class, 'create'])->name('management.user.create')->middleware('auth');
+Route::post('/management/user/store', [userManagementController::class, 'store'])->name('management.user.store')->middleware('auth');
+Route::get('/management/user/delete/{id}', [userManagementController::class, 'delete'])->name('management.user.delete')->middleware('auth');
+
+//==========PERMISSION MANAGEMENT=======
+Route::get('/management/role', [userManagementController::class, 'role_index'])->name('management.role.index')->middleware('permission:setting');
+Route::get('/management/role/create', [userManagementController::class, 'role_create'])->name('management.role.create')->middleware('auth');
+Route::post('/management/role/store', [userManagementController::class, 'role_store'])->name('management.role.store')->middleware('auth');
+Route::get('/management/role/edit/{id}', [userManagementController::class, 'role_edit'])->name('management.role.edit')->middleware('auth');
+Route::post('/management/role/update/', [userManagementController::class, 'role_update'])->name('management.role.update')->middleware('auth');
+Route::get('/management/role/delete/{id}', [userManagementController::class, 'role_delete'])->name('management.role.delete')->middleware('auth');
+
+// Route::get('/management/permission', [userManagementController::class, 'permission_index'])->name('management.permission.index')->middleware('auth');
+// Route::get('/management/permission/create', [userManagementController::class, 'permission_create'])->name('management.permission.create')->middleware('auth');
+// Route::get('/management/permission/store', [userManagementController::class, 'permission_store'])->name('management.permission.store')->middleware('auth');
+// Route::get('/management/permission/delete/{id}', [userManagementController::class, 'permission_delete'])->name('management.permission.delete')->middleware('auth');
+
 //testing 
 Route::get('/test/{id}', [JurusanController::class, 'showEducationMajor'])->name('test');
 

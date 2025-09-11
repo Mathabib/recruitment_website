@@ -444,6 +444,8 @@
                                     
                                                                 
                                     <td>
+                                        @can('edit applicants')
+                                                                                    
                                         <div class="action-icons">
                                             <!-- Edit button -->
                                             <a href="{{ route('pipelines.edit', $applicant->id) }}" class="action-icon" title="Edit">
@@ -465,6 +467,8 @@
                                                 @method('DELETE')
                                             </form>
                                         </div>
+
+                                        @endcan
                                     </td>
                                 </tr>
                             @endif

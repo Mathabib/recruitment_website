@@ -1,18 +1,27 @@
 @extends('adminlte::page')
 
-@section('title', 'User List')
+@section('title', 'Permission List')
 
 @section('content_header')
-<h2>User List</h2>
+<h2>Role List</h2>
 @stop
 @section('content')
+
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 
 <div class="card mt-5">
     <div class="card-header">
         <div>
-            <a class="btn btn-success" href="{{ route('management.user.create') }}">
+            <a class="btn btn-success" href="{{ route('management.role.create') }}">
                 <i class="fas fa-plus"></i>
-                Add User
+                Add Role
             </a>
         </div>
     </div>
@@ -22,25 +31,21 @@
                 <thead class="table-primary">
                     <tr>
                         <th style="width: 5%">No.</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
+                        <th>Role</th>                    
                         <th style="width: 10%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $index => $user)
+                    @foreach ($roles as $index => $role)
                         <tr>
                             <td>{{ $index }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->role }}</td>
+                            <td>{{ $role->name }}</td>
                             <td>
                                 <div>
-                                    <a href="{{ route('management.user.edit', $user->id) }}">
+                                    <a href="#">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('management.user.delete', $user->id) }}"  onclick="return confirm('Are you sure you want to delete this user?')">
+                                    <a href="{{ route('management.role.delete', $role->id) }}" onclick="return confirm('Are you sure you want to delete this user?')">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </div>
