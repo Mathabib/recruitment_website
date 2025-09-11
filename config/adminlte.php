@@ -379,7 +379,7 @@ return [
         [
             'text' => 'User Management',
             'icon' => 'fas fa-cog',
-            'can' => 'sidemenu user management',    
+            // 'can' => 'sidemenu user management',    
             'submenu' => [
                 [
                     'text' => 'User List',

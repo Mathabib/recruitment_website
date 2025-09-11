@@ -113,7 +113,7 @@ Route::prefix('offer-letters')->group(function () {
 
 // ======MANAGEMENT USER=======
 
-Route::get('/management/user', [userManagementController::class, 'index'])->name('management.user.index')->middleware('permission:setting');
+Route::get('/management/user', [userManagementController::class, 'index'])->name('management.user.index')->middleware('auth');
 Route::get('/management/user/edit/{id}', [userManagementController::class, 'edit'])->name('management.user.edit')->middleware('auth');
 Route::post('/management/user/update', [userManagementController::class, 'update'])->name('management.user.update')->middleware('auth');
 Route::get('/management/user/create', [userManagementController::class, 'create'])->name('management.user.create')->middleware('auth');
@@ -121,7 +121,7 @@ Route::post('/management/user/store', [userManagementController::class, 'store']
 Route::get('/management/user/delete/{id}', [userManagementController::class, 'delete'])->name('management.user.delete')->middleware('auth');
 
 //==========PERMISSION MANAGEMENT=======
-Route::get('/management/role', [userManagementController::class, 'role_index'])->name('management.role.index')->middleware('permission:setting');
+Route::get('/management/role', [userManagementController::class, 'role_index'])->name('management.role.index')->middleware('auth');
 Route::get('/management/role/create', [userManagementController::class, 'role_create'])->name('management.role.create')->middleware('auth');
 Route::post('/management/role/store', [userManagementController::class, 'role_store'])->name('management.role.store')->middleware('auth');
 Route::get('/management/role/edit/{id}', [userManagementController::class, 'role_edit'])->name('management.role.edit')->middleware('auth');
