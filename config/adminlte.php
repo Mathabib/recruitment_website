@@ -353,6 +353,7 @@ return [
         [
             'text' => 'Setting',
             'icon' => 'fas fa-cog',
+            'can' => 'super_admin',
             'submenu' => [
                 [
                     'text' => 'Education',
@@ -374,12 +375,16 @@ return [
 
         [
             'text' => 'User Management',
-            'icon' => 'fas fa-cog',
+            'icon' => 'fas fa-cog',    
             'submenu' => [
                 [
                     'text' => 'User List',
                     'url' => 'management/user'
-                ]
+                ],
+                [
+                    'text' => 'Role List',
+                    'url' => 'management/role'
+                ],
             ]
         ]
         // ['header' => 'labels'],
