@@ -81,7 +81,8 @@ class userManagementController extends Controller
     }
 
     public function role_create(){
-        return view('user_management.permission.create_role');
+        $permissions = Permission::all();
+        return view('user_management.permission.create_role', compact('permissions'));
     }
 
     public function role_store(Request $request){
@@ -89,8 +90,8 @@ class userManagementController extends Controller
             'name' => 'required|string|unique:roles,name',
         ]);
 
-        Role::create(['name' => $request->name]);
-
+        $role = Role::create(['name' => $request->name]);
+        $role->syncPermissions($request->permission);
         return redirect()->route('management.role.index')->with('success', 'Role successfully created');
     }
 
