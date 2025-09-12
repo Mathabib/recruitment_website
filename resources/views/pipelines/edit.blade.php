@@ -13,8 +13,33 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Form Edit Applicant</h3>
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            <div class="card-header d-flex">
+                <h3 class="card-title mr-auto">Form Edit Applicant</h3>
+                
+                    <form action="{{ route('pipelines.changetype') }}" method="POST">
+                        @csrf
+                        @method('POST')
+                        <div class="d-flex">
+                            <input type="hidden" name="id" value="{{ $applicant->id }}">
+                            <div class="form-group">
+                            <select class="form-select form-control" name="type" id="">
+                                <option value="">Choose type</option>
+                                <option {{ $applicant->type == 'resindo' ? 'selected' : '' }} value="resindo">Resindo</option>
+                                <option {{ $applicant->type == 'isolutions' ? 'selected' : '' }} value="isolutions">Isolutions</option>
+                            </select>
+                            </div>
+
+                            <div class="ml-4">
+                                <button class="btn btn-success" type="submit">Change Type</button>
+                            </div>
+                        </div>
+                    </form>
+                
             </div>
 
             <div class="card-body">
