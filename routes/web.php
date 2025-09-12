@@ -69,6 +69,9 @@ Route::post('/applicant/recommend', [ApplicantController::class, 'updateRecommen
 Route::delete('/pipelines/{applicant}', [ApplicantController::class, 'destroy'])->name('pipelines.destroy');
 Route::get('/get-jurusan/{education_id}', [ApplicantController::class, 'getJurusan']);
 
+//ganti TYPE DATA pelamar isolutions, resindo dll 
+Route::post('pipelines/changetype', [ApplicantController::class, 'changeType'])->name('pipelines.changetype')->middleware('auth');
+
 // Route::resource('pipelines', PipelineController::class);
 Route::patch('/jobs/{id}/update-status', [JobController::class, 'updateStatus'])->name('jobs.updateStatus');
 
@@ -83,6 +86,7 @@ Route::get('/form-resindo', [ResindoController::class, 'formresindo'])->name('fo
 
 Route::post('/kirim', [VacancyController::class, 'kirim'])->name('kirim');
 Route::post('/kirimresindo', [ResindoController::class, 'kirimresindo'])->name('kirimresindo');
+
 
 // ====NOTES====
 Route::get('/{id}', [App\Http\Controllers\VacancyController::class, 'index'])->name('vacancy');

@@ -385,7 +385,7 @@
                                         </div>
                                     </td>
                                     <td style="width: 180px;">{{ $applicant->education->name_education }} - {{ $applicant->jurusan->name_jurusan }}</td>
-                                    <td>{{ $applicant->job->job_name }}</td>
+                                    <td>{{ isset($applicant->job->job_name) ? $applicant->job->job_name : '' }}</td>
 
                                   @if(request('status') === 'offer')
                                     @if($applicant->status === 'offer')

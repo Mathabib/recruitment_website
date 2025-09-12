@@ -850,4 +850,19 @@ if ($request->has('search')) {
     }
 
 
+    public function changeType(Request $request){
+        $applicant = Applicant::findOrFail($request->id);
+        if($request->type == 'isolutions'){
+            $applicant->update([
+                'type' => null,
+            ]);
+            return redirect()->back()->with('success', 'successfully change type');
+        }
+        $applicant->update([
+            'type' => $request->type
+        ]);
+        return redirect()->back()->with('success', 'successfully change type');
+    }
+
+
 }
