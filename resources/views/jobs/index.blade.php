@@ -132,7 +132,7 @@
                             </a>
                         </td>
                         @endforeach
-                        @can('job options')
+                        @can('jobs options')
                         <!-- Options button -->
                         <td class="options">
                             <div class="dropdown">
@@ -152,7 +152,7 @@
                             </div>
                         </td>
                         @endcan
-                        @can('job publish')
+                        @can('jobs publish')
                         <td>
                             <form action="{{ route('jobs.updateStatus', $job->id) }}" method="POST">
                                 @csrf
