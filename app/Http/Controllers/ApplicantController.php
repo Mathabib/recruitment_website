@@ -111,7 +111,7 @@ class ApplicantController extends Controller
     //         }
     //     }
 
-    //     // Search 
+    //     // Search
     //     if ($request->has('search')) {
     //         $search = $request->get('search');
 
@@ -139,7 +139,7 @@ class ApplicantController extends Controller
     //         // Jika tidak ada job_id dan status, ambil semua data
     //         // Anda bisa mengatur filter tambahan jika diperlukan di sini
     //     }
-        
+
     //     // Sortir data berdasarkan parameter sort
     //     if ($sort === 'newest') {
     //         $query->orderBy('created_at', 'desc');
@@ -150,12 +150,12 @@ class ApplicantController extends Controller
     //     } elseif ($sort === 'z_to_a') {
     //         $query->orderBy('name', 'desc');
     //     }
-        
+
     //     // Eksekusi query untuk mendapatkan hasil
     //     $results = $query->get();
 
-        
-        
+
+
     //     // Pagination
     //     $perPage = 10;
     //     $applicants = $query->paginate($perPage);
@@ -164,7 +164,7 @@ class ApplicantController extends Controller
     //     $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request
 
     //     if ($jobId) {
-            
+
     //         // If job_id exists, filter by job_id
     //         $statusCounts = [
     //             'applied' => Applicant::where('status', 'applied')->where('job_id', $jobId)->count(),
@@ -183,7 +183,7 @@ class ApplicantController extends Controller
     //             'bankcv' => Applicant::where('status', 'bankcv')->count(),
     //         ];
     //     }
-        
+
 
 
     //     // Load dropdown options
@@ -195,10 +195,10 @@ class ApplicantController extends Controller
     // }
 
     public function index(Request $request)
-{   
-    
+{
+
     $query = Applicant::with('job', 'education', 'jurusan');
-    
+
 
     $pagination = 10;
     if(isset($request['pagination'])){
@@ -285,7 +285,7 @@ class ApplicantController extends Controller
             $jurusanId = $request->get('jurusan');
             $query->where('jurusan_id', $jurusanId);
         }
-        
+
         if ($request->has('job_filter') && !empty($request->get('job_filter'))) {
             $jobId = $request->get('job_filter');
             $query->where('job_id', $jobId);
@@ -296,7 +296,7 @@ class ApplicantController extends Controller
         }
     }
 
-    // Search 
+    // Search
 if ($request->has('search')) {
     $search = $request->get('search');
     $search_by = $request->get('search_by');
@@ -327,7 +327,7 @@ if ($request->has('search')) {
         // Jika tidak ada job_id dan status, ambil semua data
         // Anda bisa mengatur filter tambahan jika diperlukan di sini
     }
-    
+
     // Sortir data berdasarkan parameter sort
     if ($sort === 'newest') {
         $query->orderBy('created_at', 'desc');
@@ -351,26 +351,26 @@ if ($request->has('search')) {
     } elseif ($sort === 'education_desc') {
         $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'desc');
     }  else {
-    $query->orderBy('created_at', 'desc'); 
+    $query->orderBy('created_at', 'desc');
 }
 
 //bug pagination all : karena query diload 2 kali dan variabel applicant tidak konsisten ada
-   
+
     if ($pagination === 'all'){
         $applicants = $query->get();
     } else {
         $applicants = $query->paginate($pagination)->appends($request->all());
     }
 
- 
-    
-    
+
+
+
 
     // Get the count of applicants based on status
     $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request
 
     if ($jobId) {
-        
+
         // If job_id exists, filter by job_id
         $statusCounts = [
             'applied' => Applicant::where('status', 'applied')->where('job_id', $jobId)->count(),
@@ -391,7 +391,7 @@ if ($request->has('search')) {
             'not_qualify' => Applicant::where('status', 'not_qualify')->where('type', null)->count(),
         ];
     }
-    
+
 
 
     // Load dropdown options
@@ -434,14 +434,14 @@ if ($request->has('search')) {
 
     public function store(Request $request)
     {
-        
+
         // Validate input
         $request->validate([
             'job_id' => 'required|exists:jobs,id',
             'name' => 'required|string|max:255',
-            'address' => 'required|string',
-            'number' => 'required|string|max:15',
-            'email' => 'required|email',
+            'address' => 'nullable|string',
+            'number' => 'nullable|string|max:15',
+            'email' => 'nullable|email',
             'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
             'experience_period' => 'nullable|string',
@@ -452,13 +452,13 @@ if ($request->has('search')) {
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'required|min:0',
-            'salary_current' => 'required|min:0',
-            'role.*' => 'required|string|max:255',
-            'name_company.*' => 'required|string',
-            'desc_kerja.*' => 'required|string',
-            'mulai.*' => 'required|date',
-            // 'selesai.*' => 'required|date',
+            'salary_expectation' => 'nullable|min:0',
+            'salary_current' => 'nullable|min:0',
+            'role.*' => 'nullable|string|max:255',
+            'name_company.*' => 'nullable|string',
+            'desc_kerja.*' => 'nullable|string',
+            'mulai.*' => 'nullable|date',
+            // 'selesai.*' => 'nullable|date',
             'project_name.*' => 'nullable|string|max:255',
             'client.*' => 'nullable|string|max:255',
             'desc_project.*' => 'nullable|string',
@@ -467,8 +467,8 @@ if ($request->has('search')) {
             'name_ref.*' => 'nullable|string|max:255',
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
-            'education' => 'required|exists:education,id',
-            'jurusan' => 'required|string|max:255', // Atur sesuai kebutuhan
+            'education' => 'nullable|exists:education,id',
+            'jurusan' => 'nullable|string|max:255', // Atur sesuai kebutuhan
         ]);
 
         // Handle file upload for photo_pass if provided
@@ -595,15 +595,15 @@ if ($request->has('search')) {
         // dd($request->all());
 
         // Validate input
-        //khusus validate yang sifatnya array maka harus ditambahkan '.*' setelah nama atribut $requestnya 
+        //khusus validate yang sifatnya array maka harus ditambahkan '.*' setelah nama atribut $requestnya
         //misal 'skills.*' => 'nullable|string',
-        //kalau gak dia bakal refresh refresh terus di form dan gak kemana mana 
+        //kalau gak dia bakal refresh refresh terus di form dan gak kemana mana
         $request->validate([
             'job_id' => 'required|exists:jobs,id',
             'name' => 'required|string|max:255',
-            'address' => 'required|string',
-            'number' => 'required|string|max:15',
-            'email' => 'required|email',
+            'address' => 'nullable|string',
+            'number' => 'nullable|string|max:15',
+            'email' => 'nullable|email',
             'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
             'experience_period' => 'nullable|string',
@@ -614,14 +614,14 @@ if ($request->has('search')) {
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'required|min:0',
-            'salary_current' => 'required|min:0',
+            'salary_expectation' => 'nullable|min:0',
+            'salary_current' => 'nullable|min:0',
 
 
-            'role.*' => 'required|string|max:255',
-            'desc_kerja.*' => 'required|string',
-            'name_company.*' => 'required|string',
-            'mulai.*' => 'required|date',
+            'role.*' => 'nullable|string|max:255',
+            'desc_kerja.*' => 'nullable|string',
+            'name_company.*' => 'nullable|string',
+            'mulai.*' => 'nullable|date',
             // 'selesai.*' => 'date',
 
             'project_name.*' => 'nullable|string|max:255',
@@ -634,7 +634,7 @@ if ($request->has('search')) {
             'phone.*' => 'nullable|string|max:255',
             'email_ref.*' => 'nullable|string',
 
-            'education' => 'required|exists:education,id',
+            'education' => 'nullable|exists:education,id',
             'jurusan' => 'nullable|string|max:255',
         ]);
 
@@ -699,7 +699,7 @@ if ($request->has('search')) {
         $applicant->workExperiences()->delete(); // Delete previous work experiences
         if ($request->has('role')) {
             foreach ($request->role as $index => $role) {
-                
+
                 $applicant->workExperiences()->create([
                     'role' => $role,
                     'desc_kerja' => $request->desc_kerja[$index],
@@ -743,11 +743,11 @@ if ($request->has('search')) {
 
     public function destroy($id)
     {
-        $applicant = Applicant::find($id);       
+        $applicant = Applicant::find($id);
         if ($applicant) {
             Storage::disk('public')->delete($applicant->photo_pass);
             $applicant->delete();
-        }        
+        }
         return redirect()->route('pipelines.index')->with('success_message', 'Applicant deleted successfully.');
     }
 
@@ -793,7 +793,7 @@ if ($request->has('search')) {
 
         // Simpan atau update notes di table
         // DB::table('notes')->updateOrInsert(
-        //     ['applicant_id' => $request->applicant_id], 
+        //     ['applicant_id' => $request->applicant_id],
         //     ['notes' => $request->notes, 'updated_at' => now()]
         // );
 
