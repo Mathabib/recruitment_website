@@ -302,15 +302,15 @@ if ($request->has('search')) {
     $search_by = $request->get('search_by');
 
     if ($jobId && $status) {
-        $query->where('name', 'like', "%{$search}%");
+        $query->where('name', 'like', "{$search}%");
     } else {
         if ($search_by === 'name') {
             // Filter langsung di kolom applicant
-            $query->where('name', 'like', "%{$search}%");
+            $query->where('name', 'like', "{$search}%");
         } elseif ($search_by === 'job_name') {
             // Filter di relasi job
             $query->whereHas('job', function ($q) use ($search) {
-                $q->where('job_name', 'like', "%{$search}%");
+                $q->where('job_name', 'like', "{$search}%");
             });
         }
     }

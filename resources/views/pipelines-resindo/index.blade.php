@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
 <h1 class="m-0 text-dark">
-    <b>List Applicants 
+    <b>List Applicants
         @if(isset($jobTitle))
             - {{ $jobTitle }}
             @if(isset($stageName) && $request->has('job_id') && $request->has('status'))
@@ -21,7 +21,7 @@
 
 
     <!-- Filter Status Stage -->
-  
+
     <!-- Kode untuk menampilkan stage -->
     <div class="status-boxes">
     <a href="{{ route('pipelines-resindo.index', ['stage' => null, 'education' => null, 'job_id' => $request->get('job_id')]) }}" class="status-box status-all {{ $request->get('stage') == 'all' ? 'active' : '' }}">
@@ -88,7 +88,7 @@
 
                     <!-- <a href="{{ route('export.applicant') }}" class="btn btn-success">Export to Excel</a> -->
 
-       
+
 
                     <!-- Upload Form -->
                     <!-- <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
@@ -134,10 +134,10 @@
 
                     <div class="pagination">
                         <form method="GET" action="{{ route('pipelines-resindo.index') }}">
-                            
+
                             <div class="d-flex flex-start gap-2">
                                 <div>
-                                    
+
                                     <select class="form-select" name="pagination" aria-label="Default select example">
                                         <option value="" {{ !request('pagination') ? 'selected' : '' }}>Pagination</option>
                                         <option value="5" {{ request('pagination') == '5' ? 'selected' : '' }}>5</option>
@@ -145,18 +145,18 @@
                                         <option value="50" {{ request('pagination') == '50' ? 'selected' : '' }}>50</option>
                                         <option value="100" {{ request('pagination') == '100' ? 'selected' : '' }}>100</option>
                                         <option value="all" {{ request('pagination') == 'all' ? 'selected' : '' }}>All</option>
-                                      </select>    
+                                      </select>
                                 </div>
                                 <div>
                                     <button class="btn btn-primary" type="submit">apply</button>
-                                </div>                                  
+                                </div>
                             </div>
                         </form>
-                        
+
                     </div>
 
                     <!-- Right side: Search Input -->
-                    <div class="search-bar">
+                    {{-- <div class="search-bar">
                         <form action="{{ route('pipelines-resindo.index') }}" method="GET" class="d-flex align-items-center gap-2">
                             <input type="text" name="search" class="form-control form-control-sm custom-search-input"
                                 style="margin-left: 300px;" placeholder="Search..."
@@ -169,7 +169,7 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -177,10 +177,35 @@
                     @if(request('pagination') == 'all')
                         <h3>Total Applicant : {{ $applicants->count() }}</h3>
                     @else
-                    <h3>Total Applicant : {{ $applicants->total() }}</h3>                    
-                    @endif                    
-                    
+                    <h3>Total Applicant : {{ $applicants->total() }}</h3>
+                    @endif
+
                 </div>
+
+                 <div class="search-bar">
+                    <form action="{{ route('pipelines-resindo.index') }}" method="GET" class="d-flex align-items-end gap-2">
+                        <div>
+                            <label for="search">Keyword</label>
+                            <input type="text" name="search" class="form-control custom-search-input"
+                            style="" placeholder="Search Applicant"
+                            value="{{ request('search') }}" aria-label="Search Applicant">
+                        </div>
+                        <div>
+                            <label for="search_by">Search By</label>
+                            <select style="width: 150px;" class="form-select" name="search_by" id="">
+                                <option value="name" {{ request('search_by') == 'name' ? 'selected' : '' }}>Name</option>
+                                <option value="job_name" {{ request('search_by') == 'job_name' ? 'selected' : '' }}>Job</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="job_id" value="{{ request('job_id') }}">
+                        <input type="hidden" name="status" value="{{ request('status') }}">
+
+                        <button type="submit" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+
 
                 <!-- Modal Filter -->
                 <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -231,6 +256,19 @@
                                             <option value="not_recommended" {{ request('recommendation') == 'not_recommended' ? 'selected' : '' }}>Not Recommended</option>
                                         </select>
                                     </div>
+
+                                     <div class="mb-3">
+                                        <label for="recommendation-dropdown" class="form-label">Job Position</label>
+                                        <select name="job_filter" class="form-select" id="recommendation-dropdown">
+                                            <option value="">Select job</option>
+                                            @foreach ($jobs as $item)
+                                                <option value="{{ $item->id }}" {{ request('job_filter') == $item->job_name ? 'selected' : '' }} >{{ $item->job_name }}</option>
+                                            @endforeach
+                                            {{-- <option value="recommended" {{ request('recommendation') == 'recommended' ? 'selected' : '' }}>Recommended</option>
+                                            <option value="not_recommended" {{ request('recommendation') == 'not_recommended' ? 'selected' : '' }}>Not Recommended</option> --}}
+                                        </select>
+                                    </div>
+
 
                                     <!-- Submit Button -->
                                     <div class="modal-footer">
@@ -303,7 +341,7 @@
                                     <a href="{{ request()->fullUrlWithQuery(['sort' => 'status_desc']) }}"
                                     style="text-decoration: none; color: white;">
                                         &#9660;
-                                    </a>    
+                                    </a>
                                 </th>
                                 @endcan
                                 @can('pipeline resindo move recomend')
@@ -316,7 +354,7 @@
                         </thead>
                         <tbody>
                             @foreach($applicants as $key => $applicant)
-                          
+
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>
@@ -390,7 +428,7 @@
 
                                         <!-- Delete button -->
                                         <a href="#" class="action-icon"
-                                            onclick="event.preventDefault(); 
+                                            onclick="event.preventDefault();
                                             if (confirm('Are you sure you want to delete this item?')) {
                                                 document.getElementById('delete-form-{{ $applicant->id }}').submit();
                                             }" title="Delete">
@@ -406,7 +444,7 @@
                                 </td>
                                 @endcan
                                 </tr>
-       
+
                 @endforeach
                 </tbody>
                 </table>
@@ -415,7 +453,7 @@
                         {{ $applicants->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
                     </div>
                 @endif()
-                
+
             </div>
         </div>
     </div>
