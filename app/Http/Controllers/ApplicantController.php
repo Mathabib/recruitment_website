@@ -440,7 +440,7 @@ if ($request->has('search')) {
             'job_id' => 'required|exists:jobs,id',
             'name' => 'required|string|max:255',
             'address' => 'nullable|string',
-            'number' => 'nullable|string|max:15',
+            'number' => 'nullable|string',
             'email' => 'nullable|email',
             'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
