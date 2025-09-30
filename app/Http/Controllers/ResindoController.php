@@ -38,7 +38,7 @@ class ResindoController extends Controller
 
     public function generateSummary($id)
     {
-        $applicant = Applicant::find($id);              
+        $applicant = Applicant::find($id);
         if (!$applicant) {
             return redirect()->route('pipelines-resindo.index')->with('error', 'Applicant not found.');
         }
@@ -56,13 +56,13 @@ class ResindoController extends Controller
         $jobs = Job::all();
         $educations = Education::all();
 
-      
+
         return view('form-resindo', compact('jobs', 'educations'));
     }
-    
+
     public function kirimresindo(Request $request)
     {
-        
+
         // Validasi input
         // return $request;
         $request->validate([
@@ -121,9 +121,9 @@ class ResindoController extends Controller
         if ($request->hasFile('photo_pass')) {
             $path = $request->file('photo_pass')->store('photos', 'public');
         }
-    
+
         $educationId = $request->education[0];
-        
+
         // Cek dan simpan jurusan
         $jurusan = Jurusan::where('education_id', $educationId)->where('name_jurusan', $request->jurusan[0])->first();
         if(!$jurusan){
@@ -157,7 +157,7 @@ class ResindoController extends Controller
             'type' => 'resindo',
         ]);
 
-        
+
         foreach($request->jurusan as $index => $jurusan) {
             Jurusan2::create([
                 'jurusan2' => strtolower($request->jurusan[$index]),
@@ -165,7 +165,7 @@ class ResindoController extends Controller
                 'applicant_id' => $applicant->id,
             ]);
         }
-    
+
         // Menangani bahasa (language)
         if ($request->has('language')) {
             foreach ($request->language as $index => $language) {
@@ -177,7 +177,7 @@ class ResindoController extends Controller
                 ]);
             }
         }
-    
+
         // Menangani pengalaman kerja
         if ($request->has('role')) {
             foreach ($request->role as $index => $role) {
@@ -191,7 +191,7 @@ class ResindoController extends Controller
                 ]);
             }
         }
-    
+
         // Menangani proyek
         if ($request->has('project_name')) {
             foreach ($request->project_name as $index => $project_name) {
@@ -206,7 +206,7 @@ class ResindoController extends Controller
                 ]);
             }
         }
-    
+
         // Menangani referensi
         if ($request->has('name_ref')) {
             foreach ($request->name_ref as $index => $name_ref) {
@@ -217,31 +217,31 @@ class ResindoController extends Controller
                 ]);
             }
         }
-    
+
         return redirect()->route('form-resindo', $request->job_id)->with('success', 'Your application has been sent');
     }
-    
-    
+
+
     public function indexresindo(Request $request)
-    {   
-        
+    {
+
         $query = Applicant::with('job', 'education', 'jurusan');
-    
+
         $pagination = 10;
         if(isset($request['pagination'])){
             $pagination = $request['pagination'];
         }
-        
+
         $query->where('type',  'resindo');
         $jobId = $request->get('job_id');
         $jobTitle = $jobId ? optional(Job::find($jobId))->job_name : null;
         $status = $request->get('status');
         $sort = $request->get('sort', 'newest');
-    
+
         if ($jobId) {
             $query->where('job_id', $jobId);
         }
-    
+
         if ($status) {
             $query->where('status', $status);
         }
@@ -250,38 +250,38 @@ class ResindoController extends Controller
         if ($currentStatus && $currentStatus !== '') {
             $query->where('status', $currentStatus);
         }
-    
-    
+
+
         // Memeriksa jika ada job_id atau status
         $applicants = $query->get();
-    
-    
+
+
         // Ambil stage name jika ada job_id
         $stageName = $jobId ? ($applicants->isNotEmpty() ? $applicants->first()->status : null) : null;
-    
+
         if ($jobId || $status) {
             // Jika ada job_id, filter data berdasarkan job_id
             if ($jobId) {
                 $query->where('job_id', $jobId);
             }
-    
-    
+
+
             if ($request->has('education') && !empty($request->get('education'))) {
                 $educationId = $request->get('education');
                 $query->where('education_id', $educationId);
             }
-    
+
             if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
                 $jurusanId = $request->get('jurusan');
                 $query->where('jurusan_id', $jurusanId);
             }
-    
-    
+
+
             if ($request->has('recommendation') && $request->get('recommendation') != '') {
                 $query->where('recommendation_status', $request->get('recommendation'));
             }
-    
-    
+
+
             if ($status && $status != '') {
                 $query->where('status', $status);
             }
@@ -290,41 +290,65 @@ class ResindoController extends Controller
             if ($request->has('status') && $request->get('status') != '') {
                 $query->where('status', $request->get('status'));
             }
-    
+
             if ($request->has('education') && !empty($request->get('education'))) {
                 $educationId = $request->get('education');
                 $query->where('education_id', $educationId);
             }
-    
+
             if ($request->has('jurusan') && !empty($request->get('jurusan'))) {
                 $jurusanId = $request->get('jurusan');
                 $query->where('jurusan_id', $jurusanId);
             }
-    
+
             if ($request->has('recommendation') && $request->get('recommendation') != '') {
                 $query->where('recommendation_status', $request->get('recommendation'));
             }
-        }
-    
-        // Search 
-        if ($request->has('search')) {
-            $search = $request->get('search');
-    
-            if ($jobId && $status) {
-                $query->where('name', 'like', $search . '%');
-            } else {
-    
-                $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', $search . '%')
-                        ->orWhereHas('job', function ($query) use ($search) {
-                            $query->where('job_name', 'like', $search . '%');
-                        });
-                });
+
+            if ($request->has('job_filter') && !empty($request->get('job_filter'))) {
+                $jobId = $request->get('job_filter');
+                $query->where('job_id', $jobId);
             }
         }
-    
-    
-    
+
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $search_by = $request->get('search_by');
+
+            if ($jobId && $status) {
+                $query->where('name', 'like', "{$search}%");
+            } else {
+                if ($search_by === 'name') {
+                    // Filter langsung di kolom applicant
+                    $query->where('name', 'like', "{$search}%");
+                } elseif ($search_by === 'job_name') {
+                    // Filter di relasi job
+                    $query->whereHas('job', function ($q) use ($search) {
+                        $q->where('job_name', 'like', "{$search}%");
+                    });
+                }
+            }
+        }
+        // Search
+        // if ($request->has('search')) {
+        //     $search = $request->get('search');
+
+        //     if ($jobId && $status) {
+        //         $query->where('name', 'like', $search . '%');
+        //     } else {
+
+        //         $query->where(function ($query) use ($search) {
+        //             $query->where('name', 'like', $search . '%')
+        //                 ->orWhereHas('job', function ($query) use ($search) {
+        //                     $query->where('job_name', 'like', $search . '%');
+        //                 });
+        //         });
+        //     }
+        // }
+
+
+
         // Logika penyortiran
         if ($jobId && $status) {
             // Jika ada job_id dan status, filter berdasarkan job_id dan status
@@ -334,7 +358,7 @@ class ResindoController extends Controller
             // Jika tidak ada job_id dan status, ambil semua data
             // Anda bisa mengatur filter tambahan jika diperlukan di sini
         }
-        
+
         // Sortir data berdasarkan parameter sort
         if ($sort === 'newest') {
             $query->orderBy('created_at', 'desc');
@@ -357,14 +381,14 @@ class ResindoController extends Controller
             $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'asc');
         } elseif ($sort === 'education_desc') {
             $query->orderBy(Education::select('name_education')->whereColumn('education.id', 'applicants.education_id'), 'desc');
-        } 
-        
+        }
+
         // Eksekusi query untuk mendapatkan hasil
         $results = $query->get();
-    
+
         // Pagination
         // $perPage = 10;
-        // pagination dibawah ini akan membawa format jumlah pagination yang sama pada setiap tombol pagination nya 
+        // pagination dibawah ini akan membawa format jumlah pagination yang sama pada setiap tombol pagination nya
         // misal kita seting paginationnya 10, maka kalau kita pencet lagi pagination selanjutnya, akan menampilkan 10 data juga
         // berbeda ketika kita cuman menggunakan paginate(jumlah_pagination) aja , paginate selanjutnya bakal balik lagi ke jumlah default
         // $applicants = $query->paginate($pagination)->appends($request->all());
@@ -374,12 +398,12 @@ class ResindoController extends Controller
             $applicants = $query->paginate($pagination)->appends($request->all());
         }
         // return $applicants;
-    
+
         // Get the count of applicants based on status
         $jobId = $request->input('job_id'); // Assuming you're getting job_id from the request
-    
+
         if ($jobId) {
-            
+
             // If job_id exists, filter by job_id
             $statusCounts = [
                 'applied' => Applicant::where('status', 'applied')->where('job_id', $jobId)->count(),
@@ -400,16 +424,16 @@ class ResindoController extends Controller
                 'not_qualify' => Applicant::where('status', 'not_qualify')->where('type', 'resindo')->count(),
             ];
         }
-        
-    
-    
+
+
+
         // Load dropdown options
         $jobs = Job::all();
         $educations = Education::all();
         $jurusans = Jurusan::all();
         // $applicants = Applicant::where('type', 'resindo')
         // ->paginate(10);  // Tentukan jumlah data per halaman, misalnya 10
-        
+
         return view('pipelines-resindo.index', compact('applicants', 'jobs', 'jobTitle', 'educations', 'jurusans', 'request', 'statusCounts', 'stageName'));
     }
 
@@ -426,7 +450,7 @@ class ResindoController extends Controller
 
     public function store(Request $request)
     {
-        
+
         // Validasi input
         // return $request;
         $request->validate([
@@ -485,9 +509,9 @@ class ResindoController extends Controller
         if ($request->hasFile('photo_pass')) {
             $path = $request->file('photo_pass')->store('photos', 'public');
         }
-    
+
         $educationId = $request->education[0];
-        
+
         // Cek dan simpan jurusan
         $jurusan = Jurusan::where('education_id', $educationId)->where('name_jurusan', $request->jurusan[0])->first();
         if(!$jurusan){
@@ -497,10 +521,10 @@ class ResindoController extends Controller
             ]);
         }
 
-        
 
-        
-    
+
+
+
         // Simpan data applicant
         $applicant = Applicant::create([
             'job_id' => $request->job_id,
@@ -526,7 +550,7 @@ class ResindoController extends Controller
             'type' => 'resindo',
         ]);
 
-        
+
         foreach($request->jurusan as $index => $jurusan) {
             Jurusan2::create([
                 'jurusan2' => strtolower($request->jurusan[$index]),
@@ -534,7 +558,7 @@ class ResindoController extends Controller
                 'applicant_id' => $applicant->id,
             ]);
         }
-    
+
         // Menangani bahasa (language)
         if ($request->has('language')) {
             foreach ($request->language as $index => $language) {
@@ -546,7 +570,7 @@ class ResindoController extends Controller
                 ]);
             }
         }
-    
+
         // Menangani pengalaman kerja
         if ($request->has('role')) {
             foreach ($request->role as $index => $role) {
@@ -560,7 +584,7 @@ class ResindoController extends Controller
                 ]);
             }
         }
-    
+
         // Menangani proyek
         if ($request->has('project_name')) {
             foreach ($request->project_name as $index => $project_name) {
@@ -575,7 +599,7 @@ class ResindoController extends Controller
                 ]);
             }
         }
-    
+
         // Menangani referensi
         if ($request->has('name_ref')) {
             foreach ($request->name_ref as $index => $name_ref) {
@@ -586,13 +610,13 @@ class ResindoController extends Controller
                 ]);
             }
         }
-    
+
         return redirect()->route('pipelines-resindo.index', $request->job_id)->with('success', 'Your application has been sent');
     }
-    
+
     public function edit($id)
     {
-        $applicant = Applicant::find($id);        
+        $applicant = Applicant::find($id);
         $applicant = Applicant::with(['workExperiences', 'projects', 'references', 'languages'])->findOrFail($id);
         $jobs = Job::all();
         $educations = Education::all();
@@ -625,9 +649,9 @@ class ResindoController extends Controller
 
     public function update(Request $request, $id)
     {
-        // return $request->jurusan[0]; 
-                  
-        $request->validate([            
+        // return $request->jurusan[0];
+
+        $request->validate([
            'job_id' => 'nullable|exists:jobs,id',
             'name' => 'required|string|max:255',
             'address' => 'nullable|string',
@@ -663,17 +687,17 @@ class ResindoController extends Controller
             'email_ref.*' => 'nullable|string',
             'education*' => 'nullable|exists:education,id',
             'jurusan*' => 'nullable|string|max:255', // Atur sesuai kebutuhan
-            
+
         ]);
 
-        // Retrieve the applicant                
-        $applicant = Applicant::findOrFail($id);         
+        // Retrieve the applicant
+        $applicant = Applicant::findOrFail($id);
         if ($request->jurusan[0] != $applicant->jurusan->name_jurusan) {
             $applicant->jurusan->update([
                 'name_jurusan' => $request->jurusan[0],
                 'education_id' => $request->education[0]
             ]);
-            
+
         }
         $applicant->jurusan2()->delete();
         foreach($request->education as $index => $item){
@@ -722,8 +746,8 @@ class ResindoController extends Controller
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
-            'salary_expectation' => $request->salary_expectation, 
-            'salary_current' => $request->salary_current,            
+            'salary_expectation' => $request->salary_expectation,
+            'salary_current' => $request->salary_current,
 
             'type' => 'resindo',
             'job_id' => $request->job_id
@@ -740,7 +764,7 @@ class ResindoController extends Controller
                 ]);
             }
         }
-        
+
         // Update or create work experiences
         $applicant->workExperiences()->delete(); // Delete previous work experiences
         if ($request->has('role')) {
@@ -790,11 +814,11 @@ class ResindoController extends Controller
 
     public function destroy($id)
     {
-        $applicant = Applicant::find($id);       
+        $applicant = Applicant::find($id);
         if ($applicant) {
             Storage::disk('public')->delete($applicant->photo_pass);
             $applicant->delete();
-        }        
+        }
         return redirect()->route('pipelines-resindo.index')->with('success_message', 'Applicant deleted successfully.');
     }
 
