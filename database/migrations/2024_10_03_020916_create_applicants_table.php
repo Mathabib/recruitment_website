@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('applicants', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('jurusan_id'); // Foreign key column
-                $table->unsignedBigInteger('education_id'); // Foreign key column
-                $table->unsignedBigInteger('job_id'); // Foreign key column
+                $table->unsignedBigInteger('jurusan_id')->nullable(); // Foreign key column
+                $table->unsignedBigInteger('education_id')->nullable(); // Foreign key column
+                $table->unsignedBigInteger('job_id')->nullable(); // Foreign key column
                 $table->string('name');
                 $table->text('address');
                 $table->string('number');

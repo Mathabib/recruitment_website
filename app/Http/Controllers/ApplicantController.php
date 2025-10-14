@@ -599,7 +599,7 @@ if ($request->has('search')) {
         //misal 'skills.*' => 'nullable|string',
         //kalau gak dia bakal refresh refresh terus di form dan gak kemana mana
         $request->validate([
-            'job_id' => 'required|exists:jobs,id',
+            // 'job_id' => 'exists:jobs,id',
             'name' => 'required|string|max:255',
             'address' => 'nullable|string',
             'number' => 'nullable|string',
@@ -648,7 +648,8 @@ if ($request->has('search')) {
         } else {
             // Jika tidak ada, buat data jurusan baru
             $newJurusan = Jurusan::create([
-                'name_jurusan' => $request->jurusan
+                'name_jurusan' => $request->jurusan,
+                'education_id' => $request->education
             ]);
             $applicant->jurusan_id = $newJurusan->id;
             $applicant->save();

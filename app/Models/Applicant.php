@@ -16,25 +16,25 @@ class Applicant extends Model
         'job_id',
         'education_id',
         'jurusan_id',
-
+        'user_id',
         'name',
         'address',
         'number',
         'email',
         'profil_linkedin',
         'certificates',
-        'experience_period', 
+        'experience_period',
         'photo_pass',
         'profile',
         'languages',
-        'mbti', 
-        'iq', 
-        'achievement', 
+        'mbti',
+        'iq',
+        'achievement',
         'skills',
         'salary_expectation',
         'status',
         'type',
-        'salary_current', 
+        'salary_current',
     ];
 
     // Define the relationship with the Job model
@@ -86,5 +86,12 @@ class Applicant extends Model
     public function offerLetter()
     {
         return $this->hasOne(OfferLetter::class, 'applicant_id');
+    }
+    public function getJob()
+    {
+        return $this->belongsToMany(Job::class, 'applicant_job', 'applicant_id', 'job_id')->withTimestamps();
+    }
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

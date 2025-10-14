@@ -46,10 +46,10 @@
         .content-summary{
             padding-left: 10px;
         }
-        
+
         .foto{
             position: fixed;
-            top: 120px;            
+            top: 120px;
             right: 30px;
             z-index: 999;
         }
@@ -90,7 +90,7 @@
         .information-detail table tr .right{
             width: 30%;
             padding-top: 50px;
-            vertical-align: top;            
+            vertical-align: top;
         }
         .skills, .country-works, .language, .education, .experience-record, .selected-projects{
             margin-bottom: 20px;
@@ -107,15 +107,15 @@
         .kontener{
             display: table;
 
-            
+
         }
         footer{
             position: fixed;
             bottom: 0px;
             width: 100%;
 
-        }                
-        
+        }
+
     </style>
 </head>
 <body>
@@ -141,7 +141,7 @@
                 <td style="width: 70%; text-align: center">
                     <div style="width: 100%">
                         <table style="width: 100%">
-                            <tr>                                
+                            <tr>
                                 <td style="width: 33%">
                                     <table>
                                         <tr>
@@ -176,8 +176,8 @@
                                                 <p>www.resindori.com</p>
                                             </td>
                                         </tr>
-                                    </table>    
-                                </td>                                
+                                    </table>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -194,7 +194,7 @@
             <table style="width: 100%">
                 <tr>
                     <td><strong><p class="font-paragraph">Position / Title</p></strong></td>
-                    <td><strong><p class="font-paragraph">{{ $applicant->job->job_name }}</p></strong></td>
+                    <td><strong><p class="font-paragraph">{{ optional($applicant->job)->job_name }}</p></strong></td>
                 </tr>
                 <tr>
                     <td><p class="font-paragraph">Total Working Experiences</p></td>
@@ -216,8 +216,8 @@
             <div class="education">
                 <strong><p class="sub-tittle">Educations</p></strong>
                 <ul class="unordered-list">
-                    <li><p class="font-paragraph">{{ $applicant->jurusan->name_jurusan }}</p></li>                                
-                </ul>                            
+                    <li><p class="font-paragraph">{{ $applicant->jurusan->name_jurusan }}</p></li>
+                </ul>
             </div>
 
             <div class="experience-record">
@@ -226,7 +226,7 @@
                     @foreach($applicant->workExperiences as $experience)
                         <li><p class="font-paragraph">{{ $experience->name_company }}</p></li>
                     @endforeach
-                </ul>                            
+                </ul>
             </div>
 
             <div class="selected-projects">
@@ -235,40 +235,40 @@
                     @foreach($applicant->projects as $project)
                         <li><p class="font-paragraph">{{ $project->project_name }}</p></li>
                     @endforeach
-                </ul>                            
+                </ul>
             </div>
 
             <div class="skills">
                 <strong><p class="sub-tittle">Skills</p></strong>
                 <ul class="unordered-list">
                     @foreach(explode('|', $applicant->skills) as $skill)
-                        <li><p class="font-paragraph">{{ trim($skill) }}</p></li>                                
+                        <li><p class="font-paragraph">{{ trim($skill) }}</p></li>
                     @endforeach
                 </ul>
             </div>
-            
+
             <div class="language">
                 <strong><p class="sub-tittle">Language</p></strong>
                 <ul class="unordered-list">
-                    
+
                     @foreach ($applicant->Languages as $item)
-                        <li><p class="font-paragraph">{{ $item->language }}</p></li>    
+                        <li><p class="font-paragraph">{{ $item->language }}</p></li>
                     @endforeach
-                                                                                    
+
                 </ul>
             </div>
 
             <table>
                 <tr>
                     <td class="left">
-                        
+
                     </td>
 
                     <td class="right">
-                        
+
                     </td>
 
-                </tr>                
+                </tr>
             </table>
         </div>
 

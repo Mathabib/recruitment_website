@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -9,12 +9,12 @@ class Job extends Model
 {
     use HasFactory;
 
-    
+
     protected $table = 'jobs';
     protected $fillable = [
         'job_name',
-        'work_location_id', 
-        'spesifikasi',     
+        'work_location_id',
+        'spesifikasi',
         'department',
         'employment_type',
         'minimum_salary',
@@ -25,7 +25,7 @@ class Job extends Model
         'status_published',
     ];
 
-   
+
     public function applicants()
     {
         return $this->hasMany(Applicant::class);
@@ -41,5 +41,10 @@ class Job extends Model
     public function workLocation()
     {
         return $this->belongsTo(WorkLocation::class, 'work_location_id');
+    }
+
+    public function getApplicant()
+    {
+        return $this->belongsToMany(Applicant::class, 'applicant_job', 'job_id', 'applicant_id')->withTimestapms();
     }
 }
