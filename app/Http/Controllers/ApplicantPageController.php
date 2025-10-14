@@ -20,14 +20,14 @@ class ApplicantPageController extends Controller
     public function index(){
         return view('applicants_page.home');
     }
-    public function jobs()
+    public function jobs(Request $request)
     {
-        // $job = Job::find(4);
-        // return $job;
-        // return $job->getApplicant->count();
-
         $user = Auth::user();
-        $jobs = Job::paginate(10);
+        $query = job::query();
+        if($request->keyword){
+            $query->where('job_name', 'like', $request->keyword . '%');
+        }
+        $jobs = $query->paginate(10);
         return view('applicants_page.index', compact('user', 'jobs'));
     }
     public function jobsShow($id){
@@ -251,5 +251,12 @@ class ApplicantPageController extends Controller
         $applicant = Auth::user()->applicant;
         $applications = $applicant->getJob;
         return view('applicants_page.applications', compact('applications'));
+    }
+
+
+    public function search(Request $request){
+        $jobs = Job::where('job_name', 'like',  $request->keyword . '%')->paginate(10);
+
+        return view('applicants_page.index', compact('jobs'));
     }
 }
