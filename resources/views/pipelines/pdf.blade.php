@@ -90,33 +90,33 @@
         }
 
         /* Styles for skills, certificates, and achievements */
-     
-        
-        
-        
-        
+
+
+
+
+
          .skills-list {
     display: flex;
-    flex-wrap: wrap; 
-    gap: 10px; 
-    justify-content: flex-start; 
-    margin: 0; 
-    padding: 0; 
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
 }
 
 .skills-list li {
     background-color: #cce5ff;
-    border-radius: 25px; 
+    border-radius: 25px;
     padding: 5px 20px;
-    font-size: 10px; 
+    font-size: 10px;
     color: #004085;
-    white-space: nowrap; 
-    display: inline-block; 
+    white-space: nowrap;
+    display: inline-block;
     text-align: center;
-     margin-left: 1px; 
-    margin-right: 1px; 
-    margin-top: 1px; 
-    border: 1px solid #004085; 
+     margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    border: 1px solid #004085;
 
 }
 
@@ -124,52 +124,52 @@
 /* certificate */
 .certificates-list {
     display: flex;
-    flex-wrap: wrap; 
-    gap: 10px; 
-    justify-content: flex-start; 
-    margin: 0; 
-    padding: 0; 
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
 }
 
 .certificates-list li {
     background-color: #fff3cd;
-    border-radius: 25px; 
+    border-radius: 25px;
     padding: 5px 20px;
-    font-size: 10px; 
+    font-size: 10px;
     color: #856404;
-    white-space: nowrap; 
-    display: inline-block; 
-    text-align: center; 
-     margin-left: 1px; 
-    margin-right: 1px; 
-    margin-top: 1px; 
-    border: 1px solid #856404; 
+    white-space: nowrap;
+    display: inline-block;
+    text-align: center;
+     margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    border: 1px solid #856404;
 
 }
 
 /* achievement */
 .achievement-list {
     display: flex;
-    flex-wrap: wrap; 
-    gap: 10px; 
-    justify-content: flex-start; 
-    margin: 0; 
-    padding: 0; 
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
 }
 
 .achievement-list li {
     background-color: #d4edda;
-    border-radius: 25px; 
+    border-radius: 25px;
     padding: 5px 20px;
-    font-size: 10px; 
+    font-size: 10px;
     color: #155724;
-    white-space: nowrap; 
-    display: inline-block; 
-    text-align: center; 
-     margin-left: 1px; 
-    margin-right: 1px; 
-    margin-top: 1px; 
-    border: 1px solid #155724; 
+    white-space: nowrap;
+    display: inline-block;
+    text-align: center;
+     margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    border: 1px solid #155724;
 }
 
         .section ul {
@@ -217,7 +217,7 @@
         .table-content-cv{
             border-spacing: 7px 0px;
         }
-        
+
         .content-cv{
             text-align: justify;
         }
@@ -265,7 +265,7 @@
 
         </div>
 
-       
+
         <div class="section">
             <h2>Profile</h2>
             <p>{{ $applicant->profile }}</p>
@@ -277,15 +277,15 @@
                 <tr class="tr-content-cv">
                     <td><strong>Education</strong></td>
                     <td>:</td>
-                    <td>{{ $applicant->education->name_education }}</td>
+                    <td>{{ optional($applicant->education)->name_education }}</td>
                 </tr>
                 <tr class="tr-content-cv">
                     <td><strong>Major</strong></td>
                     <td>:</td>
-                    <td>{{ $applicant->jurusan->name_jurusan }}</td>
+                    <td>{{ optional($applicant->jurusan)->name_jurusan }}</td>
                 </tr>
             </table>
-          
+
         </div>
 
         @if($applicant->certificates)
@@ -327,7 +327,7 @@
                     <td class="title-content-cv"><strong>Period</strong></td> <td>:</td> <td>{{ $experience->mulai }} - {{ $experience->selesai }}</td>
                 </tr>
             </table>
-          
+
             @endforeach
             @else
             <p>No work experience available.</p>
@@ -339,7 +339,7 @@
         <div class="section">
             <h2>Projects</h2>
             @foreach($applicant->projects as $project)
-            
+
             <h3>{{ $project->project_name }}</h3>
             <table class="table-content-cv">
                 <tr class="tr-content-cv">
@@ -351,8 +351,8 @@
                 {{-- <tr class="tr-content-cv">
                     <td class="title-content-cv"><strong>Period</strong></td> <td>:</td> <td class="content-cv">{{ $project->mulai_project }} - {{ $project->selesai_project }}</td>
                 </tr> --}}
-            </table>        
-          
+            </table>
+
             @endforeach
         </div>
         @endif
@@ -381,8 +381,8 @@
                 </tr>
                 <tr class="tr-content-cv">
                     <td class="title-content-cv"><strong>IQ</strong></td> <td>:</td> <td class="content-cv">{{ $applicant->iq ?? 'none' }}</td>
-                </tr>               
-            </table>        
+                </tr>
+            </table>
         </div>
 
 
@@ -397,8 +397,8 @@
                 </tr>
                 <tr class="tr-content-cv">
                     <td class="title-content-cv"><strong>Email</strong></td> <td>:</td> <td class="content-cv">{{ $reference->email_ref }}</td>
-                </tr>               
-            </table>       
+                </tr>
+            </table>
             @endforeach
         </div>
         @endif

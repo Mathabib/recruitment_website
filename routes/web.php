@@ -156,6 +156,7 @@ Route::get('loker/profile', [ApplicantPageController::class, 'profile'])->name('
 
 //lamar pekerjaan
 Route::get('loker/jobs', [ApplicantPageController::class, 'jobs'])->name('applicant_page.jobs');
+Route::post('loker/jobs/search', [ApplicantPageController::class, 'search'])->name('applicant_page.jobs.search');
 Route::get('loker/jobs/show/{id}', [ApplicantPageController::class, 'jobsShow'])->name('applicant_page.jobs.show');
 Route::get('loker/jobs/apply/{id}', [ApplicantPageController::class, 'apply'])->name('applicant_page.jobs.apply')->middleware('auth');
 Route::get('loker/jobs/applications', [ApplicantPageController::class, 'application'])->name('applicant_page.jobs.applications')->middleware('auth');

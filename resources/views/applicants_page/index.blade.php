@@ -8,20 +8,34 @@
 @extends('applicants_page.layouts.master')
 @section('content')
 {{-- <a class="btn btn-success" href="{{ route('applicant_page.edit', $user->email) }}">Edit Data</a> --}}
+<div class="card mb-5">
+    <div class="card-body text-white d-flex align-items-center justify-content-center" style="
+        height: 150px;
+        background: linear-gradient(135deg, #800 0%, #b30000 50%, #d63333 100%);
+        border-radius: 10px;
+    ">
+        <h1>Welcome to Recruitment Isolutions</h1>
+    </div>
+</div>
+
 <div class="action_container">
     <div class="">
-       <form action="">
+       <form action="{{ route('applicant_page.jobs') }}" method="get">
+        @csrf
+        @method('get')
         <div class="row">
             <div class="mb-3 col-10">
-                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" name="keyword" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
             </div>
             <div class="col-2">
-                <button class="text-black btn btn-secondary"><i class="fas fa-search"></i> Search</button>
+                <button class="text-black btn btn-secondary text-white"><i class="fas fa-search"></i> Search</button>
             </div>
         </div>
        </form>
     </div>
 </div>
+
+
 
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -39,7 +53,7 @@
                         <div>
                             <div class="atas row">
                                 <div class="col-2">
-                                    <img width="50px" src="{{ asset('assets/ISOLOGO2.PNG') }}" alt="">
+                                    <img width="50px" src="{{ asset('assets/ISOLOGO2.png') }}" alt="">
                                 </div>
                                 <div class="col-10">
                                     <p class="fw-bold fs-6">PT Isolutions Indonesia</p>

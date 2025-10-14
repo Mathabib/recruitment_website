@@ -30,7 +30,7 @@
                             <a class="nav-link text-white" aria-current="page" href="{{ route('applicant_page.index') }}">Home</a>
                             </li> --}}
                             <li class="nav-item mx-2">
-                            <a class="nav-link text-white" href="{{ route('applicant_page.jobs') }}">Job vacancy</a>
+                            <a class="nav-link text-white" href="{{ route('applicant_page.jobs') }}"><i class="fas fa-briefcase"></i> Job vacancy</a>
                             </li>
                             @if(!Auth::check())
                                 <li class="nav-item mx-2 d-block d-md-none">
@@ -42,16 +42,16 @@
                             @endif
                             @if(Auth::check())
                                 <li class="nav-item mx-2">
-                                <a class="nav-link text-white" href="{{ route('applicant_page.profile') }}">Profile</a>
+                                <a class="nav-link text-white" href="{{ route('applicant_page.profile') }}"><i class="fas fa-user-alt"></i> Profile</a>
                                 </li>
                                 <li class="nav-item mx-2">
-                                <a class="nav-link text-white" href="{{ route('applicant_page.jobs.applications') }}">Your Application</a>
+                                <a class="nav-link text-white" href="{{ route('applicant_page.jobs.applications') }}"><i class="far fa-file"></i> Your Application</a>
                                 </li>
                                 <li class="nav-item mx-2 d-block d-md-none">
                                     <a class="nav-link text-white" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                     >
-                                    Log out
+                                    <i class="fas fa-sign-out-alt"></i> Log out
                                     </a>
                                 </li>
                             @endif
@@ -65,7 +65,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="{{ route('applicant_page.profile') }}">Profile</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('applicant_page.jobs.applications') }}">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('applicant_page.jobs.applications') }}">Your Application</a></li>
                                         <li><a class="dropdown-item" href="#"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                             >Log out</a>
