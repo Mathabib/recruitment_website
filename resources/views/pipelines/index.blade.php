@@ -25,7 +25,7 @@
 
 
     <!-- Filter Status Stage -->
-  
+
     <!-- Kode untuk menampilkan stage -->
     <div class="status-boxes">
         <a href="{{ route('pipelines.index', ['stage' => null, 'education' => null, 'job_id' => $request->get('job_id')]) }}" class="status-box status-all {{ $request->get('stage') == 'all' ? 'active' : '' }}">
@@ -87,7 +87,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <!-- Left side: Filter By and Sort By -->
                     <div class="d-flex align-items-center gap-3">
-                    @can('create applicants')                                            
+                    @can('create applicants')
                     <a href="{{ route('pipelines.create') }}" class="btn btn-primary btn-extended" style="margin-top: -15px;">
                         <i class="fa fa-plus"></i>New Data
                     </a>
@@ -95,7 +95,7 @@
 
                     <!-- <a href="{{ route('export.applicant') }}" class="btn btn-success">Export to Excel</a> -->
 
-       
+
                     @can('create applicants')
                     <!-- Upload Form -->
                     <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
@@ -141,10 +141,10 @@
 
                     <div class="pagination">
                         <form method="GET" action="{{ route('pipelines.index') }}">
-                            
+
                             <div class="d-flex flex-start gap-2">
                                 <div>
-                                    
+
                                     <select class="form-select" name="pagination" aria-label="Default select example">
                                         <option value="" {{ !request('pagination') ? 'selected' : '' }}>Pagination</option>
                                         <option value="5" {{ request('pagination') == '5' ? 'selected' : '' }}>5</option>
@@ -152,14 +152,14 @@
                                         <option value="50" {{ request('pagination') == '50' ? 'selected' : '' }}>50</option>
                                         <option value="100" {{ request('pagination') == '100' ? 'selected' : '' }}>100</option>
                                         <option value="all" {{ request('pagination') == 'all' ? 'selected' : '' }}>All</option>
-                                      </select>    
+                                      </select>
                                 </div>
                                 <div>
                                     <button class="btn btn-primary" type="submit">apply</button>
-                                </div>                                  
+                                </div>
                             </div>
                         </form>
-                        
+
                     </div>
 
 
@@ -184,8 +184,8 @@
                     @if(request('pagination') == 'all')
                         <h3>Applicant Total : {{ $applicants->count() }}</h3>
                     @else
-                    <h3>Applicant Total : {{ $applicants->total() }}</h3>                    
-                    @endif                    
+                    <h3>Applicant Total : {{ $applicants->total() }}</h3>
+                    @endif
 
                 </div>
 
@@ -325,7 +325,7 @@
                                         &#9660;
                                     </a>
                                 </th>
-                                <th>                    
+                                <th>
                                     <span>Job</span>
                                     <a href="{{ request()->fullUrlWithQuery(['sort' => 'job_asc']) }}"
                                     style="text-decoration: none; color: white;">
@@ -356,7 +356,7 @@
                                 @can('pipeline move stage')
                                 <th></th>
                                 @endcan
-                                @can('edit applicants')                                                                    
+                                @can('edit applicants')
                                 <th>Action</th>
                                 @endcan
                             </tr>
@@ -384,7 +384,7 @@
                                             <span>{{ $applicant->name }}</span>
                                         </div>
                                     </td>
-                                    <td style="width: 180px;">{{ $applicant->education->name_education }} - {{ $applicant->jurusan->name_jurusan }}</td>
+                                    <td style="width: 180px;">{{ optional($applicant->education)->name_education }} - {{ optional($applicant->jurusan)->name_jurusan }}</td>
                                     <td>{{ isset($applicant->job->job_name) ? $applicant->job->job_name : '' }}</td>
 
                                   @if(request('status') === 'offer')
@@ -392,13 +392,13 @@
                                         <td>
                                             @if($applicant->offerLetter)
                                                 {{-- Sudah ada offer letter --}}
-                                                <a href="{{ route('offer_letters.show', $applicant->offerLetter->id) }}" 
+                                                <a href="{{ route('offer_letters.show', $applicant->offerLetter->id) }}"
                                                 class="btn btn-sm btn-info">
                                                     View Offering Letter
                                                 </a>
                                             @else
                                                 {{-- Belum ada, tampilkan tombol create --}}
-                                                <a href="{{ route('offer_letters.create', $applicant->id) }}" 
+                                                <a href="{{ route('offer_letters.create', $applicant->id) }}"
                                                 class="btn btn-sm btn-warning">
                                                     Create Offering Letter
                                                 </a>
@@ -449,8 +449,8 @@
                                         </div>
                                     </td>
                                     @endcan
-                                    @can('edit applicants')                            
-                                    <td>                                                                                                                            
+                                    @can('edit applicants')
+                                    <td>
                                         <div class="action-icons">
                                             <!-- Edit button -->
                                             <a href="{{ route('pipelines.edit', $applicant->id) }}" class="action-icon" title="Edit">
@@ -459,7 +459,7 @@
 
                                             <!-- Delete button -->
                                             <a href="#" class="action-icon"
-                                                onclick="event.preventDefault(); 
+                                                onclick="event.preventDefault();
                                                 if (confirm('Are you sure you want to delete this item?')) {
                                                     document.getElementById('delete-form-{{ $applicant->id }}').submit();
                                                 }" title="Delete">
@@ -471,7 +471,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
-                                        </div>                                        
+                                        </div>
                                     </td>
                                     @endcan
                                 </tr>

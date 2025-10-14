@@ -13,6 +13,8 @@ use App\Http\Controllers\ResindoController;
 use App\Http\Controllers\OfferLetterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\userManagementController;
+use App\Http\Controllers\ApplicantPageController;
+use App\Http\Controllers\Auth\ApplicantRegisterController;
 
 
 
@@ -30,9 +32,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth/login');
-});
+// Route::get('/', function () {
+//     return view('auth/login');
+// });
 
 // ===== PROFILE =====
 Route::get('/profile',[UserController::class, 'index'])->name('profile.index');
@@ -55,7 +57,7 @@ Route::get('/pipelines/{id}/summary', [ResindoController::class, 'generateSummar
 
 Route::get('/pipelines-resindo/{id}/summary', [ResindoController::class, 'generateSummary'])->name('applicants.generateSummary')->middleware('auth');
 Route::get('pipelines-resindo', [ResindoController::class, 'indexresindo'])
-    ->name('pipelines-resindo.index')  
+    ->name('pipelines-resindo.index')
     ->middleware('auth');
 
 
@@ -69,7 +71,7 @@ Route::post('/applicant/recommend', [ApplicantController::class, 'updateRecommen
 Route::delete('/pipelines/{applicant}', [ApplicantController::class, 'destroy'])->name('pipelines.destroy');
 Route::get('/get-jurusan/{education_id}', [ApplicantController::class, 'getJurusan']);
 
-//ganti TYPE DATA pelamar isolutions, resindo dll 
+//ganti TYPE DATA pelamar isolutions, resindo dll
 Route::post('pipelines/changetype', [ApplicantController::class, 'changeType'])->name('pipelines.changetype')->middleware('auth');
 
 // Route::resource('pipelines', PipelineController::class);
@@ -137,8 +139,28 @@ Route::get('/management/role/delete/{id}', [userManagementController::class, 'ro
 // Route::get('/management/permission/store', [userManagementController::class, 'permission_store'])->name('management.permission.store')->middleware('auth');
 // Route::get('/management/permission/delete/{id}', [userManagementController::class, 'permission_delete'])->name('management.permission.delete')->middleware('auth');
 
-//testing 
+//testing
 Route::get('/test/{id}', [JurusanController::class, 'showEducationMajor'])->name('test');
+
+//================APPLICANT PAGE===================
+Route::get('/', [ApplicantPageController::class, 'jobs']);
+Route::get('loker/home', [ApplicantPageController::class, 'index'])->name('applicant_page.index');
+Route::post('loker/register/', [ApplicantRegisterController::class, 'register'])->name('applicant_page.register');
+
+//edit data dan CV
+Route::get('loker/cv/edit/', [ApplicantPageController::class, 'edit'])->name('applicant_page.edit')->middleware('auth');
+Route::put('loker/cv/update', [ApplicantPageController::class, 'update'])->name('applicant_page.update')->middleware('auth');
+Route::get('loker/cv/download', [ApplicantPageController::class, 'downloadcv'])->name('applicant_page.download')->middleware('auth');
+
+Route::get('loker/profile', [ApplicantPageController::class, 'profile'])->name('applicant_page.profile')->middleware('auth');
+
+//lamar pekerjaan
+Route::get('loker/jobs', [ApplicantPageController::class, 'jobs'])->name('applicant_page.jobs');
+Route::get('loker/jobs/show/{id}', [ApplicantPageController::class, 'jobsShow'])->name('applicant_page.jobs.show');
+Route::get('loker/jobs/apply/{id}', [ApplicantPageController::class, 'apply'])->name('applicant_page.jobs.apply')->middleware('auth');
+Route::get('loker/jobs/applications', [ApplicantPageController::class, 'application'])->name('applicant_page.jobs.applications')->middleware('auth');
+
+
 
 
 

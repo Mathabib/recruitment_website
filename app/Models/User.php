@@ -47,6 +47,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function applicant(){
+        return $this->hasOne(Applicant::class);
+    }
     public function adminlte_profile_url(){
         return route('profile.index');
     }
