@@ -30,10 +30,6 @@ class ApplicantPageController extends Controller
         $jobs = $query->paginate(10);
         return view('applicants_page.index', compact('user', 'jobs'));
     }
-    public function jobsShow($id){
-        $job = Job::find($id);
-        return view('applicants_page.show', compact('job'));
-    }
 
     public function profile(){
         $applicant = Auth::user()->applicant;
@@ -259,4 +255,16 @@ class ApplicantPageController extends Controller
 
         return view('applicants_page.index', compact('jobs'));
     }
+
+    public function jobsShow(Job $job)
+    {
+        // Menampilkan detail pekerjaan berdasarkan ID
+        return view('applicants_page.komponen.detail', compact('job'));
+    }
+
+    // public function jobsShow($id){
+    //     $job = Job::find($id);
+    //     return view('applicants_page.show', compact('job'));
+    // }
+
 }

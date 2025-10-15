@@ -64,9 +64,12 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        //tambahan 
+        //tambahan
         'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+        'role_for_route' => \App\Http\Middleware\RoleMiddleware::class,
+        'applicant.only' => \App\Http\Middleware\RedirectIfAuthenticatedToRole::class,
+        'admin.only' => \App\Http\Middleware\AdminOnly::class,
     ];
 }
