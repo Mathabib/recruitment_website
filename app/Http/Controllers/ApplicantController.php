@@ -745,11 +745,18 @@ if ($request->has('search')) {
     public function destroy($id)
     {
         $applicant = Applicant::find($id);
+
         if ($applicant) {
-            Storage::disk('public')->delete($applicant->photo_pass);
+            if (!empty($applicant->photo_pass) && is_string($applicant->photo_pass)) {
+                Storage::disk('public')->delete($applicant->photo_pass);
+            }
+
             $applicant->delete();
         }
-        return redirect()->route('pipelines.index')->with('success_message', 'Applicant deleted successfully.');
+
+        return redirect()
+            ->route('pipelines.index')
+            ->with('success', 'Applicant deleted successfully.');
     }
 
     public function updateStatus(Request $request, $id)
