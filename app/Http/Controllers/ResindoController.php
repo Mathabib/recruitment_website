@@ -11,7 +11,7 @@ use App\Models\Project;
 use App\Models\Language;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Jurusan;
-use App\Models\Jurusan2;
+use App\Models\jurusan2;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Carbon;
 
@@ -667,8 +667,8 @@ class ResindoController extends Controller
             'iq' => 'nullable|string',
             'achievements.*' => 'nullable|string',
             'skills.*' => 'nullable|string',
-            'salary_expectation' => 'nullable|numeric|min:0',
-            'salary_current' => 'nullable|numeric|min:0',
+            'salary_expectation' => 'nullable|min:0',
+            'salary_current' => 'nullable|min:0',
 
             'role.*' => 'nullable|string|max:255',
             'name_company.*' => 'nullable|string',
@@ -746,8 +746,8 @@ class ResindoController extends Controller
             'iq' => $request->iq,
             'achievement' => implode("|", $request->achievements ?? []),
             'skills' => implode("|", $request->skills ?? []),
-            'salary_expectation' => $request->salary_expectation,
-            'salary_current' => $request->salary_current,
+            'salary_expectation' => $salary_expectation,
+            'salary_current' => $salary_current,
 
             'type' => 'resindo',
             'job_id' => $request->job_id
