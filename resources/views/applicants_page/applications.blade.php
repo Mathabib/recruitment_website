@@ -10,7 +10,7 @@
                         <div class="atas row">
                             <div class="col-2">
                                 <div class="d-flex justify-content-center align-items-center h-100 w-100">
-                                    <img width="70px" src="{{ asset('assets/ISOLOGO2.PNG') }}" alt="">
+                                    <img width="70px" src="{{ asset('assets/ISOLOGO2.png') }}" alt="">
                                 </div>
                             </div>
                             <div class="col-9 ps-4 ps-md-0">

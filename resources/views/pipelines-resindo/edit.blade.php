@@ -52,7 +52,7 @@
                                 @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div> 
+                            </div>
 
                             <!-- Address -->
                             <div class="form-group row">
@@ -63,47 +63,13 @@
                                 @enderror
                             </div>
 
-                            <!-- Email -->
-                            <!-- <div class="form-group row">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $applicant->email) }}" placeholder="Email" required>
-                                @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div> -->
-
-                            <!-- <div class="education row"> -->
-
-                                <!-- pendidikan -->
-                            <!-- <div class="form-group col-md-3">
-                                <label for="education" class="form-label" >Last Education</label>
-                                <select id="education" name="education" class="form-control">
-                                    <option value="">Choose Education</option>
-                                    @foreach ($educations as $education)
-                                    <option value="{{ $education->id }}" {{ $applicant->education_id == $education->id ? 'selected' : ''}}>
-                                        {{ $education->name_education }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="jurusan">Major</label>
-                                <input type="text" class="form-control @error('jurusan') is-invalid @enderror" 
-                                id="jurusan" name="jurusan" 
-                                value="{{ old('jurusan', $applicant->jurusan->name_jurusan ?? '') }}" 
-                                placeholder="Enter Major" required>
-
-                                @error('jurusan')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div> -->
+                           
 
                             <!-- </div> -->
 
                             <!--jurusan -->
-                            
-                   
+
+
 
                             <!-- Photo Pass -->
                             <div class="form-group row">
@@ -130,11 +96,11 @@
 
                                      <div class="form-group">
                                 <label for="salary_current">Current Salary </label>
-                                <input type="text" 
-                                        class="form-control @error('salary_current') is-invalid @enderror" 
-                                        id="salary_current" 
-                                        name="salary_current" 
-                                        value="{{ old('salary_current', $salary_current) }}" 
+                                <input type="text"
+                                        class="form-control @error('salary_current') is-invalid @enderror"
+                                        id="salary_current"
+                                        name="salary_current"
+                                        value="{{ old('salary_current', $salary_current) }}"
                                         placeholder="Ekspektasi Gaji" required>
                                 @error('salary_current')
                                     <span class="text-danger">{{ $message }}</span>
@@ -145,11 +111,11 @@
                             <!-- Salary Expectation -->
                             <div class="form-group">
                                 <label for="salary_expectation">Salary Expectation</label>
-                                <input type="text" 
-                                        class="form-control @error('salary_expectation') is-invalid @enderror" 
-                                        id="salary_expectation" 
-                                        name="salary_expectation" 
-                                        value="{{ old('salary_expectation', $salary_expectation) }}" 
+                                <input type="text"
+                                        class="form-control @error('salary_expectation') is-invalid @enderror"
+                                        id="salary_expectation"
+                                        name="salary_expectation"
+                                        value="{{ old('salary_expectation', $salary_expectation) }}"
                                         placeholder="Ekspektasi Gaji" required>
                                 @error('salary_expectation')
                                     <span class="text-danger">{{ $message }}</span>
@@ -168,7 +134,7 @@
                         </div>
 
                         <div class="kanan col-md-5">
-                            
+
                             <!-- Job Selection -->
                             <div class="form-group row">
                                 <label for="job_id">Choose Job</label>
@@ -202,7 +168,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div> -->
-  
+
 
                             <!-- Experience Period -->
                             <div class="form-group row">
@@ -252,7 +218,7 @@
                                 </div>
 
                                 </div>
-        
+
                                 <div class="col-md-6">
                                     <!-- IQ -->
                                     <div class="form-group">
@@ -267,7 +233,7 @@
 
                         </div>
                     </div>
-        
+
                     <div class="mulitple-section" id="app">
                             <div class="tengah">
 
@@ -286,11 +252,11 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                
+
                                             <div class="jurusan col-md-9">
                                                 <div class="input" >
                                                     <label for="jurusan" class="form-label">Major<span class="important_input"> *</span></label>
-                                                   <input type="text" id="jurusan" name="jurusan[]" 
+                                                   <input type="text" id="jurusan" name="jurusan[]"
                                                         class="form-control"
                                                         placeholder="Enter Major"
                                                         v-model="jurusan.jurusan2"
@@ -303,9 +269,9 @@
                                         </div>
                                         <div>
                                             <button @click="removeInput8(index)" class="btn btn-danger">-</button>
-                                        </div>                                        
+                                        </div>
                                     </div>
-        
+
                                     <div>
                                         <button type="button" @click="addInput8" class="btn btn-secondary">+</button>
                                     </div>
@@ -321,15 +287,15 @@
                                         @enderror
                                         <button @click="removeInput4(index)" class="btn  btn-danger">-</button>
                                     </div>
-            
+
                                     <div class="button ms-1 col-md-1">
                                         <button @click="addInput4" type="button" class="btn btn-secondary">+</button>
                                     </div>
-                                    
+
                                 </div>
-                                
+
                                 <div class="input achievement">
-            
+
                                     <label for="achievement" class="mb-1">Achievement</label>
                                     <div class="achievement d-flex flex-grow-* row">
                                         <div v-for="(achievement, index) in achievements" :key='index' class="input achievements d-flex flex-grow-* col-md-6 row-sm-10">
@@ -343,9 +309,9 @@
                                             <button @click="addInput5" type="button" class="btn btn-secondary">+</button>
                                         </div>
                                     </div>
-            
+
                                 </div>
-                
+
                                 <div class="input certificate">
                                     <label for="certificates">Certificate</label>
                                     <div class="certificates d-flex flex-grow-* row">
@@ -361,8 +327,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                            </div>  
+
+                            </div>
 
 
                             <h1 style="margin-top: 30px">Languages Skills</h1>
@@ -398,7 +364,7 @@
                         </div>
 
                         <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput7">Add</button>
-                    
+
                             <h1>Work Experience</h1>
                             <div  id="work_experience" class="work_experience" v-for='(experience, index) in experiences' :key='index'>
                                 <div class="">
@@ -435,7 +401,7 @@
                                             <option value="present">Present</option>
                                         </select>
                                     </div>
-                
+
                                     <div class="date work_end" :id="'work_end' + index">
                                         <label class="form-label" for="selesai[]">End</label>
                                         <input class="form-control" type="date" name="selesai[]" v-model="experience.selesai">
@@ -446,9 +412,9 @@
                                 </div>
 
                                 <div class="input job_description">
-                                    <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>                                    
-                                    
-                                    <main>                                        
+                                    <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
+
+                                    <main>
                                         <div class="more-stuff-inbetween"></div>
                                         <trix-toolbar :id="'toolbar-' + index"></trix-toolbar>
                                         <input type="hidden" :id="'desc_kerja-' + index" name="desc_kerja[]" :value="experience.desc_kerja">
@@ -463,15 +429,15 @@
                                 <button type="button" class="btn btn-danger" @click="removeInput1(index)">Delete</button>
                             </div>
                             {{-- <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput1" >Add</button>  --}}
-                
-                       
+
+
 
                         {{-- =============================================================== --}}
                         {{-- ================== VUE JS ADD INPUT =========================== --}}
                         {{-- =============================================================== --}}
 
                         <div id="work_experience" class="work_experience" v-for='(experience, index) in experiences2' :key='index'>
-        
+
                                     <div class="input company_name">
                                         <label class="form-label" for="name_company[]">Company Name @{{index + 1}}</label>
                                         <input class="form-control" name="name_company[]" type="text">
@@ -486,7 +452,7 @@
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-        
+
                                     <div class="input date_kontainer">
                                         <div class="date work_start">
                                             <label class="form-label" for="mulai[]">Start</label>
@@ -495,29 +461,29 @@
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-        
+
                                         <div style="display: flex; align-items:flex-end">
                                             <select class="form-control status-select" :data-id="index" name="present[]" id="">
                                                 <option selected value="end_date">Input End Date</option>
                                                 <option value="present">Present</option>
                                             </select>
                                         </div>
-        
+
                                         <div class="date work_end" :id="'work_end' + index">
                                             <label class="form-label" for="selesai[]">End</label>
                                             <input class="form-control" type="date" name="selesai[]">
-                                            
+
                                             @error('selesai.*')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-        
+
                                         <div>
-                                            
+
                                         </div>
-        
+
                                     </div>
-        
+
                                     <div class="input job_description">
                                         <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
                                         <main>
@@ -528,7 +494,7 @@
                                             <trix-editor :toolbar="'toolbar-new-' + index" :input="'desc_kerja-new-' + index"></trix-editor>
                                         </main>
                                     </div>
-        
+
                                     {{-- <div class="input job_description">
                                         <label class="form-label" for="desc_kerja[]">Job Description @{{index + 1}}</label>
                                         <textarea class="form-control @error('desc_kerja.*') is-invalid @enderror" name="desc_kerja[]" placeholder="Job Description" required></textarea>
@@ -536,18 +502,18 @@
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div> --}}
-        
-                                    
-        
+
+
+
                                     <button type="button" class="btn btn-danger" @click="removeInput_experience(index)">Delete</button>
                                 </div>
                                 <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput_experience">Add</button>
-                                
+
                         <!-- Project Section -->
 
 
                         <h1 style="margin-top: 30px">Project</h1>
-                        
+
                         <div id="Project" class="Project" v-for='(project, index) in projects' :key='index'>
                             <div class="">
                                 <input type="hidden" name="project_id" v-model="project.id">
@@ -591,7 +557,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-            
+
                                 <div class="date project_end">
                                     <label class="form-label" for="selesai_project[]">End</label>
                                     <input class="form-control" type="date" name="selesai_project[]" v-model="project.selesai_project">
@@ -603,14 +569,14 @@
 
                             {{-- <div class="input project_description">
                                 <label class="form-label" for="desc_project[]">Project Description @{{index + 1}}</label>
-                                <textarea class="form-control @error('desc_project.*') is-invalid @enderror" :id="'desc_project' + (index + 1)"  name="desc_project[]" v-model="project.desc_project"></textarea>                                
+                                <textarea class="form-control @error('desc_project.*') is-invalid @enderror" :id="'desc_project' + (index + 1)"  name="desc_project[]" v-model="project.desc_project"></textarea>
                             </div> --}}
 
                             <button type="button" class="btn btn-danger" @click="removeInput2(index)">Delete</button>
                         </div>
-                            <button type="button" class="btn btn-secondary ms-4" @click="addInput2" >Add</button> 
+                            <button type="button" class="btn btn-secondary ms-4" @click="addInput2" >Add</button>
 
-                        
+
                         <!-- Reference Section -->
 
 
@@ -646,13 +612,13 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput3" >Add</button> 
+                        <button type="button" class="btn btn-secondary mb-5 ms-4" @click="addInput3" >Add</button>
 
 
 
                     </div>
 
-                    
+
 
                     <button type="submit" class="btn btn-primary">Simpan Applicant</button>
                     <a href="{{ route('pipelines.index') }}" class="btn btn-secondary">Batal</a>
@@ -684,7 +650,7 @@
                     }
                 ],
                 experiences2 : [
-                   
+
                 ],
                 projects : [
                     {
@@ -696,7 +662,7 @@
                         position: '',
                         location: '',
                         mulai_project: '',
-                        selesai_project: '',  
+                        selesai_project: '',
                     }
                 ],
                 references : [
@@ -744,21 +710,21 @@
             fetchData() {
                 fetch('{{route('edit_api_resindo', ['id' => $applicant->id ])}}')
                 .then(response => response.json())
-                .then(data => {                    
+                .then(data => {
                     console.log(data);
                     this.experiences = data.applicant.work_experiences;
                     this.projects = data.applicant.projects;
                     this.references = data.applicant.references;
                     this.languages = data.applicant.languages;
                     this.jurusans = data.applicant.jurusan2;
-                    // this.language = data.applicant.language;  
+                    // this.language = data.applicant.language;
 
                     this.skills = data.applicant.skills.split("|");
                     this.achievements = data.applicant.achievement.split("|");
                     this.certificates = data.applicant.certificates.split("|");
-                    
+
                     this.jurusans = data.applicant.jurusan2;
-                    console.log(this.experiences);                    
+                    console.log(this.experiences);
                 })
             },
             addInput_experience() {
@@ -780,10 +746,10 @@
                         desc_kerja: '',
                         mulai: '',
                         selesai: ''
-                }   
+                }
             )
             console.log(this.experiences);
-        
+
         },
             removeInput1(index) {
                 this.experiences.splice(index, 1);
@@ -797,7 +763,7 @@
                         desc_project: '',
                         client: '',
                         mulai_project: '',
-                        selesai_project: '',                        
+                        selesai_project: '',
                 }
             )},
             removeInput2(index) {
@@ -860,7 +826,7 @@
             removeInput8(index) {
                 this.jurusans.splice(index, 1);
             },
-            
+
         }
     }).mount('#app')
 
@@ -876,7 +842,7 @@
             }
 });
 
-    
+
       function updateEducationId(select) {
         document.getElementById('education_id').value = select.value;
     }

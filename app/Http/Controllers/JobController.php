@@ -72,30 +72,38 @@ public function index(Request $request)
     // Store a new job in the database
     public function store(Request $request)
     {
-        
+
+        $request->merge([
+            'minimum_salary' => str_replace(['.', ','], '', $request->input('minimum_salary')),
+            'maximum_salary' => str_replace(['.', ','], '', $request->input('maximum_salary')),
+        ]);
         // Validate input
         $request->validate([
             'job_name' => 'required|string|max:255',
             'work_location_id' => 'required|exists:work_location,id', // Validate that work_location_id exists
             'department' => 'required|exists:departements,id',
             'employment_type' => 'required|string',
-            'minimum_salary' => 'required',
-            'maximum_salary' => 'required',
+            'minimum_salary' => 'required|numeric|max:99999999',
+            'maximum_salary' => 'required|numeric|max:99999999',
             'benefit' => 'nullable|string',
             'responsibilities' => 'nullable|string',
             'requirements' => 'nullable|string',
             'spesifikasi' => 'nullable|string',
 
-        ]);
-        $minimum_salary = $request->input('minimum_salary');
-        $minimum_salary = str_replace(['.', ','], '', $minimum_salary);
-        $minimum_salary = (int) $minimum_salary;
+        ],[
 
-        $maximum_salary = $request->input('maximum_salary');
-        $maximum_salary = str_replace(['.', ','], '', $maximum_salary);
-        $maximum_salary = (int) $maximum_salary;
-        
-        //overide isi $request minimum_salary dan maximum salary 
+            'minimum_salary.max' => 'Nominal minimum tidak boleh lebih dari 99.000.000',
+            'maximum_salary.max' => 'Nominal maksimum tidak boleh lebih dari 99.000.000',
+        ]);
+        // $minimum_salary = $request->input('minimum_salary');
+        // $minimum_salary = str_replace(['.', ','], '', $minimum_salary);
+        $minimum_salary = $request->minimum_salary;
+
+        // $maximum_salary = $request->input('maximum_salary');
+        // $maximum_salary = str_replace(['.', ','], '', $maximum_salary);
+        $maximum_salary = $request->maximum_salary;
+
+        //overide isi $request minimum_salary dan maximum salary
         $request->merge([
             'minimum_salary' => (int) $minimum_salary,
             'maximum_salary' => (int) $maximum_salary,
@@ -120,7 +128,7 @@ public function index(Request $request)
         // Ambil data work_location dan departement jika ingin ditampilkan dalam dropdown
         $work_locations = WorkLocation::all();
         $departments = Departement::all();
-        
+
         // Tampilkan halaman edit dengan data job
         return view('jobs.edit', compact('job', 'work_locations', 'departments', 'minimum_salary', 'maximum_salary'));
     }
@@ -129,30 +137,42 @@ public function index(Request $request)
     {
         // return $request;
         // Validasi input
+
+        $request->merge([
+            'minimum_salary' => str_replace(['.', ','], '', $request->input('minimum_salary')),
+            'maximum_salary' => str_replace(['.', ','], '', $request->input('maximum_salary')),
+        ]);
+
         $request->validate([
             'job_name' => 'required|string|max:255',
             'work_location_id' => 'required|exists:work_location,id', // Validasi bahwa work_location_id ada
             'department' => 'required|exists:departements,id',
             'employment_type' => 'required|string',
-            'minimum_salary' => 'required',
-            'maximum_salary' => 'required',
+            'minimum_salary' => 'required|numeric|max:99999999',
+            'maximum_salary' => 'required|numeric|max:99999999',
             'benefit' => 'nullable|string',
             'responsibilities' => 'nullable|string',
             'requirements' => 'nullable|string',
             'spesifikasi' => 'nullable|string',
+        ],[
+            'minimum_salary.max' => 'Nominal minimum tidak boleh lebih dari 99.000.000',
+            'maximum_salary.max' => 'Nominal maksimum tidak boleh lebih dari 99.000.000',
         ]);
 
         // Cari job berdasarkan ID
         $job = ModelsJob::findOrFail($id);
-        $minimum_salary = $request->input('minimum_salary');
-        $minimum_salary = str_replace(['.', ','], '', $minimum_salary);
-        $minimum_salary = (int) $minimum_salary;
+        // $minimum_salary = $request->input('minimum_salary');
+        // $minimum_salary = str_replace(['.', ','], '', $minimum_salary);
 
-        $maximum_salary = $request->input('maximum_salary');
-        $maximum_salary = str_replace(['.', ','], '', $maximum_salary);
-        $maximum_salary = (int) $maximum_salary;
-        
-        //overide isi $request minimum_salary dan maximum salary 
+        $minimum_salary = $request->minimum_salary;
+        // $minimum_salary = (int) $minimum_salary;
+
+        // $maximum_salary = $request->input('maximum_salary');
+        // $maximum_salary = str_replace(['.', ','], '', $maximum_salary);
+        $maximum_salary = $request->maximum_salary;
+        // $maximum_salary = (int) $maximum_salary;
+
+        //overide isi $request minimum_salary dan maximum salary
         $request->merge([
             'minimum_salary' => (int) $minimum_salary,
             'maximum_salary' => (int) $maximum_salary,
@@ -186,7 +206,7 @@ public function index(Request $request)
         $job = ModelsJob::find($id);
         $job->status_published = $request->input('status_published');
         $job->save();
-    
+
         return redirect()->back()->with('success', 'Job status updated successfully.');
     }
 }
