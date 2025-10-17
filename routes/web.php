@@ -154,9 +154,11 @@ Route::middleware(['applicant.only', 'auth'])->group(function(){
     Route::put('loker/cv/update', [ApplicantPageController::class, 'update'])->name('applicant_page.update');
     Route::get('loker/cv/download', [ApplicantPageController::class, 'downloadcv'])->name('applicant_page.download');
     Route::get('loker/profile', [ApplicantPageController::class, 'profile'])->name('applicant_page.profile');
+    Route::get('loker/profile/cvsection', [ApplicantPageController::class, 'cvsection'])->name('applicant_page.cvsection');
 
     //lamar pekerjaan
     Route::get('loker/jobs/apply/{id}', [ApplicantPageController::class, 'apply'])->name('applicant_page.jobs.apply');
+    Route::get('loker/jobs/unapply/{id}', [ApplicantPageController::class, 'delete_application'])->name('applicant_page.jobs.unapply');
     Route::get('loker/jobs/applications', [ApplicantPageController::class, 'application'])->name('applicant_page.jobs.applications');
 });
 

@@ -6,7 +6,7 @@
     <title>Recruitment Isolutions</title>
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> --}}
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     @yield('content_header')
 
   </head>
@@ -44,9 +44,9 @@
                                 <li class="nav-item mx-2">
                                 <a class="nav-link text-white" href="{{ route('applicant_page.profile') }}"><i class="fas fa-user-alt"></i> Profile</a>
                                 </li>
-                                <li class="nav-item mx-2">
+                                {{-- <li class="nav-item mx-2">
                                 <a class="nav-link text-white" href="{{ route('applicant_page.jobs.applications') }}"><i class="far fa-file"></i> Your Application</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item mx-2 d-block d-md-none">
                                     <a class="nav-link text-white" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -65,7 +65,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="{{ route('applicant_page.profile') }}">Profile</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('applicant_page.jobs.applications') }}">Your Application</a></li>
+                                        {{-- <li><a class="dropdown-item" href="{{ route('applicant_page.jobs.applications') }}">Your Application</a></li> --}}
                                         <li><a class="dropdown-item" href="#"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                             >Log out</a>

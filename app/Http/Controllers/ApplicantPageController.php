@@ -33,7 +33,8 @@ class ApplicantPageController extends Controller
 
     public function profile(){
         $applicant = Auth::user()->applicant;
-        return view('applicants_page.profile', compact('applicant'));
+        $job = $applicant->job;
+        return view('applicants_page.profile', compact('applicant', 'job'));
     }
 
     public function edit()
@@ -232,7 +233,7 @@ class ApplicantPageController extends Controller
     }
 
 
-    public function apply($id){
+    public function apply_old($id){
         $applicant = Auth::user()->applicant;
         $applicant->getJob()->syncWithoutDetaching([
             $id => [
@@ -242,6 +243,23 @@ class ApplicantPageController extends Controller
         ]);
         return redirect()->back()->with('success', 'You have been aplied this job');
     }
+    public function apply($id){
+        $applicant = Auth::user()->applicant;
+        $applicant->update([
+            'job_id' => $id,
+            'status' => 'applied'
+        ]);
+        return redirect()->route('applicant_page.profile')->with('success', 'You have been aplied this job');
+    }
+    public function delete_application($id){
+        $applicant = Auth::user()->applicant;
+        $applicant->update([
+            'job_id' => null,
+            'status' => 'applied'
+        ]);
+        return redirect()->back()->with('success', 'successfully delete application');
+    }
+
 
     public function application(){
         $applicant = Auth::user()->applicant;
@@ -266,5 +284,13 @@ class ApplicantPageController extends Controller
     //     $job = Job::find($id);
     //     return view('applicants_page.show', compact('job'));
     // }
+
+    //BAGIAN EDIT DATA CV
+
+    public function cvsection(){
+        $applicant = Auth::user()->applicant;
+        $job = $applicant->job;
+        return view('applicants_page.data', compact('applicant', 'job'));
+    }
 
 }
