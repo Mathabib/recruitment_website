@@ -166,17 +166,16 @@ Route::middleware(['applicant.only', 'auth'])->group(function(){
 
 Route::middleware('applicant.only')->group(function(){
 
-    Route::get('/', [ApplicantPageController::class, 'jobs']);
+    Route::get('/', [ApplicantPageController::class, 'jobs'])->name('applicant_page.jobs');
     Route::get('loker/home', [ApplicantPageController::class, 'index'])->name('applicant_page.index');
     Route::post('loker/register/', [ApplicantRegisterController::class, 'register'])->name('applicant_page.register');
 
     //lamar pekerjaan
     Route::get('loker/jobs', [ApplicantPageController::class, 'jobs'])->name('applicant_page.jobs');
-
-
 });
 
 Route::get('/loker/jobs/show/{job}', [ApplicantPageController::class, 'jobsShow'])->name('applicant_page.jobs.show');
+Route::get('/loker/jobs/email', [ApplicantPageController::class, 'testEmail'])->name('applicant_page.testemail');
 
 
 

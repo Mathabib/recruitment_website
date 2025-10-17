@@ -7,23 +7,23 @@
         font-family: 'Poppins', sans-serif;
     }
     .text {
-    font-size: 14px; 
+    font-size: 14px;
     line-height: 1.5;
 }
 .job-name1 {
-    font-size: 24px; 
-    font-weight: 600; 
-    margin: 0; 
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
 }
 .title {
     font-size: 18px;
-    line-height: 1.5; 
-} 
+    line-height: 1.5;
+}
 
 .shadow {
-    box-shadow: 0 5px 10px rgba(0, 0, 255, 0.2); 
-    padding: 25px;  
-    border-radius: 8px; 
+    box-shadow: 0 5px 10px rgba(0, 0, 255, 0.2);
+    padding: 25px;
+    border-radius: 8px;
 }
 
 .flexbox-back{
@@ -47,22 +47,23 @@
 </style>
 
 <body>
-    
+
 
 <div class="shadow">
 <div class="title mt-4 d-flex justify-content-between">
-    
+
      <div class="flexbox-back" style="">
         <a id="back_button" href="{{route('list')}}">
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
         </a>
     </div>
-    
+
     <h1 class="job-name1">{{ $job->job_name }}</h1>
     <div class="apply">
-   
+
     <!--<a href="{{ route('vacancy_form', $job->id) }}" class="btn btn-primary btn-sm">Apply Now</a>-->
-    <a href="{{ route('vacancy_form', $job->id) }}" class="btn btn-primary btn-sm" target="_blank">Apply Now</a>
+    <a href="{{ route('applicant_page.jobs') }}" class="btn btn-primary btn-sm" target="_blank">Apply Now</a>
+    {{-- <a href="{{ route('vacancy_form', $job->id) }}" class="btn btn-primary btn-sm" target="_blank">Apply Now</a> --}}
 
 </div>
 </div>
