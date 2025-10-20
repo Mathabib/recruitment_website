@@ -14,7 +14,7 @@
         <div class="card-body">
             <div class="d-flex align-items-center flex-sm-row flex-column">
                 <div class="me-3">
-                    <img class="rounded-circle" width="110px" src="{{ asset('assets/no_profile.jpg') }}" alt="" >
+                    <img style="cover" class="rounded-circle" width="110px" height="110" src="{{ asset('storage/'.$applicant->photo_pass) }}" alt="" >
                 </div>
                 <div class="">
                     <p class="fs-2">{{ $applicant->name }}</p>
@@ -57,6 +57,7 @@
             <div class="mt-4">
                 <a class="btn btn-outline-danger" href="{{ route('applicant_page.edit') }}">Edit Your CV</a>
                 <a class="btn btn-outline-danger" href="{{ route('applicant_page.download') }}">Download Your CV</a>
+                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
                 {{-- <a class="btn btn-outline-danger" href="{{ route('applicant_page.cvsection') }}">CV section</a> --}}
             </div>
         </div>
@@ -163,10 +164,50 @@
 
 
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <form action="{{ route('applicant_page.changePassword') }}" method="post">
+        @csrf
+        <div class="modal-body">
+            <div>
+                <label for="newPassword" class="form-label">New Password</label>
+                <input required type="password" class="form-control" name="newPassword">
+                 {{-- @error('newPassword', 'changePasswordErrors')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror --}}
+            </div>
+            <div>
+                <label for="newPassword_confirmation" class="form-label">Confirm New Password</label>
+                <input required type="password" class="form-control" name="newPassword_confirmation">
+                {{-- @error('newPassword_confirmation', 'changePasswordErrors')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror --}}
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
 @stop
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function test(){
         Swal.fire("SweetAlert2 is working!");
     }
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //         @if ($errors->changePasswordErrors->any())
+    //             var changePassword = new bootstrap.Modal(document.getElementById('changePassword'));
+    //             changePassword.show();
+    //         @endif
+    //     });
 </script>

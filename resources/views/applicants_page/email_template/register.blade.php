@@ -58,17 +58,32 @@
     <div class="content">
       <p>Halo <strong>{{ $user->name }}</strong>,</p>
 
-      <p>Terima kasih telah melakukan registrasi di <strong>Recruitment Isolutions</strong>.</p>
+    <p>
+        Terima kasih telah mengajukan lamaran untuk posisi {{ $job->job_name }} pada website Isolutions.
+        Akun pengguna telah dibuat secara otomatis untuk Anda.
+    </p>
 
-      <p>Akun Anda telah berhasil dibuat dan sekarang Anda dapat login ke sistem kami menggunakan email dan password yang telah Anda daftarkan.</p>
+    <p><strong>Akun Anda :</strong></p>
+    <p><strong>Email</strong> : {{ $user->email }}</p>
+    <p><strong>Password Sementara </strong> : 123123123</p>
 
-      <p>Silakan klik tombol di bawah ini untuk masuk ke akun Anda:</p>
+      {{-- <p>Akun Anda telah berhasil dibuat dan sekarang Anda dapat login ke sistem kami menggunakan email yang anda telah daftarkan.</p> --}}
+
+      <p>
+        Silakan masuk ke platform kami untuk melihat dan melacak status lamaran Anda:
+      </p>
+
+       <p style="text-align: center;">
+        <a href="{{ url('/') }}" class="button">Masuk ke Akun</a>
+      </p>
+
+      {{-- <p>Silakan klik tombol di bawah ini untuk masuk ke akun Anda:</p>
 
       <p style="text-align: center;">
         <a href="{{ url('/login') }}" class="button">Masuk ke Akun</a>
-      </p>
+      </p> --}}
 
-      <p>Jika Anda tidak merasa melakukan registrasi ini, abaikan email ini.</p>
+      {{-- <p>Jika Anda tidak merasa melakukan registrasi ini, abaikan email ini.</p> --}}
     </div>
 
     <div class="footer">

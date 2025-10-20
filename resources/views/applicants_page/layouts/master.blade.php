@@ -170,7 +170,7 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            @if ($errors->any())
+            @if ($errors->registerErrors->any())
                 var registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
                 registerModal.show();
             @endif

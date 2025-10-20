@@ -24,3 +24,4 @@ Route::get('edit_api/{id}', [ApplicantController::class, 'edit_api'])->name('edi
 Route::get('edit_api_resindo/{id}', [ResindoController::class, 'edit_api'])->name('edit_api_resindo');
 Route::get('edit_api_applicant/{id}', [ApplicantPageController::class, 'edit_api'])->name('edit_api_applicant');
 
+Route::get('loker/profile/cvsection/experience/{id}', [ApplicantPageController::class, 'experienceApi'])->name('applicant_page.cvsection.experienceApi');
