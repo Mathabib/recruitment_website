@@ -7,33 +7,38 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Applicant;
 use App\Models\Jurusan;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
+use App\Mail\register_mail;
+use Illuminate\Support\Facades\Mail;
 
 class VacancyController extends Controller
 {
-    
+
      public function search(Request $request)
     {
-      
+
         $jobName = $request->input('job_name');
         $employmentType = $request->input('employment_type');
         $workLocation = $request->input('work_location');
-        $sort = $request->input('sort', 'asc');  
+        $sort = $request->input('sort', 'asc');
 
-       
+
         $jobs = Job::query();
 
-        
+
         if ($jobName) {
             $jobs->where('job_name', 'like', '%' . $jobName . '%');
         }
 
-        
+
         if ($employmentType) {
             $jobs->where('employment_type', $employmentType);
         }
 
-        
+
         if ($workLocation) {
             $jobs->whereHas('workLocation', function($query) use ($workLocation) {
                 $query->where('location', 'like', '%' . $workLocation . '%');
@@ -43,35 +48,35 @@ class VacancyController extends Controller
         // unpublish tidak akan muncul di tampilan
         $jobs->where('status_published', '!=', 'unpublish');
 
-        
+
         if ($sort === 'desc') {
             $jobs->orderBy('job_name', 'desc');
         } else {
             $jobs->orderBy('job_name', 'asc');
         }
 
-       
+
         // $jobs = $jobs->get();
         $jobs = $jobs->paginate(10);
 
-       
+
         return view('list', compact('jobs'));
     }
 
-    
-    
+
+
     public function index($id)
     {
         // cari jobs dengan id tertentu
         $jobs = Job::findOrfail($id);
-        $work_location = $jobs->workLocation->location; 
+        $work_location = $jobs->workLocation->location;
         //diatas adalah contoh dari inverse relation child referensi ke parent, kita harus sesuaikan dengan nama model nya
-        //nama table nya adalah work_location, tapi nama model nya adalah WorkLocation 
+        //nama table nya adalah work_location, tapi nama model nya adalah WorkLocation
         //maka kita pakai WorkLocation
         if(!$jobs || $jobs->status_published == 0){
             abort(404);
         }
-        
+
         // Kirim data jobs ke view vacancy
         return view('vacancy', compact('jobs', 'work_location'));
     }
@@ -81,7 +86,7 @@ class VacancyController extends Controller
         // Menampilkan detail pekerjaan berdasarkan ID
         return view('detail', compact('job'));
     }
-    
+
     public function list()
     {
         $jobs = Job::all();
@@ -95,13 +100,13 @@ class VacancyController extends Controller
     //     $jobs = Job::where('status_published', 1)->get();
     //     return view('list', compact('jobs'));
     // }
-    
+
       public function list2(Request $request)
 {
     // Paginate the jobs, showing 10 per page, where 'status_published' is 1
     $jobs = Job::where('status_published', 1)
                ->paginate(10); // Paginate results, 10 per page
-    
+
     // Append the current query parameters to preserve filters across pagination
     $jobs->appends($request->all());
 
@@ -127,18 +132,17 @@ class VacancyController extends Controller
         return view('vacancy_form', compact('jobs', 'educations'));
     }
 
-   
+
 
     public function kirim(Request $request)
     {
-    //    return $request;
         // Validate input
         $request->validate([
             'job_id' => 'required|exists:jobs,id',
             'name' => 'required|string|max:255',
             'address' => 'required|string',
             'number' => 'required|string|max:15',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'profil_linkedin' => 'nullable|url',
             'certificates.*' => 'nullable|string',
             'experience_period' => 'nullable|string',
@@ -167,15 +171,17 @@ class VacancyController extends Controller
             'email_ref.*' => 'nullable|string',
             'education' => 'required|exists:education,id',
             'jurusan' => 'required|string|max:255', // Atur sesuai kebutuhan
-            
+
         ]);
-    
+
+
+
         // Handle file upload for photo_pass if provided
         $path = null;
         if ($request->hasFile('photo_pass')) {
             $path = $request->file('photo_pass')->store('photos', 'public');
         }
-        $educationId = $request->education; 
+        $educationId = $request->education;
         // Cek dan simpan jurusan
         $jurusan = Jurusan::where('education_id', $educationId)->where('name_jurusan', $request->jurusan)->first();
         if(!$jurusan){
@@ -197,8 +203,19 @@ class VacancyController extends Controller
         $salary_current = str_replace(',', '.', $salary_current); // ubah koma jadi titik (jika ada)
         $salary_current = (int) $salary_current;
 
+
+        // BIKIN USER
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'image'    => $path,
+            'password' => Hash::make('123123123'),
+            'role'     => 'applicant', // tambahkan kolom role di users jika belum
+        ]);
+
         // Create applicant
         $applicant = Applicant::create([
+            'user_id' => $user->id,
             'job_id' => $request->job_id,
             'name' => $request->name,
             'address' => $request->address,
@@ -219,7 +236,7 @@ class VacancyController extends Controller
             'education_id' => $request->education, // Pastikan ini mengacu ke id yang benar
             'jurusan_id' => $jurusan->id, // Gunakan ID dari jurusan
         ]);
-    
+
         // Handle work experiences
         if ($request->has('role')) {
             foreach ($request->role as $index => $role) {
@@ -235,7 +252,7 @@ class VacancyController extends Controller
                 ]);
             }
         }
-    
+
         // Handle projects
         if ($request->has('project_name')) {
             foreach ($request->project_name as $index => $project_name) {
@@ -248,7 +265,7 @@ class VacancyController extends Controller
                 ]);
             }
         }
-    
+
         // Handle references
         if ($request->has('name_ref')) {
             foreach ($request->name_ref as $index => $name_ref) {
@@ -259,13 +276,19 @@ class VacancyController extends Controller
                 ]);
             }
         }
-    
-        return redirect()->route('vacancy', $request->job_id)->with('success', 'Your application has been sent');
-    }
-    
-    
 
-    
+        // return redirect()->route('vacancy', $request->job_id)->with('success', 'Your application has been sent');
+        // 3️⃣ Login otomatis
+        Auth::login($user);
+        $job = Job::findOrFail($request->job_id);
+        Mail::to($user->email)->queue(new register_mail($user, $job));
+        // 4️⃣ Redirect ke halaman applicant
+        return redirect()->route('applicant_page.profile');
+    }
+
+
+
+
 
     public function test(Request $request)
     {

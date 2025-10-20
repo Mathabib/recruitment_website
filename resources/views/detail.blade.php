@@ -62,8 +62,8 @@
     <div class="apply">
 
     <!--<a href="{{ route('vacancy_form', $job->id) }}" class="btn btn-primary btn-sm">Apply Now</a>-->
-    <a href="{{ route('applicant_page.jobs') }}" class="btn btn-primary btn-sm" target="_blank">Apply Now</a>
-    {{-- <a href="{{ route('vacancy_form', $job->id) }}" class="btn btn-primary btn-sm" target="_blank">Apply Now</a> --}}
+    {{-- <a href="{{ route('applicant_page.jobs') }}" class="btn btn-primary btn-sm" target="_blank">Apply Now</a> --}}
+    <a href="{{ route('vacancy_form', $job->id) }}" class="btn btn-primary btn-sm" target="_blank">Apply Now</a>
 
 </div>
 </div>

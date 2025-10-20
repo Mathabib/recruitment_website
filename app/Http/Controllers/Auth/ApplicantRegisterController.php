@@ -26,7 +26,7 @@ class ApplicantRegisterController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'phone'    => 'nullable|string|max:20',
             // 'address'  => 'nullable|string|max:255',
-       ]);
+       ],[],[],"registerErrors");
 
         // 1️⃣ Buat user
         $user = User::create([

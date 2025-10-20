@@ -11,14 +11,32 @@ use App\Models\Jurusan;
 use App\Models\Project;
 use App\Models\Reference;
 use App\Models\Notes;
+use App\Models\WorkExperience;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 class ApplicantPageController extends Controller
 {
     public function index(){
         return view('applicants_page.home');
+    }
+
+    //CHANGE PASSWORD
+    public function changePassword(Request $request){
+
+
+        // $request->validate([
+        //     'newPassword' => 'required|string|confirmed'
+        // ],[],[],'changePasswordErrors');
+        $user = Auth::user();
+        $user->update([
+            'password' => Hash::make($request->newPassword),
+        ]);
+
+        return redirect()->back()->with('success', 'Password has changed');
     }
     public function jobs(Request $request)
     {
@@ -289,8 +307,104 @@ class ApplicantPageController extends Controller
 
     public function cvsection(){
         $applicant = Auth::user()->applicant;
+        $experiences = $applicant->workExperiences;
+        $projects = $applicant->projects;
+        $references = $applicant->references;
         $job = $applicant->job;
-        return view('applicants_page.data', compact('applicant', 'job'));
+        $skills = explode('|', $applicant->skills);
+        $achievements = explode('|', $applicant->achievement);
+        $certificates = explode('|', $applicant->certificates);
+        $salary_expectation = number_format(optional($applicant)->salary_expectation, 0, ',', '.');
+        $salary_current = number_format(optional($applicant)->salary_current, 0, ',', '.');
+
+
+        return view('applicants_page.data', compact('applicant', 'job', 'skills', 'achievements', 'certificates', 'experiences', 'projects', 'references', 'salary_expectation', 'salary_current'));
+    }
+
+    public function editProfileData1(Request $request){
+        $applicant = Auth::user()->applicant;
+         if ($request->hasFile('photo_pass')) {
+            // Storage::disk('public')->delete($applicant->photo_pass);
+            if (!empty($applicant->photo_pass) && Storage::disk('public')->exists($applicant->photo_pass)) {
+                Storage::disk('public')->delete($applicant->photo_pass);
+            }
+            $path = $request->file('photo_pass')->store('photos', 'public');
+            $applicant->update(['photo_pass' => $path]);
+            // $request->merge(['photo_pass' => $path]);
+        }
+
+
+        $applicant->update([
+            'name' => $request->name,
+            'profile' => $request->profile,
+        ]);
+        return redirect()->back()->with('success', 'data successfully changed');
+    }
+
+    public function editProfileData2(Request $request){
+        $applicant = Auth::user()->applicant;
+        $salary_expectation = $request->input('salary_expectation');
+        $salary_expectation = str_replace(['.', ','], '', $salary_expectation);
+        $salary_expectation = (int) $salary_expectation;
+
+
+        //=== bagian ubah input text jadi integer, karena di input type nya text untuk keperluan formating =======
+        $salary_current = $request->input('salary_current');
+        $salary_current = str_replace(['.', ','], '', $salary_current);
+        $salary_current = (int) $salary_current;
+
+        $request->merge([
+            'salary_current' => $salary_current,
+            'salary_expectation' => $salary_expectation
+        ]);
+
+        $applicant->update($request->all());
+
+        return redirect()->back()->with('success', 'Data successfully updated');
+    }
+
+    public function editProfileData3(Request $request){
+
+        $applicant = Auth::user()->applicant;
+        $applicant->update($request->all());
+        return redirect()->back()->with('success', 'Data successfully updated');
+    }
+
+    public function editProfileData4(Request $request){
+
+        $applicant = Auth::user()->applicant;
+        $applicant->update($request->all());
+        return redirect()->back()->with('success', 'Data successfully updated');
+    }
+
+    public function editProfileData5(Request $request){
+
+        $applicant = Auth::user()->applicant;
+        $applicant->update($request->all());
+        return redirect()->back()->with('success', 'Data successfully updated');
+    }
+
+
+    //EXPERIENCE
+
+    public function experienceEdit(Request $request){
+
+    }
+    public function experienceAdd(Request $request){
+
+    }
+    public function experienceDelete($id){
+
+    }
+
+    public function experienceApi($id){
+        $experience = WorkExperience::findOrFail($id);
+        return $experience;
+    }
+
+    public function testEmail(){
+
+        return view('applicants_page.email_template.register');
     }
 
 }

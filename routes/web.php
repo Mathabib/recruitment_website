@@ -156,6 +156,23 @@ Route::middleware(['applicant.only', 'auth'])->group(function(){
     Route::get('loker/profile', [ApplicantPageController::class, 'profile'])->name('applicant_page.profile');
     Route::get('loker/profile/cvsection', [ApplicantPageController::class, 'cvsection'])->name('applicant_page.cvsection');
 
+    //edit satu satu
+    Route::post('loker/profile/cvsection/profiledata', [ApplicantPageController::class, 'editProfileData1'])->name('applicant_page.cvsection.profiledata1');
+    Route::post('loker/profile/cvsection/profiledata2', [ApplicantPageController::class, 'editProfileData2'])->name('applicant_page.cvsection.profiledata2');
+    Route::post('loker/profile/cvsection/profiledata3', [ApplicantPageController::class, 'editProfileData3'])->name('applicant_page.cvsection.profiledata3');
+    Route::post('loker/profile/cvsection/profiledata4', [ApplicantPageController::class, 'editProfileData4'])->name('applicant_page.cvsection.profiledata4');
+    Route::post('loker/profile/cvsection/profiledata5', [ApplicantPageController::class, 'editProfileData5'])->name('applicant_page.cvsection.profiledata5');
+
+    Route::post('loker/profile/cvsection/experience/edit', [ApplicantPageController::class, 'experienceEdit'])->name('applicant_page.cvsection.experienceEdit');
+    Route::post('loker/profile/cvsection/experience/add', [ApplicantPageController::class, 'experienceAdd'])->name('applicant_page.cvsection.experienceAdd');
+    Route::get('loker/profile/cvsection/experience/delete/{id}', [ApplicantPageController::class, 'experienceDelete'])->name('applicant_page.cvsection.experienceDelete');
+
+    //CHANGE PASSWORD
+    Route::post('loker/profile/changepassword', [ApplicantPageController::class, 'changePassword'])->name('applicant_page.changePassword');
+
+
+
+
     //lamar pekerjaan
     Route::get('loker/jobs/apply/{id}', [ApplicantPageController::class, 'apply'])->name('applicant_page.jobs.apply');
     Route::get('loker/jobs/unapply/{id}', [ApplicantPageController::class, 'delete_application'])->name('applicant_page.jobs.unapply');
