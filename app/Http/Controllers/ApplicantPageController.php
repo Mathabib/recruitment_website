@@ -171,7 +171,7 @@ class ApplicantPageController extends Controller
         //=====================================
         // Update applicant data
         $applicant->update([
-            'job_id' => $request->job_id,
+            
             'name' => $request->name,
             'address' => $request->address,
             'number' => $request->number,
