@@ -171,7 +171,7 @@ class ApplicantPageController extends Controller
         //=====================================
         // Update applicant data
         $applicant->update([
-            
+
             'name' => $request->name,
             'address' => $request->address,
             'number' => $request->number,
@@ -388,14 +388,78 @@ class ApplicantPageController extends Controller
     //EXPERIENCE
 
     public function experienceEdit(Request $request){
+        $experience = WorkExperience::findOrFail($request->experience_id);
+        $experience->update([
+            'role' => $request->role,
+            'name_company' => $request->name_company,
+            'desc_kerja' => $request->desc_kerja,
+            'mulai' => $request->mulai,
+            'selesai' => $request->selesai,
+            'present' => $request->present,
+        ]);
 
+        return redirect()->back()->with('success', 'data successfully updated');
     }
     public function experienceAdd(Request $request){
-
+        $applicant = Auth::user()->applicant;
+        WorkExperience::create([
+            'applicant_id' => $applicant->id,
+            'role' => $request->role,
+            'name_company' => $request->name_company,
+            'desc_kerja' => $request->desc_kerja,
+            'mulai' => $request->mulai,
+            'selesai' => $request->selesai,
+            'present' => $request->present,
+        ]);
+        return redirect()->back()->with('success', 'data successfully updated');
     }
     public function experienceDelete($id){
-
+        $experience = WorkExperience::findOrFail($id);
+        $experience->delete();
+        return redirect()->back()->with('success', 'data successfully updated');
     }
+
+
+    // ========PROJECT========
+    public function projectEdit(Request $request){
+        $project = Project::findOrFail($request->project_id);
+        $project->update([
+            'project_name' => $request->project_name,
+            'client' => $request->client,
+            'desc_project' => $request->desc_project
+        ]);
+        return redirect()->back()->with('success', 'data successfully updated');
+    }
+    public function projectAdd(Request $request){
+        $applicant = Auth::user()->applicant;
+        Project::create([
+            'applicant_id' => $applicant->id,
+            'project_name' => $request->project_name,
+            'client' => $request->client,
+            'desc_project' => $request->desc_project
+        ]);
+        return redirect()->back()->with('success', 'data successfully updated');
+    }
+    public function projectDelete($id){
+        $project = Project::findOrFail($id);
+        $project->delete();
+        return redirect()->back()->with('success', 'data successfully updated');
+    }
+
+
+    public function referenceEdit(Request $request){
+
+        return redirect()->back()->with('success', 'data successfully updated');
+    }
+    public function referenceAdd(Request $request){
+
+        return redirect()->back()->with('success', 'data successfully updated');
+    }
+    public function referenceDelete($id){
+        
+        return redirect()->back()->with('success', 'data successfully updated');
+    }
+
 
     public function experienceApi($id){
         $experience = WorkExperience::findOrFail($id);

@@ -27,7 +27,7 @@
 
     <div class="card mt-3">
         <div class="card-body">
-            <h3>Personal Information test push</h3>
+            <h3>Personal Information</h3>
             <div class="row">
                 <div class="col-md-6">
                     <p class="fw-bold fs-6 m-0 p-0" style="color: #800">Nama</p>
@@ -58,7 +58,7 @@
                 <a class="btn btn-outline-danger" href="{{ route('applicant_page.edit') }}">Edit Your CV</a>
                 <a class="btn btn-outline-danger" href="{{ route('applicant_page.download') }}">Download Your CV</a>
                 <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
-                {{-- <a class="btn btn-outline-danger" href="{{ route('applicant_page.cvsection') }}">CV section</a> --}}
+                <a class="btn btn-outline-danger" href="{{ route('applicant_page.cvsection') }}">CV section</a>
             </div>
         </div>
     </div>

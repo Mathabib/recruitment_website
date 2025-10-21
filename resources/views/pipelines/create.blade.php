@@ -89,11 +89,11 @@
                             <!-- Current Salary -->
                              <div class="form-group">
                                 <label for="salary_current">Current Salary</label>
-                                <input type="text" 
-                                        class="form-control @error('salary_current') is-invalid @enderror" 
-                                        id="salary_current" 
-                                        name="salary_current" 
-                                        value="{{ old('salary_current') }}" 
+                                <input type="text"
+                                        class="form-control @error('salary_current') is-invalid @enderror"
+                                        id="salary_current"
+                                        name="salary_current"
+                                        value="{{ old('salary_current') }}"
                                         placeholder="Ekspektasi Gaji" required>
                                 @error('salary_current')
                                     <span class="text-danger">{{ $message }}</span>
@@ -103,11 +103,11 @@
                             <!-- Salary Expectation -->
                             <div class="form-group">
                                 <label for="salary_expectation">Salary Expectation</label>
-                                <input type="text" 
-                                        class="form-control @error('salary_expectation') is-invalid @enderror" 
-                                        id="salary_expectation" 
-                                        name="salary_expectation" 
-                                        value="{{ old('salary_expectation') }}" 
+                                <input type="text"
+                                        class="form-control @error('salary_expectation') is-invalid @enderror"
+                                        id="salary_expectation"
+                                        name="salary_expectation"
+                                        value="{{ old('salary_expectation') }}"
                                         placeholder="Ekspektasi Gaji" required>
                                 @error('salary_expectation')
                                     <span class="text-danger">{{ $message }}</span>
@@ -319,7 +319,7 @@
                                 <div class="date work_end" :id="'work_end' + index">
                                     <label class="form-label" for="selesai[]">End</label>
                                     <input class="form-control" type="date" name="selesai[]">
-                                    
+
                                     @error('selesai.*')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -363,25 +363,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
-                            {{-- <div class="input date_kontainer">
-                                <div class="date project_start">
-                                    <label class="form-label" for="mulai_project[]">Start</label>
-                                    <input class="form-control" type="date" name="mulai_project[]">
-                                    @error('mulai_project.*')
-                                    <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="date project_end">
-                                    <label class="form-label" for="selesai_project[]">End</label>
-                                    <input class="form-control" type="date" name="selesai_project[]">
-                                    @error('selesai_project.*')
-                                    <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                            </div> --}}
 
                             <div class="input project_description">
                                 <label class="form-label" for="desc_project[]">Project Description @{{index + 1}}</label>
@@ -450,9 +431,9 @@
             console.log("Data ID:", dataId);
             console.log("Status:", status);
             if(status == 'present'){
-                $(`#work_end${dataId}`).hide();
+                $(`#work_end`).hide();
             } else {
-                $(`#work_end${dataId}`).show();
+                $(`#work_end`).show();
             }
 });
 
