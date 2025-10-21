@@ -167,6 +167,16 @@ Route::middleware(['applicant.only', 'auth'])->group(function(){
     Route::post('loker/profile/cvsection/experience/add', [ApplicantPageController::class, 'experienceAdd'])->name('applicant_page.cvsection.experienceAdd');
     Route::get('loker/profile/cvsection/experience/delete/{id}', [ApplicantPageController::class, 'experienceDelete'])->name('applicant_page.cvsection.experienceDelete');
 
+    Route::post('loker/profile/cvsection/project/edit', [ApplicantPageController::class, 'projectEdit'])->name('applicant_page.cvsection.projectEdit');
+    Route::post('loker/profile/cvsection/project/add', [ApplicantPageController::class, 'projectAdd'])->name('applicant_page.cvsection.projectAdd');
+    Route::get('loker/profile/cvsection/project/delete/{id}', [ApplicantPageController::class, 'projectDelete'])->name('applicant_page.cvsection.projectDelete');
+
+    Route::post('loker/profile/cvsection/reference/edit', [ApplicantPageController::class, 'referenceEdit'])->name('applicant_page.cvsection.referenceEdit');
+    Route::post('loker/profile/cvsection/reference/add', [ApplicantPageController::class, 'referenceAdd'])->name('applicant_page.cvsection.referenceAdd');
+    Route::get('loker/profile/cvsection/reference/delete/{id}', [ApplicantPageController::class, 'referenceDelete'])->name('applicant_page.cvsection.referenceDelete');
+
+
+
     //CHANGE PASSWORD
     Route::post('loker/profile/changepassword', [ApplicantPageController::class, 'changePassword'])->name('applicant_page.changePassword');
 
@@ -194,7 +204,10 @@ Route::middleware('applicant.only')->group(function(){
 Route::get('/loker/jobs/show/{job}', [ApplicantPageController::class, 'jobsShow'])->name('applicant_page.jobs.show');
 Route::get('/loker/jobs/email', [ApplicantPageController::class, 'testEmail'])->name('applicant_page.testemail');
 
-
+Route::get('/test', function () {
+    return view('vendor/notifications/email');
+    return 'test';
+ });
 
 
 

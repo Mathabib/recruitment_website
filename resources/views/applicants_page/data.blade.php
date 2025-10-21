@@ -185,13 +185,31 @@
             {{-- EXPERIENCE ======= --}}
             <div role="tabpanel" class="p-4 tab-pane fade show active" id="Experience">
                 {{-- <h1>Applicant Experience</h1> --}}
-                <div class="position-relative">
+                <div class="">
+                   <div class="d-flex justify-content-between mb-3">
+                        <div></div>
+                        <div data-bs-toggle="modal" data-bs-target="#addExperience" id="add-certificate-btn" class="border rounded p-2 bg-success-subtle" style="cursor: pointer;">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                   </div>
+
                     @foreach ($experiences as $experience)
                     <div class="card mt-3 border-danger-subtle">
-                        <div class="card-body ">
-                            <p style="color: #800" class="fw-bolder fs-4">
-                                {{ $experience->role }}
-                            </p>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <p style="color: #800" class="fw-bolder fs-4">
+                                    {{ $experience->role }}
+                                </p>
+                                <div class="d-flex gap-1" style="">
+                                    <div style="height: 40px; width: 40px" id="add-certificate-btn" class="border rounded p-2 bg-warning-subtle d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                                        <i class="fas fa-pen edit-certificate experienceEdit" data-bs-toggle="modal" data-bs-target="#experiencemodal" style="cursor: pointer;" data-url="{{ route('applicant_page.cvsection.projectEdit') }}" onclick="getExperience({{ json_encode($experience) }})" ></i></span>
+                                    </div>
+                                    <div style="height: 40px; width: 40px" id="add-certificate-btn" class="border rounded p-2 bg-danger-subtle d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                                        <a onclick="return confirm('are you sure want delete ?')" class="text-dark" href="{{ route('applicant_page.cvsection.experienceDelete', $experience->id) }}"><i class="fas fa-trash-alt delete-certificate" style="cursor: pointer;"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
                             <p style="color: #800" class="fw-bolder fs-5">
                                 {{ $experience->name_company }}
                             </p>
@@ -209,10 +227,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex gap-2" style="position: absolute; top=0px; right=0px">
-                            <i class="fas fa-pen edit-certificate" data-bs-toggle="modal" data-bs-target="#experiencemodal" style="cursor: pointer;"></i>
-                            <i class="fas fa-trash-alt delete-certificate" style="cursor: pointer;"></i>
-                        </div>
+
                     </div>
                     @endforeach
                 </div>
@@ -221,11 +236,28 @@
             {{-- PROJECT ====== --}}
             <div role="tabpanel" class="p-4 tab-pane fade show" id="Project">
                 {{-- <h1>Applicant Project</h1> --}}
+                <div class="d-flex justify-content-between mb-3">
+                    <div></div>
+                    <div onclick="addProject()" data-url="{{ route('applicant_page.cvsection.projectAdd') }}" data-bs-toggle="modal" data-bs-target="#editProject" id="add-project-btn" class="border rounded p-2 bg-success-subtle" style="cursor: pointer;">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                </div>
                 <div>
                     @foreach ($projects as $project)
                         <div class="card mt-3 border-danger-subtle">
                             <div class="card-body">
-                                <p style="color: #800" class="fw-bolder fs-4">{{ $project->project_name }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <p style="color: #800" class="fw-bolder fs-4">{{ $project->project_name }}</p>
+                                    <div class="d-flex gap-1" style="">
+                                        <div style="height: 40px; width: 40px" id="edit_project_btn" data-url="{{ route('applicant_page.cvsection.projectEdit') }}" class="border rounded p-2 bg-warning-subtle d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                                            <i class="fas fa-pen edit-certificate projectEdit project_edit_btn" data-bs-toggle="modal" data-bs-target="#editProject" style="cursor: pointer;" onclick="getProject({{ json_encode($project) }})" ></i>
+                                        </div>
+                                        <div style="height: 40px; width: 40px" id="" class="border rounded p-2 bg-danger-subtle d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                                            <a class="text-dark" onclick="return confirm('are you sure want delete this ? ')" href="{{ route('applicant_page.cvsection.projectDelete', $project->id) }}"><i class="fas fa-trash-alt delete-certificate" style="cursor: pointer;"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <p style="color: #800" class="fw-bolder">{{ $project->client }}</p>
 
                                 <button class="btn btn-outline-danger mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#project{{ $project->id }}" aria-expanded="false" aria-controls="collapseExample">
@@ -419,37 +451,37 @@
 {{-- ======EXPERIENCE MODAL ======== --}}
 
 <div class="modal fade" id="experiencemodal" tabindex="-1" aria-labelledby="experienceLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
     <form action="{{ route("applicant_page.cvsection.experienceEdit") }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="modal-body">
-            <input type="hidden" name="job_id" value="{{ $applicant->id }}">
+            <input type="hidden" name="experience_id" >
             <div id="work_experience" class="work_experience">
 
                 <div class="input company_name">
                     <label class="form-label" for="name_company">Company Name</label>
                     <input class="form-control" name="name_company" type="text">
                 </div>
-                <div class="input role_name">
+                <div class="input role_name mt-3">
                     <label class="form-label" for="role">Position Name</label>
                     <input class="form-control" name="role" type="text" value="">
                 </div>
 
-                <div class="input date_kontainer">
-                    <div class="date work_start">
+                <div class="input date_kontainer row mt-4 mb-4">
+                    <div class="date work_start col-4">
                         <label class="form-label" for="mulai">Start</label>
                         <input class="form-control" type="date" name="mulai">
                     </div>
 
-                    <div style="display: flex; align-items:flex-end">
-                        <select class="form-control status-select" :data-id="index" name="present" id="">
+                    <div class="col-4" style="display: flex; align-items:flex-end">
+                        <select class="form-control status-select" name="present" id="">
                             <option selected value="end_date">Input End Date</option>
                             <option value="present">Present</option>
                         </select>
                     </div>
 
-                    <div class="date work_end" :id="'work_end_' + index">
+                    <div class="date work_end col-4" id="work_end">
                         <label class="form-label" for="selesai">End</label>
                         <input class="form-control" type="date" name="selesai">
                     </div>
@@ -482,6 +514,148 @@
 </div>
 
 
+<div class="modal fade" id="addExperience" tabindex="-1" aria-labelledby="addExperience" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+    <form action="{{ route("applicant_page.cvsection.experienceAdd") }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+            <input type="hidden" name="experience_id" >
+            <div id="work_experience" class="work_experience">
+
+                <div class="input company_name">
+                    <label class="form-label" for="name_company">Company Name</label>
+                    <input class="form-control" name="name_company" type="text">
+                </div>
+                <div class="input role_name mt-3">
+                    <label class="form-label" for="role">Position Name</label>
+                    <input class="form-control" name="role" type="text" value="">
+                </div>
+
+                <div class="input date_kontainer row mt-4 mb-4">
+                    <div class="date work_start col-4">
+                        <label class="form-label" for="mulai">Start</label>
+                        <input class="form-control" type="date" name="mulai">
+                    </div>
+
+                    <div class="col-4" style="display: flex; align-items:flex-end">
+                        <select class="form-control status-select" name="present" id="">
+                            <option selected value="end_date">Input End Date</option>
+                            <option value="present">Present</option>
+                        </select>
+                    </div>
+
+                    <div class="date work_end col-4" id="work_end">
+                        <label class="form-label" for="selesai">End</label>
+                        <input class="form-control" type="date" name="selesai">
+                    </div>
+
+                    <div>
+
+                    </div>
+
+                </div>
+
+                <div class="input job_description">
+                    <label class="form-label" for="desc_kerja">Job Description</label>
+                    <main>
+                        {{-- <trix-toolbar id="my_toolbar"></trix-toolbar> --}}
+                        <div class="more-stuff-inbetween"></div>
+                        <trix-toolbar id="my_toolbar2"></trix-toolbar>
+                        <input type="hidden" id="my_input2" name="desc_kerja" value="">
+                        <trix-editor toolbar="my_toolbar2" input="my_input2"></trix-editor>
+                    </main>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{{-- =========================================================
+=====================PROJECT MODAL=======================
+========================================================= --}}
+
+
+<div class="modal fade" id="editProject" tabindex="-1" aria-labelledby="editProject" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <form action="{{ route("applicant_page.cvsection.projectEdit") }}" method="post" enctype="multipart/form-data">
+        @csrf
+
+        <div class="modal-body">
+            <input type="hidden" name="project_id">
+            <div class="input Project_name">
+                <label class="form-label" for="project_name">Project Name</label>
+                <input class="form-control" name="project_name" type="text">
+            </div>
+            <div class="input client_name">
+                <label class="form-label" for="client">Client</label>
+                <input class="form-control" name="client" type="text">
+            </div>
+
+            <div class="input project_description">
+                <label class="form-label" for="desc_project">Project Description</label>
+                <textarea class="form-control" name="desc_project"  placeholder="Project Description"></textarea>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{{-- =========================================================
+=====================PROJECT MODAL=======================
+========================================================= --}}
+
+
+<div class="modal fade" id="editReference" tabindex="-1" aria-labelledby="editReference" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <form action="{{ route("applicant_page.cvsection.referenceEdit") }}" method="post" enctype="multipart/form-data">
+        @csrf
+
+        <div class="modal-body">
+            <input type="hidden" name="reference_id">
+            <div class="input reference_name">
+                <label class="form-label" for="reference_name">Project Name</label>
+                <input class="form-control" name="reference_name" type="text">
+            </div>
+            <div class="input reference_email">
+                <label class="form-label" for="reference_email">Client</label>
+                <input class="form-control" name="reference_email" type="text">
+            </div>
+
+            <div class="input reference_number">
+                <label class="form-label" for="reference_number">Project Description</label>
+                <textarea class="form-control" name="reference_number"  placeholder="Project Description"></textarea>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
       // ============untuk angka expected salary================
     document.getElementById('salary_expectation').addEventListener('input', function(e) {
@@ -685,7 +859,97 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+//=======EXPERIENCE==========
+function getExperience(data) {
+
+    console.log("Experience data:", data);
+
+    // 1️⃣ Bersihkan semua input di modal terlebih dahulu
+    const modal = document.querySelector("#experiencemodal");
+
+    modal.querySelector('input[name="experience_id"]').value = "";
+    modal.querySelector('input[name="name_company"]').value = "";
+    modal.querySelector('input[name="role"]').value = "";
+    modal.querySelector('input[name="mulai"]').value = "";
+    modal.querySelector('input[name="selesai"]').value = "";
+    modal.querySelector('select[name="present"]').value = "end_date";
+    modal.querySelector('input[name="desc_kerja"]').value = "";
+
+    // Jika kamu menggunakan Trix Editor, perlu direset manual juga:
+    const trixEditor = modal.querySelector("trix-editor");
+    if (trixEditor) trixEditor.editor.loadHTML("");
+
+    // 2️⃣ Isi input berdasarkan data yang diterima
+    if (data) {
+        modal.querySelector('input[name="experience_id"]').value = data.id ?? "";
+        modal.querySelector('input[name="name_company"]').value = data.name_company ?? "";
+        modal.querySelector('input[name="role"]').value = data.role ?? "";
+        modal.querySelector('input[name="mulai"]').value = data.mulai ?? "";
+        modal.querySelector('input[name="selesai"]').value = data.selesai ?? "";
+        modal.querySelector('select[name="present"]').value = data.present ?? "end_date";
+
+
+        // Jika ada deskripsi kerja dan pakai Trix:
+        modal.querySelector('input[name="desc_kerja"]').value = data.desc_kerja ?? "";
+        if (trixEditor && data.desc_kerja) {
+            trixEditor.editor.loadHTML(data.desc_kerja);
+        }
+    }
+    $(`#work_end`).show();
+     $(document).on('change', '.status-select', function () {
+            let dataId = $(this).data('id');
+            let status = $(this).val();
+            console.log("Data ID:", dataId);
+            console.log("Status:", status);
+            if(status == 'present'){
+                $(`#work_end`).hide();
+            } else {
+                $(`#work_end`).show();
+            }
+        });
+}
+
+
+function getProject(data){
+    console.log(data)
+
+    modal = document.querySelector('#editProject');
+    url = document.querySelector('#edit_project_btn').getAttribute('data-url');
+    modal.querySelector('form').action=url;
+    modal.querySelector('input[name="project_id"]').value = "";
+    modal.querySelector('input[name="project_name"]').value = "";
+    modal.querySelector('input[name="client"]').value = "";
+    modal.querySelector('textarea[name="desc_project"]').value = "";
+
+
+    modal = document.querySelector('#editProject');
+    modal.querySelector('input[name="project_id"]').value = data.id;
+    modal.querySelector('input[name="project_name"]').value = data.project_name;
+    modal.querySelector('input[name="client"]').value = data.client;
+    modal.querySelector('textarea[name="desc_project"]').value = data.desc_project;
+
+}
+
+function addProject(){
+
+    modal = document.querySelector('#editProject');
+    url = document.querySelector('#add-project-btn').getAttribute('data-url');
+    modal.querySelector('form').action=url;
+    modal.querySelector('input[name="project_id"]').value = "";
+    modal.querySelector('input[name="project_name"]').value = "";
+    modal.querySelector('input[name="client"]').value = "";
+    modal.querySelector('textarea[name="desc_project"]').value = "";
+}
+
+function getReference(data){
+    console.log(data);
+}
 </script>
+
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}
+<script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script> {{-- library untuk text editor --}}
+
 
 
 @stop
