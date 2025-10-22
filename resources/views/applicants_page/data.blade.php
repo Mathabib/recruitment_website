@@ -32,10 +32,10 @@
         <div class="card-body">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Profile" type="button" role="tab" >Personal Data</button>
+                    <button class="nav-link  active" data-bs-toggle="tab" data-bs-target="#Profile" type="button" role="tab" >Personal Data</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#Experience" type="button" role="tab" >Experience</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Experience" type="button" role="tab" >Experience</button>
                 </li>
                 <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Project" type="button" role="tab" >Project</button>
@@ -47,7 +47,7 @@
         </div>
 
         <div class="tab-content">
-            <div role="tabpanel" class="p-4 tab-pane fade show" id="Profile">
+            <div role="tabpanel" class="p-4 tab-pane fade show  active" id="Profile">
                 <div class="position-relative">
                     <div class="row">
                         <div class="col-md-4">
@@ -183,7 +183,7 @@
             </div>
 
             {{-- EXPERIENCE ======= --}}
-            <div role="tabpanel" class="p-4 tab-pane fade show active" id="Experience">
+            <div role="tabpanel" class="p-4 tab-pane fade show" id="Experience">
                 {{-- <h1>Applicant Experience</h1> --}}
                 <div class="">
                    <div class="d-flex justify-content-between mb-3">
