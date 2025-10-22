@@ -364,29 +364,29 @@ class ApplicantPageController extends Controller
         // return redirect()->back()->with('success', 'Data successfully updated');
     }
 
-    // public function editProfileData3(Request $request){
+    public function editProfileData3(Request $request){
 
-    //     $applicant = Auth::user()->applicant;
-    //     $applicant->update($request->all());
-    //     return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully updated');
-    //     // return redirect()->back()->with('success', 'Data successfully updated');
-    // }
+        $applicant = Auth::user()->applicant;
+        $applicant->update($request->all());
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully updated');
+        // return redirect()->back()->with('success', 'Data successfully updated');
+    }
 
-    // public function editProfileData4(Request $request){
+    public function editProfileData4(Request $request){
 
-    //     $applicant = Auth::user()->applicant;
-    //     $applicant->update($request->all());
-    //     return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully added');
-    //     // return redirect()->back()->with('success', 'Data successfully updated');
-    // }
+        $applicant = Auth::user()->applicant;
+        $applicant->update($request->all());
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully added');
+        // return redirect()->back()->with('success', 'Data successfully updated');
+    }
 
-    // public function editProfileData5(Request $request){
+    public function editProfileData5(Request $request){
 
-    //     $applicant = Auth::user()->applicant;
-    //     $applicant->update($request->all());
-    //     return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully deleted');
-    //     // return redirect()->back()->with('success', 'Data successfully updated');
-    // }
+        $applicant = Auth::user()->applicant;
+        $applicant->update($request->all());
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully deleted');
+        // return redirect()->back()->with('success', 'Data successfully updated');
+    }
 
 
     //EXPERIENCE
