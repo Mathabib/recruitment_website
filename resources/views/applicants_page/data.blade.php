@@ -35,13 +35,13 @@
                     <button class="nav-link  active" data-bs-toggle="tab" data-bs-target="#Profile" type="button" role="tab" >Personal Data</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Experience" type="button" role="tab" >Experience</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Experience" type="button" role="tab" id="experience_nav_button">Experience</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Project" type="button" role="tab" >Project</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Project" type="button" role="tab" id="project_nav_button">Project</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Reference" type="button" role="tab" >Contact Reference</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Reference" type="button" role="tab" id="reference_nav_button">Contact Reference</button>
                 </li>
             </ul>
         </div>
@@ -277,9 +277,23 @@
             {{-- REFERENCE ========== --}}
             <div role="tabpanel" class="p-4 tab-pane fade show" id="Reference">
                 <div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <div></div>
+                        <div onclick="addReference()" id="add-reference-btn" data-url="{{ route('applicant_page.cvsection.referenceAdd') }}" data-bs-toggle="modal" data-bs-target="#referenceModal"  class="border rounded p-2 bg-success-subtle" style="cursor: pointer;">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
                     @foreach ($references as $reference)
                         <div class="card mt-4">
-                            <div class="card-body">
+                            <div class="card-body position-relative">
+                                <div class="d-flex gap-1" style="position: absolute; top: 10px; right: 10px;">
+                                    <div style="height: 40px; width: 40px" id="edit-reference-btn" data-url="{{ route('applicant_page.cvsection.referenceEdit') }}" class="border rounded p-2 bg-warning-subtle d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                                        <i class="fas fa-pen edit-certificate referenceEdit reference_edit_btn" data-bs-toggle="modal" data-bs-target="#referenceModal" style="cursor: pointer;" onclick="getReference({{ json_encode($reference) }})" ></i>
+                                    </div>
+                                    <div style="height: 40px; width: 40px" id="" class="border rounded p-2 bg-danger-subtle d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                                        <a class="text-dark" onclick="return confirm('are you sure want delete this ? ')" href="{{ route('applicant_page.cvsection.referenceDelete', $reference->id) }}"><i class="fas fa-trash-alt delete-certificate" style="cursor: pointer;"></i></a>
+                                    </div>
+                                </div>
                                 <table>
                                     <tr>
                                         <td class="fw-bolder" style="color: #800">Name  </td>
@@ -617,11 +631,11 @@
 
 
 {{-- =========================================================
-=====================PROJECT MODAL=======================
+=====================REFERENCE MODAL=======================
 ========================================================= --}}
 
 
-<div class="modal fade" id="editReference" tabindex="-1" aria-labelledby="editReference" aria-hidden="true">
+<div class="modal fade" id="referenceModal" tabindex="-1" aria-labelledby="referenceModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
     <form action="{{ route("applicant_page.cvsection.referenceEdit") }}" method="post" enctype="multipart/form-data">
@@ -630,17 +644,17 @@
         <div class="modal-body">
             <input type="hidden" name="reference_id">
             <div class="input reference_name">
-                <label class="form-label" for="reference_name">Project Name</label>
+                <label class="form-label" for="reference_name">Reference Name</label>
                 <input class="form-control" name="reference_name" type="text">
             </div>
             <div class="input reference_email">
-                <label class="form-label" for="reference_email">Client</label>
+                <label class="form-label" for="reference_email">Reference Email</label>
                 <input class="form-control" name="reference_email" type="text">
             </div>
 
             <div class="input reference_number">
-                <label class="form-label" for="reference_number">Project Description</label>
-                <textarea class="form-control" name="reference_number"  placeholder="Project Description"></textarea>
+                <label class="form-label" for="reference_number">Reference Number</label>
+                <input class="form-control" name="reference_number" type="text">
             </div>
         </div>
 
@@ -657,6 +671,70 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+    function changeSection(){
+    // Ambil URL saat ini
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Ambil nilai parameter "datasection"
+    const datasection = urlParams.get('datasection');
+    if(datasection == 'profile'){
+        console.log('profile paneeeee')
+    }
+    if(datasection == 'experience'){
+        console.log('EXPERIENCE paneeeee')
+        const nav_section = document.querySelectorAll('.nav-link');
+        nav_section.forEach(element => {
+            element.classList.remove('active')
+        });
+        document.querySelector('#experience_nav_button').classList.add('active')
+
+        const tab_pane = document.querySelectorAll('.tab-pane');
+        tab_pane.forEach(element => {
+            element.classList.remove('active');
+        })
+        document.querySelector('#Experience').classList.add('active');
+    }
+
+    if(datasection == 'project'){
+        console.log('PROJECT paneeeee');
+        const nav_section = document.querySelectorAll('.nav-link');
+        nav_section.forEach(element => {
+            element.classList.remove('active')
+        });
+        document.querySelector('#project_nav_button').classList.add('active')
+
+        const tab_pane = document.querySelectorAll('.tab-pane');
+        tab_pane.forEach(element => {
+            element.classList.remove('active');
+        })
+        document.querySelector('#Project').classList.add('active');
+    }
+
+    if(datasection == 'reference'){
+        console.log('REFERENCE paneeeee')
+        const nav_section = document.querySelectorAll('.nav-link');
+        nav_section.forEach(element => {
+            element.classList.remove('active')
+        });
+        document.querySelector('#reference_nav_button').classList.add('active')
+        const tab_pane = document.querySelectorAll('.tab-pane');
+        tab_pane.forEach(element => {
+            element.classList.remove('active')
+        })
+        document.querySelector('#Reference').classList.add('active')
+
+    }
+    console.log(datasection); // hasil: "profile"
+    // const nav_section = document.querySelectorAll('.nav-link');
+    // nav_section.forEach(element => {
+    //     element.classList.remove('active')
+    // });
+    // profile_pane = document.querySelector('#Profile_pane')
+    // profile_pane.classList.add('profile_pane');
+    // const tab_pane = document.querySelectorAll('tab-pane')
+}
+changeSection()
       // ============untuk angka expected salary================
     document.getElementById('salary_expectation').addEventListener('input', function(e) {
     let value = this.value.replace(/\D/g, ""); // hanya angka
@@ -942,9 +1020,37 @@ function addProject(){
     modal.querySelector('textarea[name="desc_project"]').value = "";
 }
 
+
 function getReference(data){
     console.log(data);
+    modal = document.querySelector('#referenceModal');
+    url = document.querySelector('#edit-reference-btn').getAttribute('data-url');
+    console.log(url)
+    modal.querySelector('form').action=url;
+    modal.querySelector('input[name="reference_id"]').value = "";
+    modal.querySelector('input[name="reference_name"]').value = "";
+    modal.querySelector('input[name="reference_email"]').value = "";
+    modal.querySelector('input[name="reference_number"]').value = "";
+
+    modal.querySelector('input[name="reference_id"]').value = data.id;
+    modal.querySelector('input[name="reference_name"]').value = data.name_ref;
+    modal.querySelector('input[name="reference_email"]').value = data.email_ref;
+    modal.querySelector('input[name="reference_number"]').value = data.phone;
 }
+
+function addReference(){
+    modal = document.querySelector('#referenceModal');
+    url = document.querySelector('#add-reference-btn').getAttribute('data-url');
+    console.log(url);
+    modal.querySelector('form').action = url;
+    modal.querySelector('input[name="reference_id"]').value = "";
+    modal.querySelector('input[name="reference_name"]').value = "";
+    modal.querySelector('input[name="reference_email"]').value = "";
+    modal.querySelector('input[name="reference_number"]').value = "";
+
+}
+
+
 </script>
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}
