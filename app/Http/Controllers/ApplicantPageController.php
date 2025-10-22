@@ -338,7 +338,8 @@ class ApplicantPageController extends Controller
             'name' => $request->name,
             'profile' => $request->profile,
         ]);
-        return redirect()->back()->with('success', 'data successfully changed');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully updated');
+        // return redirect()->back()->with('success', 'data successfully changed');
     }
 
     public function editProfileData2(Request $request){
@@ -359,30 +360,33 @@ class ApplicantPageController extends Controller
         ]);
 
         $applicant->update($request->all());
-
-        return redirect()->back()->with('success', 'Data successfully updated');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully updated');
+        // return redirect()->back()->with('success', 'Data successfully updated');
     }
 
-    public function editProfileData3(Request $request){
+    // public function editProfileData3(Request $request){
 
-        $applicant = Auth::user()->applicant;
-        $applicant->update($request->all());
-        return redirect()->back()->with('success', 'Data successfully updated');
-    }
+    //     $applicant = Auth::user()->applicant;
+    //     $applicant->update($request->all());
+    //     return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully updated');
+    //     // return redirect()->back()->with('success', 'Data successfully updated');
+    // }
 
-    public function editProfileData4(Request $request){
+    // public function editProfileData4(Request $request){
 
-        $applicant = Auth::user()->applicant;
-        $applicant->update($request->all());
-        return redirect()->back()->with('success', 'Data successfully updated');
-    }
+    //     $applicant = Auth::user()->applicant;
+    //     $applicant->update($request->all());
+    //     return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully added');
+    //     // return redirect()->back()->with('success', 'Data successfully updated');
+    // }
 
-    public function editProfileData5(Request $request){
+    // public function editProfileData5(Request $request){
 
-        $applicant = Auth::user()->applicant;
-        $applicant->update($request->all());
-        return redirect()->back()->with('success', 'Data successfully updated');
-    }
+    //     $applicant = Auth::user()->applicant;
+    //     $applicant->update($request->all());
+    //     return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully deleted');
+    //     // return redirect()->back()->with('success', 'Data successfully updated');
+    // }
 
 
     //EXPERIENCE
@@ -397,8 +401,8 @@ class ApplicantPageController extends Controller
             'selesai' => $request->selesai,
             'present' => $request->present,
         ]);
-
-        return redirect()->back()->with('success', 'data successfully updated');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'experience'])->with('success', 'data successfully updated');
+        // return redirect()->back()->with('success', 'data successfully updated');
     }
     public function experienceAdd(Request $request){
         $applicant = Auth::user()->applicant;
@@ -411,12 +415,14 @@ class ApplicantPageController extends Controller
             'selesai' => $request->selesai,
             'present' => $request->present,
         ]);
-        return redirect()->back()->with('success', 'data successfully updated');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'experience'])->with('success', 'data successfully added');
+        // return redirect()->back()->with('success', 'data successfully updated');
     }
     public function experienceDelete($id){
         $experience = WorkExperience::findOrFail($id);
         $experience->delete();
-        return redirect()->back()->with('success', 'data successfully updated');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'experience'])->with('success', 'data successfully deleted');
+        // return redirect()->back()->with('success', 'data successfully updated');
     }
 
 
@@ -428,7 +434,9 @@ class ApplicantPageController extends Controller
             'client' => $request->client,
             'desc_project' => $request->desc_project
         ]);
-        return redirect()->back()->with('success', 'data successfully updated');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'project'])->with('success', 'data successfully updated');
+        // return redirect()->back()->with('success', 'data successfully updated');
+
     }
     public function projectAdd(Request $request){
         $applicant = Auth::user()->applicant;
@@ -438,26 +446,44 @@ class ApplicantPageController extends Controller
             'client' => $request->client,
             'desc_project' => $request->desc_project
         ]);
-        return redirect()->back()->with('success', 'data successfully updated');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'project'])->with('success', 'data successfully added');
+        // return redirect()->back()->with('success', 'data successfully updated');
     }
     public function projectDelete($id){
         $project = Project::findOrFail($id);
         $project->delete();
-        return redirect()->back()->with('success', 'data successfully updated');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'project'])->with('success', 'data successfully deleted');
+        // return redirect()->back()->with('success', 'data successfully updated');
     }
 
 
     public function referenceEdit(Request $request){
 
-        return redirect()->back()->with('success', 'data successfully updated');
+        $reference = Reference::findOrFail($request->reference_id);
+        $reference->update([
+            'name_ref' => $request->reference_name,
+            'phone' => $request->reference_number,
+            'email_ref' => $request->reference_email,
+        ]);
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'reference'])->with('success', 'data successfully updated');
+        // return redirect()->back()->with('success', 'data successfully updated');
     }
     public function referenceAdd(Request $request){
-
-        return redirect()->back()->with('success', 'data successfully updated');
+        $applicant = Auth::user()->applicant;
+        Reference::create([
+            'applicant_id' => $applicant->id,
+            'name_ref' => $request->reference_name,
+            'phone' => $request->reference_number,
+            'email_ref' => $request->reference_email,
+        ]);
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'reference'])->with('success', 'data successfully added');
+        // return redirect()->back()->with('success', 'data successfully updated');
     }
     public function referenceDelete($id){
-        
-        return redirect()->back()->with('success', 'data successfully updated');
+        $reference = Reference::findOrFail($id);
+        $reference->delete();
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'reference'])->with('success', 'data successfully deleted');
+        // return redirect()->back()->with('success', 'data successfully updated');
     }
 
 
