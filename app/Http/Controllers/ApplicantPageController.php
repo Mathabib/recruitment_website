@@ -376,7 +376,7 @@ class ApplicantPageController extends Controller
 
         $applicant = Auth::user()->applicant;
         $applicant->update($request->all());
-        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully added');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully updated');
         // return redirect()->back()->with('success', 'Data successfully updated');
     }
 
@@ -384,7 +384,7 @@ class ApplicantPageController extends Controller
 
         $applicant = Auth::user()->applicant;
         $applicant->update($request->all());
-        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully deleted');
+        return redirect()->route('applicant_page.cvsection',['datasection' => 'profile'])->with('success', 'data successfully updated');
         // return redirect()->back()->with('success', 'Data successfully updated');
     }
 
