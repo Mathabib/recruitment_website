@@ -26,15 +26,40 @@ class ApplicantController extends Controller
     public function sendEmailNotification(Request $request){
 
         $applicant = Applicant::findOrFail($request->id_for_notification);
+        // if(!$applicant->job_id){
+        //     return redirect()->back()->with('pelamar belum melamar pekerjaan');
+        // }
         // return $applicant;
         if($applicant->status == 'interview'){
             Mail::to($applicant->email)->queue(new interview_mail($request->email_notes));
+
         }elseif($applicant->status == 'offer'){
-            Mail::to($applicant->email)->queue(new offer_mail($request->email_notes));
+
+            $position = Job::findOrFail($applicant->job_id)->job_name;
+            $name = $applicant->name;
+            $location   = $request->location ?? '-';
+            $start_date = $request->start_date ?? '-';
+            $end_date   = $request->end_date ?? '-';
+
+            Mail::to($applicant->email)->queue(new offer_mail($request->email_notes, $position, $name, $location, $start_date, $end_date ));
+
         }elseif($applicant->status == 'accepted'){
             Mail::to($applicant->email)->queue(new accepted_mail($request->email_notes));
+            if(in_array($applicant->status, ['bankcv', 'not_qualify', 'accepted'])){
+            $applicant->job_id = null;
+            $applicant->save();
+            }
+
         }else{
-            Mail::to($applicant->email)->queue(new rejected_mail($request->email_notes));
+            $position = Job::findOrFail($applicant->job_id)->job_name;
+            $name = $applicant->name;
+            Mail::to($applicant->email)->queue(new rejected_mail($request->email_notes, $name, $position));
+
+            if(in_array($applicant->status, ['bankcv', 'not_qualify'])){
+            $applicant->job_id = null;
+            $applicant->save();
+
+            }
         }
 
         return redirect()->back();
@@ -793,6 +818,9 @@ if ($request->has('search')) {
 
         $applicant = Applicant::findOrFail($id);
         $applicant->status = $request->status;
+        // if(in_array($request->status, ['bankcv', 'not_qualify', 'accepted'])){
+        //     $applicant->job_id = null;
+        // }
         $applicant->save();
 
         return redirect()->back()->with('success', 'Applicant status updated successfully!');

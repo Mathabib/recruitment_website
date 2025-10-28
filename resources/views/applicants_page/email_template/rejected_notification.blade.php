@@ -63,11 +63,39 @@
     </div>
 
     <div class="content">
-      <h1>PEMBERITAHUAN HASIL SELEKSI</h1>
+        <h1>PEMBERITAHUAN HASIL SELEKSI</h1>
 
-      <p>Halo <strong>{{ $applicant_name ?? 'Pelamar' }}</strong>,</p>
+        <p>Kepada Yth <strong>{{ $name ?? 'Pelamar' }}</strong>,</p>
 
-      <p>
+        <p>
+            Terima kasih atas minat dan waktu yang telah Anda luangkan
+            untuk berpartisipasi dalam proses rekrutmen di ISOLUTIONS Indonesia.
+        </p>
+
+        <p>
+            Setelah kami melakukan evaluasi terhadap kualifikasi dan performa Anda selama proses seleksi, serta
+            mempertimbangkan berbagai aspek secara menyeluruh, dengan hormat kami sampaikan bahwa saat ini
+            <strong>kami belum dapat melanjutkan proses lamaran Anda</strong> untuk posisi {{ $position }}.
+        </p>
+
+        <p>
+            Namun demikian, profil Anda akan tetap kami simpan dalam basis data kandidat kami, dan kami dapat
+            menghubungi Anda kembali di masa mendatang apabila terdapat kesempatan yang lebih sesuai.
+        </p>
+
+        <p>
+            Kami dengan tulus menghargai minat Anda untuk bergabung bersama perusahaan kami serta usaha yang telah Anda berikan selama proses ini.
+        </p>
+
+        <p>
+            Kami berharap Anda terus meraih kesuksesan dalam karier dan perjalanan profesional Anda ke depan.
+        </p>
+
+        <p>Hormat Kami,</p>
+        <p>HR Department</p>
+        <p>ISOLUTIONS Indonesia</p>
+
+      {{-- <p>
         Terima kasih telah berpartisipasi dalam proses rekrutmen di <strong>Isolutions</strong> dan telah meluangkan waktu serta usaha untuk mengikuti seluruh tahapan seleksi yang kami selenggarakan.
       </p>
 
@@ -93,7 +121,7 @@
       </p>
 
       <p>Salam hangat,<br><strong>Tim Recruitment Isolutions</strong></p>
-    </div>
+    </div> --}}
 
     <div class="footer">
       <p>Email ini dikirim secara otomatis oleh sistem. Mohon tidak membalas email ini.</p>

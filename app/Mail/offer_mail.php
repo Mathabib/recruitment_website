@@ -19,17 +19,32 @@ class offer_mail extends Mailable
      * @return void
      */
     public $email_notes;
-    public function __construct($email_notes)
+    public $position;
+    public $name;
+    public $location;
+    public $start_date;
+    public $end_date;
+    public function __construct($email_notes, $position, $name, $location, $start_date, $end_date )
     {
         $this->email_notes = $email_notes;
+        $this->position = $position;
+        $this->name = $name;
+        $this->location = $location;
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
     }
 
     public function build()
     {
-        return $this->subject('Recruitment Isolutions Application Status Notifications')
+        return $this->subject('Pemberitahuan Tahap Offering - Recruitment ISolutions Indonesia')
                     ->view('applicants_page.email_template.offer_notification')
                     ->with([
-                        'email_notes' => $this->email_notes
+                        'email_notes' => $this->email_notes,
+                        'position' => $this->position,
+                        'name' => $this->name,
+                        'location' => $this->location,
+                        'start_date' => $this->start_date,
+                        'end_date' => $this->end_date,
                         ]);
     }
     /**

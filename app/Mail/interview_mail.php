@@ -27,7 +27,7 @@ class interview_mail extends Mailable
 
     public function build()
     {
-        return $this->subject('Recruitment Isolutions Application Status Notifications')
+        return $this->subject('Pemberitahuan Tahap Interview - Recruitment ISolutions Indonesia')
                     ->view('applicants_page.email_template.interview_notification')
                     ->with([
                         'email_notes' => $this->email_notes

@@ -554,7 +554,21 @@
         @csrf
             <div class="modal-body">
                 <input type="hidden" id="id_for_notification" name="id_for_notification">
+                <div id="date_input_for_offer" class="">
+                    <label class="form-label" for="start_date">Start Date (waktu mulai bekerja)</label>
+                    <input class="form-control" name="start_date" type="text" placeholder="example : Senin 27 october 2025">
+                </div>
 
+                <div id="end_date_input_for_offer" class="">
+                    <label class="form-label" for="end_date">End Date (waktu berakhir penawaran offering)</label>
+                    <input class="form-control" name="end_date" type="text" placeholder="example : Senin 27 october 2025">
+                </div>
+
+                <div id="location_input_for_offer">
+                    <label class="form-label" for="location">Location</label>
+                    <textarea class="form-control" name="location" id="" rows="3"></textarea>
+                    {{-- <input class="form-control" name="location_email" type="text" placeholder=""> --}}
+                </div>
                 <div class="input job_description">
                     <label class="form-label" for="email_notes">Additional Notes</label>
                     <main>
@@ -605,6 +619,10 @@
 
     function showApplicantInfo(applicant) {
 
+        $('#location_input_for_offer').addClass('d-none');
+        $('#date_input_for_offer').addClass('d-none');
+        $('#end_date_input_for_offer').addClass('d-none');
+
         let formatted_salary = new Intl.NumberFormat('id-ID').format(applicant.salary_expectation);
         let formatted_salary_current = new Intl.NumberFormat('id-ID').format(applicant.salary_current);
 
@@ -623,6 +641,13 @@
         $('#id_for_notification').val(applicant.id);
         $('#sendNotificationModalLabel').empty();
         $('#sendNotificationModalLabel').append("Notification for " + applicant.status + " status");
+
+        if(applicant.status == 'offer'){
+            $('#location_input_for_offer').removeClass('d-none');
+            $('#date_input_for_offer').removeClass('d-none');
+            $('#end_date_input_for_offer').removeClass('d-none');
+        }
+
 
         currentApplicantId = applicant.id;
 

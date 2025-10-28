@@ -19,17 +19,23 @@ class rejected_mail extends Mailable
      * @return void
      */
     public $email_notes;
-    public function __construct($email_notes)
+    public $name;
+    public $position;
+    public function __construct($email_notes, $name, $position)
     {
         $this->email_notes = $email_notes;
+        $this->name = $name;
+        $this->position = $position;
     }
 
     public function build()
     {
-        return $this->subject('Recruitment Isolutions Application Status Notifications')
+        return $this->subject('Pemberitahuan Hasil Rekrutmen - ISolutions Indonesia')
                     ->view('applicants_page.email_template.rejected_notification')
                     ->with([
-                        'email_notes' => $this->email_notes
+                        'email_notes' => $this->email_notes,
+                        'name' => $this->name,
+                        'position' => $this->position
                         ]);
     }
 
