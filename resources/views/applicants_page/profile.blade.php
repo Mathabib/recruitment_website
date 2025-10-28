@@ -55,10 +55,10 @@
                 </div> --}}
             </div>
             <div class="mt-4">
-                <a class="btn btn-outline-danger" href="{{ route('applicant_page.edit') }}">Edit Your CV</a>
+                <a class="btn btn-outline-danger" href="{{ route('applicant_page.cvsection') }}">Edit Your CV</a>
+                {{-- <a class="btn btn-outline-danger" href="{{ route('applicant_page.edit') }}">Edit Your CV</a> --}}
                 <a class="btn btn-outline-danger" href="{{ route('applicant_page.download') }}">Download Your CV</a>
                 <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
-                <a class="btn btn-outline-danger" href="{{ route('applicant_page.cvsection') }}">CV section</a>
             </div>
         </div>
     </div>
@@ -83,7 +83,7 @@
                                 <p class="fw-bold fs-6">PT Isolutions Indonesia</p>
                                 <div>
                                     {{-- <a class="btn btn-outline-danger" href="{{ route('applicant_page.jobs') }}">Change Job</a> --}}
-                                    <a class="btn btn-outline-danger" href="{{ route('applicant_page.jobs.unapply', $job->id) }}">Delete Application</a>
+                                    {{-- <a class="btn btn-outline-danger" href="{{ route('applicant_page.jobs.unapply', $job->id) }}">Delete Application</a> --}}
                                 </div>
                             </div>
                             <a href="#" style="text-decoration: none">

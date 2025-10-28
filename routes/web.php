@@ -99,8 +99,31 @@ Route::middleware(['admin.only', 'auth'])->group(function(){
 
     Route::patch('/jobs/{job}/update-status', [JobController::class, 'updateStatus'])->name('jobs.updateStatus');
 
+      // ======MANAGEMENT USER=======
 
+    Route::get('/management/user', [userManagementController::class, 'index'])->name('management.user.index');
+    Route::get('/management/user/edit/{id}', [userManagementController::class, 'edit'])->name('management.user.edit');
+    Route::post('/management/user/update', [userManagementController::class, 'update'])->name('management.user.update');
+    Route::get('/management/user/create', [userManagementController::class, 'create'])->name('management.user.create');
+    Route::post('/management/user/store', [userManagementController::class, 'store'])->name('management.user.store');
+    Route::get('/management/user/delete/{id}', [userManagementController::class, 'delete'])->name('management.user.delete');
 
+    //==========PERMISSION MANAGEMENT=======
+    Route::get('/management/role', [userManagementController::class, 'role_index'])->name('management.role.index');
+    Route::get('/management/role/create', [userManagementController::class, 'role_create'])->name('management.role.create');
+    Route::post('/management/role/store', [userManagementController::class, 'role_store'])->name('management.role.store');
+    Route::get('/management/role/edit/{id}', [userManagementController::class, 'role_edit'])->name('management.role.edit');
+    Route::post('/management/role/update/', [userManagementController::class, 'role_update'])->name('management.role.update');
+    Route::get('/management/role/delete/{id}', [userManagementController::class, 'role_delete'])->name('management.role.delete');
+
+    // Route::get('/management/permission', [userManagementController::class, 'permission_index'])->name('management.permission.index')->middleware('auth');
+    // Route::get('/management/permission/create', [userManagementController::class, 'permission_create'])->name('management.permission.create')->middleware('auth');
+    // Route::get('/management/permission/store', [userManagementController::class, 'permission_store'])->name('management.permission.store')->middleware('auth');
+    // Route::get('/management/permission/delete/{id}', [userManagementController::class, 'permission_delete'])->name('management.permission.delete')->middleware('auth');
+
+    //=============SEND EMAIL STATUS NOTIFICATION=================
+    // Route::get('/notification/status/{id}', [ApplicantController::class, 'sendEmailNotification'])->name('sendEmailNotification');
+    Route::post('/notification/status/', [ApplicantController::class, 'sendEmailNotification'])->name('sendEmailNotification');
 
 });
 
@@ -122,27 +145,7 @@ Route::prefix('offer-letters')->middleware(['admin.only', 'auth'])->group(functi
 });
 
 Route::middleware('auth')->group(function(){
-    // ======MANAGEMENT USER=======
 
-    Route::get('/management/user', [userManagementController::class, 'index'])->name('management.user.index');
-    Route::get('/management/user/edit/{id}', [userManagementController::class, 'edit'])->name('management.user.edit');
-    Route::post('/management/user/update', [userManagementController::class, 'update'])->name('management.user.update');
-    Route::get('/management/user/create', [userManagementController::class, 'create'])->name('management.user.create');
-    Route::post('/management/user/store', [userManagementController::class, 'store'])->name('management.user.store');
-    Route::get('/management/user/delete/{id}', [userManagementController::class, 'delete'])->name('management.user.delete');
-
-    //==========PERMISSION MANAGEMENT=======
-    Route::get('/management/role', [userManagementController::class, 'role_index'])->name('management.role.index');
-    Route::get('/management/role/create', [userManagementController::class, 'role_create'])->name('management.role.create');
-    Route::post('/management/role/store', [userManagementController::class, 'role_store'])->name('management.role.store');
-    Route::get('/management/role/edit/{id}', [userManagementController::class, 'role_edit'])->name('management.role.edit');
-    Route::post('/management/role/update/', [userManagementController::class, 'role_update'])->name('management.role.update');
-    Route::get('/management/role/delete/{id}', [userManagementController::class, 'role_delete'])->name('management.role.delete');
-
-    // Route::get('/management/permission', [userManagementController::class, 'permission_index'])->name('management.permission.index')->middleware('auth');
-    // Route::get('/management/permission/create', [userManagementController::class, 'permission_create'])->name('management.permission.create')->middleware('auth');
-    // Route::get('/management/permission/store', [userManagementController::class, 'permission_store'])->name('management.permission.store')->middleware('auth');
-    // Route::get('/management/permission/delete/{id}', [userManagementController::class, 'permission_delete'])->name('management.permission.delete')->middleware('auth');
 
 });
 
@@ -202,6 +205,7 @@ Route::middleware('applicant.only')->group(function(){
 });
 
 Route::get('/loker/jobs/show/{job}', [ApplicantPageController::class, 'jobsShow'])->name('applicant_page.jobs.show');
+Route::post('/loker/jobs/show/', [ApplicantPageController::class, 'jobsShow2'])->name('applicant_page.jobs.show');
 Route::get('/loker/jobs/email', [ApplicantPageController::class, 'testEmail'])->name('applicant_page.testemail');
 
 Route::get('/test', function () {

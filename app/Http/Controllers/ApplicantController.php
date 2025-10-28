@@ -14,9 +14,35 @@ use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Mail\interview_mail;
+use App\Mail\offer_mail;
+use App\Mail\accepted_mail;
+use App\Mail\rejected_mail;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicantController extends Controller
 {
+
+    public function sendEmailNotification(Request $request){
+
+        $applicant = Applicant::findOrFail($request->id_for_notification);
+        // return $applicant;
+        if($applicant->status == 'interview'){
+            Mail::to($applicant->email)->queue(new interview_mail($request->email_notes));
+        }elseif($applicant->status == 'offer'){
+            Mail::to($applicant->email)->queue(new offer_mail($request->email_notes));
+        }elseif($applicant->status == 'accepted'){
+            Mail::to($applicant->email)->queue(new accepted_mail($request->email_notes));
+        }else{
+            Mail::to($applicant->email)->queue(new rejected_mail($request->email_notes));
+        }
+
+        return redirect()->back();
+
+    }
+
+
+
     public function generatePdf($id)
     {
         $applicant = Applicant::find($id);

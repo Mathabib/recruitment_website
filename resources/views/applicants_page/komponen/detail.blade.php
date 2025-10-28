@@ -58,27 +58,39 @@
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
         </a>
     </div>
-
-    <h1 class="job-name1">{{ $job->job_name }}</h1>
+    <div>
+        <h1 class="job-name1">{{ $job->job_name }}</h1>
+    </div>
     <div class="apply">
-
-    <!--<a href="{{ route('vacancy_form', $job->id) }}" class="btn btn-primary btn-sm">Apply Now</a>-->
-    <a href="{{ route('applicant_page.jobs.apply', $job->id) }}" class="{{ !Auth::check() ? 'd-none' : '' }} btn text-white" style="background: #800">Apply Now</a>
-    <button class="btn text-white {{ Auth::check() ? 'd-none' : '' }} " style="background: #800" data-bs-toggle="modal" data-bs-target="#exampleModal">Apply Now</button>
-</div>
-</div>
-
-<!-- Employment Type and Work Location -->
-<div class="title mt-3 mb-4">
-    <div class="job-detail">
-        <i class="fas fa-briefcase"></i>
-        <span>Employment Type: {{ $job->employment_type }}</span>
-    </div>
-    <div class="job-detail">
-        <i class="fas fa-map-pin"></i>
-        <span>Work Location: {{ $job->workLocation->location }}</span>
+            @if(Auth::check())
+                <a href="{{ route('applicant_page.jobs.apply', $job->id) }}" class="btn text-white {{ Auth::user()->applicant->job_id != null ? 'disabled' : '' }}" style="background: #800">Apply Now</a>
+            @endif
+        <!--<a href="{{ route('vacancy_form', $job->id) }}" class="btn btn-primary btn-sm">Apply Now</a>-->
+        {{-- <a href="{{ route('applicant_page.jobs.apply', $job->id) }}" class="{{ !Auth::check() ? 'd-none' : '' }} btn text-white" style="background: #800">Apply Now</a> --}}
+        <button class="btn text-white {{ Auth::check() ? 'd-none' : '' }} " style="background: #800" data-bs-toggle="modal" data-bs-target="#exampleModal">Apply Now</button>
     </div>
 </div>
+
+    <!-- Employment Type and Work Location -->
+    <div class="title mt-3 mb-4">
+        <div class="job-detail">
+            <i class="fas fa-briefcase"></i>
+            <span>Employment Type: {{ $job->employment_type }}</span>
+        </div>
+        <div class="job-detail">
+            <i class="fas fa-map-pin"></i>
+            <span>Work Location: {{ $job->workLocation->location }}</span>
+        </div>
+    </div>
+    
+    @if(Auth::check())
+        @if(Auth::user()->applicant->job_id != null)
+            <div>
+                <p style="color: red">**Anda hanya dapat melamar satu posisi hingga lamaran Anda selesai diproses.</p>
+            </div>
+        @endif
+    @endif
+
 
 </div>
  <br>

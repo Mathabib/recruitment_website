@@ -324,7 +324,7 @@
                     {{-- <td class="title-content-cv"><strong>Description</strong></td> <td>:</td> <td class="content-cv">{{ $experience->desc_kerja }}</td> --}}
                 </tr>
                 <tr class="tr-content-cv">
-                    <td class="title-content-cv"><strong>Period</strong></td> <td>:</td> <td>{{ $experience->mulai }} - {{ $experience->selesai }}</td>
+                    <td class="title-content-cv"><strong>Period</strong></td> <td>:</td> <td>{{ $experience->mulai }} - {{ ($experience->present == 'present' ? 'present' : $experience->selesai) }}</td>
                 </tr>
             </table>
 
