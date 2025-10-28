@@ -525,12 +525,14 @@
                 <a id="download-cv" href="#" class="btn btn-success">Download CV</a>
                 <a id="download-cv2" href="#" class="btn btn-success">Download CV RESINDO</a>
                 <a id="download-summary" href="#" class="btn btn-success">Download SUMMARY RESINDO</a>
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#sendNotificationModal">Send Notifications</button>
+                {{-- <a id="send_notifications" href="#" class="btn btn-warning">Send Notifications</a> --}}
                 {{-- @if($applicant->status === 'offer')
                 <a href="{{ route('offer_letters.create', $applicant->id) }}" class="btn btn-warning">
                     Create Offering Letter
                 </a>
                 @endif --}}
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
 
             </div>
 
@@ -538,8 +540,45 @@
     </div>
 </div>
 
+
+{{-- =================MODAL UNTUK SEND EMAIL NOTIFICATIONS=============== --}}
+
+<div class="modal fade" id="sendNotificationModal" tabindex="-1" aria-labelledby="sendNotificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="sendNotificationModalLabel">Notification for </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    <form action="{{ route('sendEmailNotification') }}" method="POST">
+        @csrf
+            <div class="modal-body">
+                <input type="hidden" id="id_for_notification" name="id_for_notification">
+
+                <div class="input job_description">
+                    <label class="form-label" for="email_notes">Additional Notes</label>
+                    <main>
+                        {{-- <trix-toolbar id="my_toolbar"></trix-toolbar> --}}
+                        <div class="more-stuff-inbetween"></div>
+                        <trix-toolbar id="my_toolbar"></trix-toolbar>
+                        <input type="hidden" id="my_input" name="email_notes" value="">
+                        <trix-editor toolbar="my_toolbar" input="my_input"></trix-editor>
+                    </main>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Send Notification</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
 @stop
 
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> {{-- library untuk text editor --}}
+<script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script> {{-- library untuk text editor --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="{{ asset('css/applicant.index.css') }}">
@@ -580,6 +619,10 @@
         $('#download-cv').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf").attr('target', '_blank');
         $('#download-cv2').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/pdf2").attr('target', '_blank');
         $('#download-summary').attr('href', "{{ url('/pipelines') }}/" + applicant.id + "/summary").attr('target', '_blank');
+        $('#send_notifications').attr('href', "{{ url('/notification/status') }}/" + applicant.id);
+        $('#id_for_notification').val(applicant.id);
+        $('#sendNotificationModalLabel').empty();
+        $('#sendNotificationModalLabel').append("Notification for " + applicant.status + " status");
 
         currentApplicantId = applicant.id;
 
