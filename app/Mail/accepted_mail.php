@@ -27,7 +27,7 @@ class accepted_mail extends Mailable
 
     public function build()
     {
-        return $this->subject('Recruitment Isolutions Application Status Notifications')
+        return $this->subject('Pemberitahuan Penerimaan - Recruitment ISolutions Indonesia')
                     ->view('applicants_page.email_template.accepted_notification')
                     ->with([
                         'email_notes' => $this->email_notes

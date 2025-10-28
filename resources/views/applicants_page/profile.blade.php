@@ -93,7 +93,9 @@
                             <div>
                                 <div class="badge text-bg-success">{{ $job->employment_type }}</div>
                                 <span><strong> | Status : </strong></span>
-                                <div class="badge text-bg-success">{{ ucfirst($applicant->status) }}</div>
+                                @if(!in_array($applicant->status, ['bankcv', 'not_qualify',]))
+                                    <div class="badge text-bg-success">{{ ucfirst($applicant->status) }}</div>
+                                @endif
                             </div>
 
                             <div class="{{ !in_array($applicant->status, ['applied', 'interview', 'offer', 'accepted']) ? 'd-none' : '' }}">

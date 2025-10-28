@@ -68,18 +68,30 @@
     <div class="content">
       <h1>PEMBERITAHUAN OFFERING</h1>
 
-      <p>Halo <strong>{{ $applicant_name ?? 'Pelamar' }}</strong>,</p>
+      <p>Kepada Yth <strong>{{ $name }}</strong>,</p>
 
       <p>
-        Kami dengan senang hati menginformasikan bahwa Anda telah <strong>lulus tahap seleksi</strong> dan
-        dinyatakan <strong>terpilih untuk melanjutkan ke tahap offering</strong> di <strong>Isolutions</strong>.
+        Kami dengan senang hati menyampaikan tawaran kerja kepada Anda untuk posisi {{ $position }} di ISOLUTIONS Indonesia.
+        Setelah meninjau kualifikasi serta performa Anda selama proses seleksi, kami yakin bahwa Anda akan memberikan kontribusi yang berharga bagi tim kami.
       </p>
 
-      {{-- <p>
-        Melalui tahap ini, kami akan menyampaikan detail terkait <strong>penawaran kerja</strong>, termasuk
-        posisi, kompensasi, dan ketentuan lainnya. Mohon untuk memeriksa dengan seksama dan menyiapkan
-        dokumen atau konfirmasi yang diperlukan sesuai petunjuk berikut.
-      </p> --}}
+      <table>
+        <tr>
+            <td><strong>Position</strong></td>
+            <td>:</td>
+            <td>{{ $position }}</td>
+        </tr>
+        <tr>
+            <td><strong>Start Date</strong></td>
+            <td>:</td>
+            <td>{{ $start_date }}</td>
+        </tr>
+        <tr>
+            <td><strong>Location</strong></td>
+            <td>:</td>
+            <td>{{ $location }}</td>
+        </tr>
+      </table>
 
     @if($email_notes)
         <p><strong>Catatan tambahan:</strong></p>
@@ -89,13 +101,45 @@
     @endif
 
       <p>
-        Apabila Anda memiliki pertanyaan atau klarifikasi, silakan hubungi tim HR kami melalui alamat email
-        resmi yang tertera pada catatan di atas.
+        Kami dengan hormat meminta Anda untuk mengonfirmasi penerimaan penawaran ini dengan membalas email ini selambat-lambatnya pada {{ $end_date }} pukul 15.00 WIB.
+        Setelah kami menerima konfirmasi dari Anda, tim HR kami akan mengirimkan perjanjian kerja resmi beserta informasi lebih lanjut mengenai proses onboarding.
       </p>
 
-      <p>Terima kasih atas waktu dan kerja sama Anda. Kami berharap Anda dapat segera bergabung bersama tim kami.</p>
+      <p>
+        Kami sangat antusias dengan kemungkinan Anda bergabung
+        bersama tim kami yang terus berkembang dan berkontribusi terhadap kesuksesan ISolutions Indonesia.
+      </p>
 
-      <p>Salam hangat,<br><strong>Tim Recruitment Isolutions</strong></p>
+      <p>Hormat Kami,</p>
+      <p>HR Department</p>
+      <p>ISOLUTIONS Indonesia</p>
+
+      {{-- <p>
+        Kami dengan senang hati menginformasikan bahwa Anda telah <strong>lulus tahap seleksi</strong> dan
+        dinyatakan <strong>terpilih untuk melanjutkan ke tahap offering</strong> di <strong>Isolutions</strong>.
+      </p> --}}
+
+      {{-- <p>
+        Melalui tahap ini, kami akan menyampaikan detail terkait <strong>penawaran kerja</strong>, termasuk
+        posisi, kompensasi, dan ketentuan lainnya. Mohon untuk memeriksa dengan seksama dan menyiapkan
+        dokumen atau konfirmasi yang diperlukan sesuai petunjuk berikut.
+      </p> --}}
+
+    {{-- @if($email_notes)
+        <p><strong>Catatan tambahan:</strong></p>
+        <div style="background-color:#f8f8f8; border-left:4px solid #800; padding:10px 15px; border-radius:6px;">
+            {!! $email_notes !!}
+        </div>
+    @endif --}}
+
+      {{-- <p>
+        Apabila Anda memiliki pertanyaan atau klarifikasi, silakan hubungi tim HR kami melalui alamat email
+        resmi yang tertera pada catatan di atas.
+      </p> --}}
+
+      {{-- <p>Terima kasih atas waktu dan kerja sama Anda. Kami berharap Anda dapat segera bergabung bersama tim kami.</p>
+
+      <p>Salam hangat,<br><strong>Tim Recruitment Isolutions</strong></p> --}}
     </div>
 
     <div class="footer">
